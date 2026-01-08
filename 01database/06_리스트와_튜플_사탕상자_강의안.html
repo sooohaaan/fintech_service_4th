@@ -1,0 +1,403 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>리스트와 튜플 — 사탕 상자 비유로 이해하기</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+<header class="header">
+  <div class="container">
+    <span class="badge">Python · List · Tuple · Sequence</span>
+    <h1 class="title">리스트와 튜플 — 사탕 상자 비유로 이해하기</h1>
+    <p class="subtitle">업로드된 노트북(06리스트와_튜플_사용하기.ipynb)의 내용을 최대한 살리되, 설명을 ‘사탕 상자(리스트/딕셔너리) 비유’로 보강한 HTML 강의안이다.</p>
+    <nav class="toc" aria-label="목차">
+      <a href='#리스트와-튜플-사용하기-초급편'>리스트와 튜플 사용하기 초급편</a>
+<a href='#리스트-만들기'>리스트 만들기</a>
+<a href='#리스트-형변환-함수-list' class='toc-sub'>리스트 형변환 함수 list()</a>
+<a href='#숫자를-생성해주는-range' class='toc-sub'>숫자를 생성해주는 range()</a>
+<a href='#리스트에-자료-추가하기-append' class='toc-sub'>리스트에 자료 추가하기 .append()</a>
+<a href='#특정-위치에-자료-추가-insert' class='toc-sub'>특정 위치에 자료 추가 .insert</a>
+<a href='#리스트의-자료-삭제하기' class='toc-sub'>리스트의 자료 삭제하기</a>
+<a href='#리스트를-확장하기-extend' class='toc-sub'>리스트를 확장하기 .extend()</a>
+<a href='#list-list-extend-를-한-것과-동일' class='toc-sub'>list + list = .extend()를 한 것과 동일</a>
+<a href='#리스트-안에서-원하는-값의-인덱스-찾기' class='toc-sub'>리스트 안에서 원하는 값의 인덱스 찾기</a>
+<a href='#리스트-안에서-특정-값의-개수-구하기-count-값' class='toc-sub'>리스트 안에서 특정 값의 개수 구하기 .count(값)</a>
+<a href='#리스트-순서-뒤집기-reverse' class='toc-sub'>리스트 순서 뒤집기 .reverse()</a>
+<a href='#리스트-정렬-sort-오름차순-sort-reverse-true-내림차순' class='toc-sub'>리스트 정렬 .sort() 오름차순 .sort(reverse=True) 내림차순</a>
+<a href='#sorted-리스트-오름차순-sorted-리스트-reverse-true-내림차순' class='toc-sub'>sorted(리스트) 오름차순, sorted(리스트, reverse=True) 내림차순</a>
+<a href='#튜플-tuple'>튜플 tuple</a>
+<a href='#튜플-튜플-두개의-튜플의-요소가-하나로-합쳐짐' class='toc-sub'>튜플 + 튜플 = 두개의 튜플의 요소가 하나로 합쳐짐</a>
+<a href='#시퀀스-객체-자료형'>시퀀스 객체(자료형)</a>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+  <section class="section" id="content">
+    <div class='card'>
+<h1>리스트와 튜플 사용하기 초급편</h1>
+<div id='리스트와-튜플-사용하기-초급편'></div>
+<pre><code>a = 1
+b = 2 
+c = 3
+d = 4
+e = 5</code></pre>
+<pre><code>l = [1,2, &quot;파이썬&quot;, 3.0, [4,5,6], (7,8, &quot;리스트&quot;), True, False]</code></pre>
+<pre><code>type(l)</code></pre>
+</div><div class='card'>
+<h1>리스트 만들기</h1>
+<ul class='list'>
+<li>대괄호 안에 자료를 나열해서 만듬</li>
+<li>내용이 비어있는 리스트도 생성 가능 []</li>
+<li>자료가 1개만 있는 리스트도 생성 가능</li>
+</ul>
+<div class="note"><strong>사탕 상자 비유</strong></div>
+<p>리스트는 <strong>번호(인덱스)가 붙은 사탕 상자</strong>다. 0번, 1번처럼 번호로 사탕을 꺼낼 수 있다.</p>
+<pre><code>candies = [&quot;딸기&quot;, &quot;포도&quot;, &quot;레몬&quot;]
+print(candies[0])  # 0번 사탕
+print(candies[2])  # 2번 사탕</code></pre>
+<div id='리스트-만들기'></div>
+<pre><code>l2 = []
+print(l2, type(l2))</code></pre>
+<pre><code>l3 = [1]
+print(l3, type(l3))</code></pre>
+</div><div class='card'>
+<h2>리스트 형변환 함수 list()</h2>
+<div class="note"><strong>사탕 상자 비유</strong></div>
+<p>문자열/튜플 같은 것을 <strong>번호 사탕 상자(리스트)</strong>로 바꾸는 느낌이다. 글자들이 사탕처럼 한 칸씩 들어간다.</p>
+<pre><code>letters = list(&quot;CANDY&quot;)
+print(letters)  # [&quot;C&quot;,&quot;A&quot;,&quot;N&quot;,&quot;D&quot;,&quot;Y&quot;]</code></pre>
+<div id='리스트-형변환-함수-list'></div>
+<pre><code>type(range(1, 10))</code></pre>
+<pre><code>print(range(1,10))</code></pre>
+<pre><code>list(range(1, 10))</code></pre>
+<pre><code>list((1,2,3,4))</code></pre>
+</div><div class='card'>
+<h2>숫자를 생성해주는 range()</h2>
+<ul class='list'>
+<li>range(시작번호, 끝번호+1, step)</li>
+</ul>
+<div class="note"><strong>사탕 상자 비유</strong></div>
+<p><strong>번호표를 만들어주는 기계</strong>라고 생각하면 된다. range로 만든 번호들을 리스트로 바꾸면 ‘번호 사탕’ 상자가 된다.</p>
+<pre><code>nums = list(range(1, 6))
+print(nums)  # [1, 2, 3, 4, 5]</code></pre>
+<div id='숫자를-생성해주는-range'></div>
+<pre><code>list(range(1,11,2))</code></pre>
+<pre><code>list(range(4,100,4))</code></pre>
+<pre><code>list(range(100,1, -4))</code></pre>
+</div><div class='card'>
+<h2>리스트에 자료 추가하기 .append()</h2>
+<div class="note"><strong>사탕 상자 비유</strong></div>
+<p>append는 <strong>사탕 상자 맨 뒤에</strong> 새 사탕을 하나 더 넣는 동작이다.</p>
+<pre><code>candies = [&quot;딸기&quot;, &quot;포도&quot;]
+candies.append(&quot;레몬&quot;)
+print(candies)</code></pre>
+<div id='리스트에-자료-추가하기-append'></div>
+<pre><code>l.append(3)
+l</code></pre>
+<pre><code>l.append(3.0)
+l</code></pre>
+<pre><code>l.append(&quot;append&quot;)
+l</code></pre>
+<pre><code>l.append([1,2,3])
+l</code></pre>
+<pre><code>l.append((4,5,6))
+l</code></pre>
+<pre><code>l.append({&quot;key&quot;:&quot;value&quot;})
+l</code></pre>
+</div><div class='card'>
+<h2>특정 위치에 자료 추가 .insert</h2>
+<ul class='list'>
+<li>insert(추가할 위치의 인덱스, 추가할 값)</li>
+</ul>
+<div class="note"><strong>사탕 상자 비유</strong></div>
+<p>insert는 <strong>원하는 번호 칸</strong>에 사탕을 끼워 넣는 것이다. (뒤에 있던 사탕들은 한 칸씩 밀린다.)</p>
+<pre><code>candies = [&quot;딸기&quot;, &quot;포도&quot;, &quot;레몬&quot;]
+candies.insert(1, &quot;사탕&quot;)
+print(candies)</code></pre>
+<div id='특정-위치에-자료-추가-insert'></div>
+<pre><code>l</code></pre>
+<pre><code># 인덱스 2번에 정수 3 넣기
+l.insert(2, 3)
+l</code></pre>
+<pre><code># 인덱스 2번에 정수 &#x27;삼번&#x27; 넣기
+l.insert(2, &quot;삼번&quot;)
+l</code></pre>
+</div><div class='card'>
+<h2>리스트의 자료 삭제하기</h2>
+<ul class='list'>
+<li>del 변수명[인덱스 번호] : 해당 인덱스 번호의 자료 삭제</li>
+<li>pop(): 리스트의 가장 끝 자료가 출력되면서 삭제됨.</li>
+<li>remove(값): 리스트의 앞부터 일치하는 값 1개를 찾아서 삭제 (정수, 실수 구분 X)</li>
+</ul>
+<div class="note"><strong>사탕 상자 비유</strong></div>
+<p>사탕을 빼는 방법도 여러 가지가 있다. (번호로 빼기 / 값으로 빼기 등)</p>
+<pre><code>candies = [&quot;딸기&quot;, &quot;포도&quot;, &quot;레몬&quot;]
+# 값으로 제거
+candies.remove(&quot;포도&quot;)
+print(candies)
+# 맨 뒤 사탕 꺼내기
+last = candies.pop()
+print(last, candies)</code></pre>
+<div id='리스트의-자료-삭제하기'></div>
+<pre><code>del l[7]
+l</code></pre>
+<pre><code>del l[2]</code></pre>
+<pre><code>l</code></pre>
+<pre><code>l.pop()</code></pre>
+<pre><code>l</code></pre>
+<pre><code>l.remove(3)</code></pre>
+<pre><code>l</code></pre>
+<pre><code>l.remove(3)</code></pre>
+<pre><code>l</code></pre>
+</div><div class='card'>
+<h2>리스트를 확장하기 .extend()</h2>
+<ul class='list'>
+<li>리스트에 자료를 추가하되, 요소만 추가</li>
+</ul>
+<div class="note"><strong>사탕 상자 비유</strong></div>
+<p>extend는 <strong>다른 사탕 상자를 통째로 이어붙여</strong> 내 상자를 길게 만드는 느낌이다.</p>
+<pre><code>a = [&quot;딸기&quot;, &quot;포도&quot;]
+b = [&quot;초코&quot;, &quot;카라멜&quot;]
+a.extend(b)
+print(a)</code></pre>
+<div id='리스트를-확장하기-extend'></div>
+<pre><code>a = [1,2,3]
+b = [4,5,6]</code></pre>
+<pre><code>a.append(b)</code></pre>
+<pre><code>a</code></pre>
+<pre><code>len(a)</code></pre>
+<pre><code>a[3][0]</code></pre>
+<pre><code>a.insert(4,b)
+a</code></pre>
+<pre><code>a.extend([7,8,9])
+a</code></pre>
+<pre><code>c = [7,8,9]</code></pre>
+<pre><code>b</code></pre>
+<pre><code>c</code></pre>
+<pre><code>b.extend(c)
+b</code></pre>
+</div><div class='card'>
+<h2>list + list = .extend()를 한 것과 동일</h2>
+<div id='list-list-extend-를-한-것과-동일'></div>
+<pre><code>b + c</code></pre>
+</div><div class='card'>
+<h2>리스트 안에서 원하는 값의 인덱스 찾기</h2>
+<ul class='list'>
+<li>in , not in: 리스트 안에 원하는 값이 있는지 확인</li>
+<li>원하는 값이 있는 위치를 찾을 때 .index(찾을 값)</li>
+<li>동일한 값이 여러개 있는 경우 가장 앞의 인덱스를 반환</li>
+<li>2번째 이상의 자료를 찾으려면 옵션에 시작 인덱스를 지정하면 된다.</li>
+<li>.index(찾는 값, 시작 인덱스 번호)</li>
+</ul>
+<div class="note"><strong>사탕 상자 비유</strong></div>
+<p>index는 “이 사탕이 <strong>몇 번 칸</strong>에 있지?”를 찾는 것이다.</p>
+<pre><code>candies = [&quot;딸기&quot;, &quot;포도&quot;, &quot;레몬&quot;]
+print(candies.index(&quot;레몬&quot;))  # 2</code></pre>
+<div id='리스트-안에서-원하는-값의-인덱스-찾기'></div>
+<pre><code>a</code></pre>
+<pre><code>a.index(4)</code></pre>
+<pre><code>a[3].index(4)</code></pre>
+<pre><code>a.extend([1,2,3])</code></pre>
+<pre><code>a</code></pre>
+<pre><code>a.index(3)</code></pre>
+<p>a에서 2번째 3을 찾으세요</p>
+<pre><code>a.index(3, 3)</code></pre>
+<pre><code>a.append(&quot;파이썬&quot;)</code></pre>
+<pre><code>a</code></pre>
+<pre><code>a.index(&quot;파이썬&quot;)</code></pre>
+</div><div class='card'>
+<h2>리스트 안에서 특정 값의 개수 구하기 .count(값)</h2>
+<div class="note"><strong>사탕 상자 비유</strong></div>
+<p>count는 “이 사탕이 <strong>몇 개 들어있지?</strong>”를 세는 것이다.</p>
+<pre><code>candies = [&quot;딸기&quot;, &quot;포도&quot;, &quot;딸기&quot;, &quot;딸기&quot;]
+print(candies.count(&quot;딸기&quot;))  # 3</code></pre>
+<div id='리스트-안에서-특정-값의-개수-구하기-count-값'></div>
+<pre><code>a</code></pre>
+<pre><code>a.count(4)</code></pre>
+</div><div class='card'>
+<h2>리스트 순서 뒤집기 .reverse()</h2>
+<ul class='list'>
+<li>실행 즉시 원본 데이터가 변경</li>
+</ul>
+<div class="note"><strong>사탕 상자 비유</strong></div>
+<p>reverse는 사탕 상자의 <strong>앞뒤 순서를 통째로 뒤집는</strong> 것이다.</p>
+<pre><code>candies = [&quot;딸기&quot;, &quot;포도&quot;, &quot;레몬&quot;]
+candies.reverse()
+print(candies)</code></pre>
+<div id='리스트-순서-뒤집기-reverse'></div>
+<pre><code>a</code></pre>
+<pre><code>a.reverse()</code></pre>
+<pre><code>a.reverse()</code></pre>
+<pre><code>a</code></pre>
+<ul class='list'>
+<li>인덱싱으로 순서 뒤집기</li>
+</ul>
+<pre><code>a[::-1]</code></pre>
+<pre><code>a</code></pre>
+</div><div class='card'>
+<h2>리스트 정렬 .sort() 오름차순 .sort(reverse=True) 내림차순</h2>
+<ul class='list'>
+<li>실행 즉시 원본 데이터를 바꿈</li>
+</ul>
+<div class="note"><strong>사탕 상자 비유</strong></div>
+<p>sort는 사탕을 <strong>정해진 기준(알파벳/크기 등)</strong>으로 상자 안에서 정렬한다. (원본 상자가 바뀐다)</p>
+<pre><code>candies = [&quot;레몬&quot;, &quot;딸기&quot;, &quot;포도&quot;]
+candies.sort()
+print(candies)
+candies.sort(reverse=True)
+print(candies)</code></pre>
+<div id='리스트-정렬-sort-오름차순-sort-reverse-true-내림차순'></div>
+<pre><code>a = [1,6,7,4,5,7,9,4,5,754,9]</code></pre>
+<pre><code>a.sort()
+a</code></pre>
+<pre><code>a.sort(reverse=True)</code></pre>
+<pre><code>a</code></pre>
+</div><div class='card'>
+<h2>sorted(리스트) 오름차순, sorted(리스트, reverse=True) 내림차순</h2>
+<div class="note"><strong>사탕 상자 비유</strong></div>
+<p>sorted는 “정렬된 <strong>새 상자</strong>를 하나 더 만들어 준다.” (원본 상자는 그대로)</p>
+<pre><code>candies = [&quot;레몬&quot;, &quot;딸기&quot;, &quot;포도&quot;]
+new_box = sorted(candies)
+print(new_box)
+print(candies)</code></pre>
+<div id='sorted-리스트-오름차순-sorted-리스트-reverse-true-내림차순'></div>
+<pre><code>b =[1,6,7,4,5,7,9,4,5,754,9]</code></pre>
+<pre><code>sorted(b)</code></pre>
+<pre><code>b</code></pre>
+<pre><code>sorted(b, reverse=True)</code></pre>
+<pre><code>b</code></pre>
+</div><div class='card'>
+<h1>튜플 tuple</h1>
+<ul class='list'>
+<li>튜플은 리스트처럼 모든 자료형을 넣어 만들 수 있다.</li>
+<li>순서가 있는 자료형, 인덱스가 있다.</li>
+<li>인덱싱, 슬라이싱 가능</li>
+<li>자료의 추가 삭제가 안됨</li>
+<li>()안에 자료를 넣어서 만든다.</li>
+<li>튜플 형변환 함수는 tuple()</li>
+<li>자료 1개만 넣어서 만들 수 있다. (1,) 형식이어야 한다.</li>
+<li>튜플 생성시 자료가 2개 이상인 경우 ()는 생략 가능</li>
+</ul>
+<div class="note"><strong>사탕 상자 비유</strong></div>
+<p>튜플은 <strong>포장 비닐로 밀봉된 사탕 상자</strong>라고 생각하면 된다. 순서는 있지만, 사탕을 <strong>추가/삭제</strong>할 수 없다.</p>
+<pre><code>sealed = (&quot;딸기&quot;, &quot;포도&quot;, &quot;레몬&quot;)
+print(sealed[0])
+# sealed.append(&quot;초코&quot;)  # 불가능</code></pre>
+<div id='튜플-tuple'></div>
+<pre><code>t = (1,2,3)
+t</code></pre>
+<pre><code>t[0]</code></pre>
+<pre><code>t[::-1]</code></pre>
+<pre><code>t.append()</code></pre>
+<pre><code>t2 = (4,5,6)</code></pre>
+</div><div class='card'>
+<h2>튜플 + 튜플 = 두개의 튜플의 요소가 하나로 합쳐짐</h2>
+<div class="note"><strong>사탕 상자 비유</strong></div>
+<p>밀봉 상자끼리는 “새 밀봉 상자”로 합칠 수 있다. (기존 상자는 그대로)</p>
+<pre><code>a = (&quot;딸기&quot;, &quot;포도&quot;)
+b = (&quot;레몬&quot;,)
+print(a + b)</code></pre>
+<div id='튜플-튜플-두개의-튜플의-요소가-하나로-합쳐짐'></div>
+<pre><code>t + t2</code></pre>
+<pre><code>tuple([1,2,3,4,5])</code></pre>
+<pre><code>t</code></pre>
+<pre><code>del t[0]</code></pre>
+<pre><code>t.insert(2, 4)</code></pre>
+<ul class='list'>
+<li>list와 같이 특정 값의 인덱스를 찾는 것은 가능</li>
+</ul>
+<pre><code>t.index(2)</code></pre>
+<ul class='list'>
+<li>list와 같이 특정 값을 개수를 세는 것도 가능</li>
+</ul>
+<pre><code>t.count(1)</code></pre>
+<ul class='list'>
+<li>튜플에 자료를 추가하고 싶을 때</li>
+<li>list로 형변환 후 다시 tuple로 형변환 하면 된다.</li>
+</ul>
+<pre><code>t</code></pre>
+<pre><code>t = list(t)
+t</code></pre>
+<pre><code>t.extend([4,5,6])</code></pre>
+<pre><code>t</code></pre>
+<pre><code>t = tuple(t)
+t</code></pre>
+<ul class='list'>
+<li>튜플에 자료를 1개만 넣고 만들 때</li>
+<li>(자료,)</li>
+</ul>
+<pre><code>t3 = (&quot;튜플&quot;)
+print(t3, type(t3))</code></pre>
+<pre><code>t4 = (&quot;튜플&quot;,)
+print(t4, type(t4))</code></pre>
+<ul class='list'>
+<li>괄호를 생략하고 튜플 만들기</li>
+</ul>
+<pre><code>t5 = &quot;튜플&quot;, &quot;괄호 없이&quot;, &quot;만들기&quot;, 222
+print(t5, type(t5))</code></pre>
+<pre><code>a= 3
+b =&quot;3&quot;
+print(a, b)</code></pre>
+<pre><code>a</code></pre>
+<pre><code>b</code></pre>
+<pre><code>t6 = &quot;튜플&quot;,
+print(t6, type(t6))</code></pre>
+</div><div class='card'>
+<h1>시퀀스 객체(자료형)</h1>
+<ul class='list'>
+<li>문자열, 리스트, 튜플 같은 순서가 있는 자료형 : 시퀀스 자료형</li>
+<li>순서가 있고, 인덱스 번호가 부여되며 인덱싱, 슬라이싱이 가능</li>
+<li>반복문에 시퀀스 자료형을 그대로 넣어서 반복시키는 것이 가능</li>
+</ul>
+<div class="note"><strong>사탕 상자 비유</strong></div>
+<p>문자열/리스트/튜플은 모두 <strong>순서가 있는 ‘사탕 줄(시퀀스)’</strong>이다. 그래서 for문으로 하나씩 꺼내기(순회)가 쉽다.</p>
+<pre><code>seqs = [&quot;CANDY&quot;, [&quot;딸기&quot;,&quot;포도&quot;], (&quot;레몬&quot;,&quot;초코&quot;)]
+for s in seqs:
+  for item in s:
+    print(item)</code></pre>
+<div id='시퀀스-객체-자료형'></div>
+<ul class='list'>
+<li>특정값이 있는지 확인 in, not in</li>
+</ul>
+<pre><code>t2</code></pre>
+<pre><code>4 in t2</code></pre>
+<pre><code>7 in t2</code></pre>
+<pre><code>c = &quot;시퀀스 자료형은 in, not in을 자료가 내부에 있는지 확인 가능하다.&quot;</code></pre>
+<pre><code>&quot;자료&quot; in c</code></pre>
+<pre><code>&quot;확인&quot; in c</code></pre>
+<pre><code>list_01 = [1,2,3,4,5]
+3 in list_01</code></pre>
+<ul class='list'>
+<li>시퀀스 객체는 +  연산자를 이용해서 서로 연결이 가능</li>
+</ul>
+<pre><code>&quot;시퀀스&quot; + &quot;자료형&quot;</code></pre>
+<pre><code>[1,2,3,4] + [5,6,7,8]</code></pre>
+<pre><code>(1,2,3,4) + (5,6,7,8)</code></pre>
+<ul class='list'>
+<li>시퀀스 객체는 * 로 반복 가능</li>
+</ul>
+<pre><code>&quot;=&quot; * 50</code></pre>
+<pre><code>[1,2,3] * 3</code></pre>
+<pre><code>(4,5,6) * 3</code></pre>
+<pre><code>for i in &quot;문자열은 반복문에서 사용가능&quot;:
+    print(i)</code></pre>
+<pre><code>for i in [1,2,3,4]:
+    print(i)</code></pre>
+<pre><code>t1 = (1,2,3,4,5)
+for i in t1:
+    print(i)</code></pre>
+<ul class='list'>
+<li>리스트, 튜플은 sum(), max(), min()과 같은 함수로 연산도 가능</li>
+</ul>
+<pre><code>t1</code></pre>
+<pre><code>sum(t1)</code></pre>
+<pre><code>max(t1)</code></pre>
+<pre><code>min(t1)</code></pre>
+</div>
+  </section>
+</main>
+</body>
+</html>

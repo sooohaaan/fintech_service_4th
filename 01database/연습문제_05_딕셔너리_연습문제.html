@@ -1,0 +1,834 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>딕셔너리 사용 연습문제 30개 (HTML)</title>
+  <style>
+:root{
+  --bg:#f6f7fb;
+  --card:#ffffff;
+  --text:#1f2937;
+  --muted:#6b7280;
+  --border:#e5e7eb;
+  --accent:#2563eb;
+  --accent-soft:#eff6ff;
+  --code-bg:#0b1220;
+  --code-text:#e5e7eb;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:system-ui,-apple-system,Segoe UI,Roboto,"Noto Sans KR",Arial,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  line-height:1.65;
+}
+.container{width:min(1000px,calc(100% - 32px));margin:0 auto;}
+.header{
+  background:linear-gradient(180deg,var(--accent-soft),var(--bg));
+  border-bottom:1px solid var(--border);
+  padding:24px 0;
+}
+.title{margin:0;font-size:28px;letter-spacing:-.2px;}
+.subtitle{margin:8px 0 0;color:var(--muted);font-size:14px;}
+.toc{margin-top:14px;display:flex;flex-wrap:wrap;gap:8px;}
+.toc a{
+  display:inline-block;
+  padding:6px 10px;
+  border:1px solid var(--border);
+  background:#fff;
+  color:var(--text);
+  text-decoration:none;
+  border-radius:10px;
+  font-size:13px;
+}
+main{padding:22px 0 50px;}
+.section{margin:18px 0;}
+.card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:16px;
+  padding:16px 16px 14px;
+  box-shadow:0 8px 18px rgba(15,23,42,.05);
+  margin:12px 0;
+}
+.card h3{margin:0 0 10px;font-size:18px;}
+.badge{
+  display:inline-block;
+  padding:3px 10px;
+  border-radius:999px;
+  background:var(--accent-soft);
+  color:var(--accent);
+  border:1px solid rgba(37,99,235,.18);
+  font-size:12px;
+  vertical-align:middle;
+  margin-right:8px;
+}
+p{margin:8px 0;}
+code{
+  font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,"Liberation Mono",Consolas,monospace;
+  font-size:0.95em;
+  background:rgba(37,99,235,.08);
+  border:1px solid rgba(37,99,235,.12);
+  padding:1px 6px;
+  border-radius:7px;
+}
+pre{
+  margin:10px 0 0;
+  background:var(--code-bg);
+  color:var(--code-text);
+  border-radius:14px;
+  padding:12px 12px;
+  overflow:auto;
+  border:1px solid rgba(229,231,235,.15);
+}
+pre code{background:transparent;border:none;padding:0;color:inherit;}
+details{
+  margin-top:10px;
+  border:1px solid var(--border);
+  border-radius:14px;
+  background:#fff;
+  overflow:hidden;
+}
+details summary{
+  cursor:pointer;
+  padding:10px 12px;
+  list-style:none;
+  font-weight:650;
+}
+details summary::-webkit-details-marker{display:none;}
+.details-body{padding:0 12px 12px;}
+.hr{height:1px;background:var(--border);margin:12px 0;}
+.small{color:var(--muted);font-size:13px;}
+footer{padding:24px 0;border-top:1px solid var(--border);color:var(--muted);font-size:13px;}
+</style>
+</head>
+<body>
+  <header class="header">
+    <div class="container">
+      <h1 class="title">딕셔너리 사용 연습문제 30개</h1>
+      <p class="subtitle">ipynb 내용을 주피터 스타일 없이 순수 HTML/CSS로 재구성한 문서이다. 구성은 <strong>문제 → 힌트 → 정답</strong>이다. (생성일: 2025-12-28)</p>
+      <nav class="toc" aria-label="문항 바로가기">
+        <a href="#q1">1번</a>
+<a href="#q2">2번</a>
+<a href="#q3">3번</a>
+<a href="#q4">4번</a>
+<a href="#q5">5번</a>
+<a href="#q6">6번</a>
+<a href="#q7">7번</a>
+<a href="#q8">8번</a>
+<a href="#q9">9번</a>
+<a href="#q10">10번</a>
+<a href="#q11">11번</a>
+<a href="#q12">12번</a>
+<a href="#q13">13번</a>
+<a href="#q14">14번</a>
+<a href="#q15">15번</a>
+<a href="#q16">16번</a>
+<a href="#q17">17번</a>
+<a href="#q18">18번</a>
+<a href="#q19">19번</a>
+<a href="#q20">20번</a>
+<a href="#q21">21번</a>
+<a href="#q22">22번</a>
+<a href="#q23">23번</a>
+<a href="#q24">24번</a>
+<a href="#q25">25번</a>
+<a href="#q26">26번</a>
+<a href="#q27">27번</a>
+<a href="#q28">28번</a>
+<a href="#q29">29번</a>
+<a href="#q30">30번</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="section" id="problems">
+
+      <article class="card" id="q1">
+        <h3><span class="badge">1번</span> 문제</h3>
+        <p><strong>빈 딕셔너리 <code>empty_dict</code>를 생성하고 출력하세요.</strong></p>
+
+        <details class="hint" open>
+          <summary>힌트 / 출력</summary>
+          <div class="details-body">
+            <div class="small">출력 예시</div><pre><code>{}</code></pre>
+          </div>
+        </details>
+
+        <details class="answer">
+          <summary>정답 코드 보기</summary>
+          <div class="details-body">
+            <div class="small">정답 1</div><pre><code># empty_dict = dict()
+empty_dict = {}</code></pre>
+<div class="small">정답 2</div><pre><code>empty_dict</code></pre>
+          </div>
+        </details>
+      </article>
+
+      <article class="card" id="q2">
+        <h3><span class="badge">2번</span> 문제</h3>
+        <p><strong>다음과 같은 딕셔너리를 생성하고 출력하세요.</strong></p>
+
+        <details class="hint" open>
+          <summary>힌트 / 출력</summary>
+          <div class="details-body">
+            <div class="small">출력/힌트</div><pre><code>person = {"name": "Alice", "age": 25, "city": "Seoul"}
+ 
+   </code></pre>
+          </div>
+        </details>
+
+        <details class="answer">
+          <summary>정답 코드 보기</summary>
+          <div class="details-body">
+            <div class="small">정답 1</div><pre><code>person = dict(name="Alice", age=25, city="Seoul")
+person</code></pre>
+<div class="small">정답 2</div><pre><code>person = dict([("name", "Alice"), ("age", 25), ("city", "Seoul")])
+person</code></pre>
+<div class="small">정답 3</div><pre><code>person = dict(zip(["name", "age", "city"], ["Alice", 25, "Seoul"]))
+person</code></pre>
+          </div>
+        </details>
+      </article>
+
+      <article class="card" id="q3">
+        <h3><span class="badge">3번</span> 문제</h3>
+        <p><strong>딕셔너리 <code>person</code>에서 <code>"name"</code> 키의 값을 출력하세요.</strong></p>
+
+        <details class="hint" open>
+          <summary>힌트 / 출력</summary>
+          <div class="details-body">
+            <div class="small">출력/힌트</div><pre><code>Alice</code></pre>
+          </div>
+        </details>
+
+        <details class="answer">
+          <summary>정답 코드 보기</summary>
+          <div class="details-body">
+            <div class="small">정답 1</div><pre><code>person['name']</code></pre>
+<div class="small">정답 2</div><pre><code>person.get("name", "key 없음")</code></pre>
+          </div>
+        </details>
+      </article>
+
+      <article class="card" id="q4">
+        <h3><span class="badge">4번</span> 문제</h3>
+        <p><strong>딕셔너리 <code>person</code>에서 <code>"age"</code> 키의 값을 출력하세요.</strong></p>
+
+        <details class="hint" open>
+          <summary>힌트 / 출력</summary>
+          <div class="details-body">
+            <div class="small">출력/힌트</div><pre><code>25
+   </code></pre>
+          </div>
+        </details>
+
+        <details class="answer">
+          <summary>정답 코드 보기</summary>
+          <div class="details-body">
+            <div class="small">정답</div><pre><code>person.get("age", "key 없음")</code></pre>
+          </div>
+        </details>
+      </article>
+
+      <article class="card" id="q5">
+        <h3><span class="badge">5번</span> 문제</h3>
+        <p><strong>딕셔너리 <code>person</code>에 <code>"job": "Engineer"</code>를 추가하고 출력하세요.</strong></p>
+
+        <details class="hint" open>
+          <summary>힌트 / 출력</summary>
+          <div class="details-body">
+            <div class="small">출력/힌트</div><pre><code>{"name": "Alice", "age": 25, "city": "Seoul", "job": "Engineer"}
+   </code></pre>
+          </div>
+        </details>
+
+        <details class="answer">
+          <summary>정답 코드 보기</summary>
+          <div class="details-body">
+            <div class="small">정답 1</div><pre><code># person["job"] = "Engineer"
+person.setdefault("job", "Engineer")</code></pre>
+<div class="small">정답 2</div><pre><code>person</code></pre>
+          </div>
+        </details>
+      </article>
+
+      <article class="card" id="q6">
+        <h3><span class="badge">6번</span> 문제</h3>
+        <p><strong>딕셔너리 <code>person</code>에서 <code>"city"</code>의 값을 <code>"Busan"</code>으로 변경하고 출력하세요.</strong></p>
+
+        <details class="hint" open>
+          <summary>힌트 / 출력</summary>
+          <div class="details-body">
+            <div class="small">출력/힌트</div><pre><code>{"name": "Alice", "age": 25, "city": "Busan", "job": "Engineer"}
+   
+   </code></pre>
+          </div>
+        </details>
+
+        <details class="answer">
+          <summary>정답 코드 보기</summary>
+          <div class="details-body">
+            <div class="small">정답 1</div><pre><code>person['city'] = "Busan"
+person</code></pre>
+<div class="small">정답 2</div><pre><code>person['city'] = "Seoul"
+person</code></pre>
+<div class="small">정답 3</div><pre><code>person.update(city="Busan")
+person</code></pre>
+          </div>
+        </details>
+      </article>
+
+      <article class="card" id="q7">
+        <h3><span class="badge">7번</span> 문제</h3>
+        <p><strong>딕셔너리 <code>person</code>에서 <code>"age"</code> 키를 삭제하고 출력하세요.</strong></p>
+
+        <details class="hint" open>
+          <summary>힌트 / 출력</summary>
+          <div class="details-body">
+            <div class="small">출력/힌트</div><pre><code>{"name": "Alice", "city": "Busan", "job": "Engineer"}
+   </code></pre>
+          </div>
+        </details>
+
+        <details class="answer">
+          <summary>정답 코드 보기</summary>
+          <div class="details-body">
+            <div class="small">정답 1</div><pre><code># del person['age']
+person.pop('age')</code></pre>
+<div class="small">정답 2</div><pre><code>person</code></pre>
+          </div>
+        </details>
+      </article>
+
+      <article class="card" id="q8">
+        <h3><span class="badge">8번</span> 문제</h3>
+        <p><strong>딕셔너리 <code>person</code>의 모든 키를 출력하세요.</strong></p>
+
+        <details class="hint" open>
+          <summary>힌트 / 출력</summary>
+          <div class="details-body">
+            <div class="small">출력/힌트</div><pre><code>dict_keys(['name', 'city', 'job'])
+   </code></pre>
+          </div>
+        </details>
+
+        <details class="answer">
+          <summary>정답 코드 보기</summary>
+          <div class="details-body">
+            <div class="small">정답 1</div><pre><code>person.keys()</code></pre>
+<div class="small">정답 2</div><pre><code>for key in person:
+    print(key)</code></pre>
+          </div>
+        </details>
+      </article>
+
+      <article class="card" id="q9">
+        <h3><span class="badge">9번</span> 문제</h3>
+        <p><strong>딕셔너리 <code>person</code>의 모든 값(value)을 출력하세요.</strong></p>
+
+        <details class="hint" open>
+          <summary>힌트 / 출력</summary>
+          <div class="details-body">
+            <div class="small">출력/힌트</div><pre><code>dict_values(['Alice', 'Busan', 'Engineer'])
+   </code></pre>
+          </div>
+        </details>
+
+        <details class="answer">
+          <summary>정답 코드 보기</summary>
+          <div class="details-body">
+            <div class="small">정답 1</div><pre><code>person.values()</code></pre>
+<div class="small">정답 2</div><pre><code>for i in person:
+    print(person.get(i, "key 없음"))</code></pre>
+          </div>
+        </details>
+      </article>
+
+      <article class="card" id="q10">
+        <h3><span class="badge">10번</span> 문제</h3>
+        <p><strong>딕셔너리 <code>person</code>의 모든 키-값 쌍을 출력하세요.</strong></p>
+
+        <details class="hint" open>
+          <summary>힌트 / 출력</summary>
+          <div class="details-body">
+            <div class="small">출력/힌트</div><pre><code>dict_items([('name', 'Alice'), ('city', 'Busan'), ('job', 'Engineer')])
+    </code></pre>
+          </div>
+        </details>
+
+        <details class="answer">
+          <summary>정답 코드 보기</summary>
+          <div class="details-body">
+            <div class="small">정답 1</div><pre><code>person.items()</code></pre>
+<div class="small">정답 2</div><pre><code>dict_items =[]
+for i in person:
+    dict_items.append((i, person[i]))
+dict_items</code></pre>
+          </div>
+        </details>
+      </article>
+
+      <article class="card" id="q11">
+        <h3><span class="badge">11번</span> 문제</h3>
+        <p><strong><code>"email"</code> 키가 딕셔너리 <code>person</code>에 존재하는지 확인하세요.</strong></p>
+
+        <details class="hint" open>
+          <summary>힌트 / 출력</summary>
+          <div class="details-body">
+            <div class="small">출력/힌트</div><pre><code>False
+    </code></pre>
+          </div>
+        </details>
+
+        <details class="answer">
+          <summary>정답 코드 보기</summary>
+          <div class="details-body">
+            <div class="small">정답</div><pre><code>"email" in person</code></pre>
+          </div>
+        </details>
+      </article>
+
+      <article class="card" id="q12">
+        <h3><span class="badge">12번</span> 문제</h3>
+        <p><strong><code>person</code>에서 <code>"job"</code>을 제거하고 출력하세요.</strong></p>
+
+        <details class="hint" open>
+          <summary>힌트 / 출력</summary>
+          <div class="details-body">
+            <div class="small">출력/힌트</div><pre><code>"Engineer",
+{'name': 'Alice', 'city': 'Busan'}</code></pre>
+          </div>
+        </details>
+
+        <details class="answer">
+          <summary>정답 코드 보기</summary>
+          <div class="details-body">
+            <div class="small">정답</div><pre><code>del person['job']
+person</code></pre>
+          </div>
+        </details>
+      </article>
+
+      <article class="card" id="q13">
+        <h3><span class="badge">13번</span> 문제</h3>
+        <p><strong><code>person</code> 딕셔너리의 모든 키-값 쌍을 초기화하고 출력하세요.</strong></p>
+
+        <details class="hint" open>
+          <summary>힌트 / 출력</summary>
+          <div class="details-body">
+            <div class="small">출력/힌트</div><pre><code>{}
+    </code></pre>
+          </div>
+        </details>
+
+        <details class="answer">
+          <summary>정답 코드 보기</summary>
+          <div class="details-body">
+            <div class="small">정답 1</div><pre><code>person.clear()</code></pre>
+<div class="small">정답 2</div><pre><code>person</code></pre>
+          </div>
+        </details>
+      </article>
+
+      <article class="card" id="q14">
+        <h3><span class="badge">14번</span> 문제</h3>
+        <p><strong>중첩 딕셔너리를 student 변수에 생성하고 출력하세요.</strong></p>
+
+        <details class="hint" open>
+          <summary>힌트 / 출력</summary>
+          <div class="details-body">
+            <div class="small">출력/힌트</div><pre><code>{"name": "Bob",
+ "grades": {"math": 85, "science": 90, "history": 80}
+}</code></pre>
+          </div>
+        </details>
+
+        <details class="answer">
+          <summary>정답 코드 보기</summary>
+          <div class="details-body">
+            <p class="small">정답 코드가 없다.</p>
+          </div>
+        </details>
+      </article>
+
+      <article class="card" id="q15">
+        <h3><span class="badge">15번</span> 문제</h3>
+        <p><strong>student에서 "science" 점수를 출력하세요.</strong></p>
+
+        <details class="hint" open>
+          <summary>힌트 / 출력</summary>
+          <div class="details-body">
+            <div class="small">출력/힌트</div><pre><code>90</code></pre>
+          </div>
+        </details>
+
+        <details class="answer">
+          <summary>정답 코드 보기</summary>
+          <div class="details-body">
+            <div class="small">정답 1</div><pre><code>l1 = list(range(1,11))
+l1</code></pre>
+<div class="small">정답 2</div><pre><code>l1.clear()
+l1</code></pre>
+          </div>
+        </details>
+      </article>
+
+      <article class="card" id="q16">
+        <h3><span class="badge">16번</span> 문제</h3>
+        <p><strong><code>student</code>의 <code>"grades"</code>에 <code>"english": 95</code>를 추가하고 출력하세요.</strong></p>
+
+        <details class="hint" open>
+          <summary>힌트 / 출력</summary>
+          <div class="details-body">
+            <div class="small">출력/힌트</div><pre><code>{'math': 85, 'science': 90, 'history': 80, 'english': 95}
+    </code></pre>
+          </div>
+        </details>
+
+        <details class="answer">
+          <summary>정답 코드 보기</summary>
+          <div class="details-body">
+            <div class="small">정답</div><pre><code>student = dict(math=85, science=90, history=80, english=95)
+student</code></pre>
+          </div>
+        </details>
+      </article>
+
+      <article class="card" id="q17">
+        <h3><span class="badge">17번</span> 문제</h3>
+        <p><strong><code>student</code>의 <code>"math"</code> 점수를 88로 변경하고 출력하세요.</strong></p>
+
+        <details class="hint" open>
+          <summary>힌트 / 출력</summary>
+          <div class="details-body">
+            <div class="small">출력/힌트</div><pre><code>{'math': 88, 'science': 90, 'history': 80, 'english': 95}
+    </code></pre>
+          </div>
+        </details>
+
+        <details class="answer">
+          <summary>정답 코드 보기</summary>
+          <div class="details-body">
+            <div class="small">정답</div><pre><code>student['math'] = 88
+student</code></pre>
+          </div>
+        </details>
+      </article>
+
+      <article class="card" id="q18">
+        <h3><span class="badge">18번</span> 문제</h3>
+        <p><strong><code>student</code>에서 <code>"history"</code> 점수를 삭제하고 출력하세요.</strong></p>
+
+        <details class="hint" open>
+          <summary>힌트 / 출력</summary>
+          <div class="details-body">
+            <div class="small">출력/힌트</div><pre><code>{'math': 88, 'science': 90, 'english': 95}
+    </code></pre>
+          </div>
+        </details>
+
+        <details class="answer">
+          <summary>정답 코드 보기</summary>
+          <div class="details-body">
+            <div class="small">정답</div><pre><code>student.pop('history')
+student</code></pre>
+          </div>
+        </details>
+      </article>
+
+      <article class="card" id="q19">
+        <h3><span class="badge">19번</span> 문제</h3>
+        <p><strong>딕셔너리 <code>student</code>에서 setdefault를 이용하여 <code>"total"</code>이란 키를 만들고 math, science, english의 합계를 입력하세요. 단, 합계를 구할 때 값을 수동입력 하지 말고 딕셔너리에서 추출해서 더하도록 하세요.</strong></p>
+
+        <details class="hint" open>
+          <summary>힌트 / 출력</summary>
+          <div class="details-body">
+            <div class="small">출력/힌트</div><pre><code>{'name': 'Bob',
+    'grades': {'math': 88, 'science': 90, 'english': 95},
+    'total': 270}
+    </code></pre>
+          </div>
+        </details>
+
+        <details class="answer">
+          <summary>정답 코드 보기</summary>
+          <div class="details-body">
+            <div class="small">정답 1</div><pre><code>student2 = dict(name='bob', grades=student)
+student2</code></pre>
+<div class="small">정답 2</div><pre><code>student.setdefault('total', student['grades']['mat'] 
+                   + student['grades']['sceince']
+                   + student['grades']['english'])</code></pre>
+<div class="small">정답 3</div><pre><code>student2.setdefault('total', sum(student2['grades'].values()))</code></pre>
+<div class="small">정답 4</div><pre><code>student2</code></pre>
+          </div>
+        </details>
+      </article>
+
+      <article class="card" id="q20">
+        <h3><span class="badge">20번</span> 문제</h3>
+        <p><strong>딕셔너리 <code>student2</code>에서 update를 이용하여 'english' 는 100, 'history'는 80를 입력하세요.</strong></p>
+
+        <details class="hint" open>
+          <summary>힌트 / 출력</summary>
+          <div class="details-body">
+            <div class="small">출력/힌트</div><pre><code>{'name': 'Bob',
+ 'grades': {'math': 88, 'science': 90, 'english': 100, 'history': 80},
+ 'total': 270}</code></pre>
+          </div>
+        </details>
+
+        <details class="answer">
+          <summary>정답 코드 보기</summary>
+          <div class="details-body">
+            <div class="small">정답 1</div><pre><code>student2</code></pre>
+<div class="small">정답 2</div><pre><code>student2['grades'].update(english=100, history=80)</code></pre>
+<div class="small">정답 3</div><pre><code>student2.update(english=100)</code></pre>
+<div class="small">정답 4</div><pre><code>student3 = {'name': 'bob',
+ 'grades': {'math': 88, 'science': 90, 'english': 100, 'history': 80},
+            'name2': 'alice',
+ 'grades2': {'math': 80, 'science': 100, 'english': 75, 'history': 100},
+ 'total': 273}</code></pre>
+<div class="small">정답 5</div><pre><code>student3</code></pre>
+<div class="small">정답 6</div><pre><code>student3['grades'].update(english=70)
+student3</code></pre>
+          </div>
+        </details>
+      </article>
+
+      <article class="card" id="q21">
+        <h3><span class="badge">21번</span> 문제</h3>
+        <p><strong>courses라는 변수에 dict() 함수를 사용하여 다음과 같은 딕셔너리를 생성하세요.</strong></p>
+
+        <details class="hint" open>
+          <summary>힌트 / 출력</summary>
+          <div class="details-body">
+            <div class="small">출력/힌트</div><pre><code>{'programming': {'python': 50, 'java': 30, 'Cpp': 20},
+ 'design': {'Photoshop': 25, 'Illustrator': 15}}</code></pre>
+          </div>
+        </details>
+
+        <details class="answer">
+          <summary>정답 코드 보기</summary>
+          <div class="details-body">
+            <div class="small">정답</div><pre><code>courses = dict(programming= dict(python=50, java=30, Cpp=20),
+              design=dict(Photoshop=25, Illustrator=15))
+courses</code></pre>
+          </div>
+        </details>
+      </article>
+
+      <article class="card" id="q22">
+        <h3><span class="badge">22번</span> 문제</h3>
+        <p><strong>"python"의 수강생 수를 출력하세요.</strong></p>
+
+        <details class="hint" open>
+          <summary>힌트 / 출력</summary>
+          <div class="details-body">
+            <div class="small">출력/힌트</div><pre><code>50</code></pre>
+          </div>
+        </details>
+
+        <details class="answer">
+          <summary>정답 코드 보기</summary>
+          <div class="details-body">
+            <div class="small">정답</div><pre><code>courses['programming']['python']</code></pre>
+          </div>
+        </details>
+      </article>
+
+      <article class="card" id="q23">
+        <h3><span class="badge">23번</span> 문제</h3>
+        <p><strong>딕셔너리 <code>courses</code>에서 <code>"Cpp"</code> 수강생 수를 25로 변경하고 출력하세요.</strong></p>
+
+        <details class="hint" open>
+          <summary>힌트 / 출력</summary>
+          <div class="details-body">
+            <div class="small">출력/힌트</div><pre><code>{'python': 50, 'java': 30, 'Cpp': 25}
+    </code></pre>
+          </div>
+        </details>
+
+        <details class="answer">
+          <summary>정답 코드 보기</summary>
+          <div class="details-body">
+            <div class="small">정답</div><pre><code>courses['programming']['Cpp'] = 25
+courses</code></pre>
+          </div>
+        </details>
+      </article>
+
+      <article class="card" id="q24">
+        <h3><span class="badge">24번</span> 문제</h3>
+        <p><strong>딕셔너리 <code>courses</code>에서 <code>"Photoshop"</code> 수강생 수를 삭제하고 출력하세요.</strong></p>
+
+        <details class="hint" open>
+          <summary>힌트 / 출력</summary>
+          <div class="details-body">
+            <div class="small">출력/힌트</div><pre><code>{'programming': {'python': 50, 'java': 30, 'Cpp': 25},
+ 'design': {'Illustrator': 15}}
+    </code></pre>
+          </div>
+        </details>
+
+        <details class="answer">
+          <summary>정답 코드 보기</summary>
+          <div class="details-body">
+            <div class="small">정답</div><pre><code>courses['design'].pop('Photoshop')
+courses</code></pre>
+          </div>
+        </details>
+      </article>
+
+      <article class="card" id="q25">
+        <h3><span class="badge">25번</span> 문제</h3>
+        <p><strong>딕셔너리 <code>courses</code>에서 <code>"JavaScript": 40</code>을 <code>"programming"</code> 항목에 추가하고 출력하세요.</strong></p>
+
+        <details class="hint" open>
+          <summary>힌트 / 출력</summary>
+          <div class="details-body">
+            <div class="small">출력/힌트</div><pre><code>{'python': 50, 'java': 30, 'Cpp': 25, 'JavaScript': 40}
+    </code></pre>
+          </div>
+        </details>
+
+        <details class="answer">
+          <summary>정답 코드 보기</summary>
+          <div class="details-body">
+            <div class="small">정답</div><pre><code>courses['programming'].setdefault("Javascript", 40)
+courses</code></pre>
+          </div>
+        </details>
+      </article>
+
+      <article class="card" id="q26">
+        <h3><span class="badge">26번</span> 문제</h3>
+        <p><strong>딕셔너리 <code>courses</code>의 모든 과목명을 출력하세요.</strong></p>
+
+        <details class="hint" open>
+          <summary>힌트 / 출력</summary>
+          <div class="details-body">
+            <div class="small">출력/힌트</div><pre><code>['python', 'java', 'Cpp', 'Javascript', 'Illustrator']
+    </code></pre>
+          </div>
+        </details>
+
+        <details class="answer">
+          <summary>정답 코드 보기</summary>
+          <div class="details-body">
+            <div class="small">정답 1</div><pre><code>list(courses['programming'].keys()) + list(courses['design'].keys())</code></pre>
+<div class="small">정답 2</div><pre><code>subject_name = []
+for key in courses:
+#     print(courses[key].keys())
+    for subject in courses[key].keys():
+        subject_name.append(subject)
+subject_name</code></pre>
+          </div>
+        </details>
+      </article>
+
+      <article class="card" id="q27">
+        <h3><span class="badge">27번</span> 문제</h3>
+        <p><strong>딕셔너리 <code>courses</code>에서 <code>"design"</code> 과목의 모든 정보를 출력하세요.</strong></p>
+
+        <details class="hint" open>
+          <summary>힌트 / 출력</summary>
+          <div class="details-body">
+            <div class="small">출력/힌트</div><pre><code>{'Illustrator': 15}
+    </code></pre>
+          </div>
+        </details>
+
+        <details class="answer">
+          <summary>정답 코드 보기</summary>
+          <div class="details-body">
+            <div class="small">정답</div><pre><code>courses['design']</code></pre>
+          </div>
+        </details>
+      </article>
+
+      <article class="card" id="q28">
+        <h3><span class="badge">28번</span> 문제</h3>
+        <p><strong>딕셔너리 <code>courses</code>에서 <code>"design"</code> 항목을 삭제하고 전체 딕셔너리를 출력하세요.</strong></p>
+
+        <details class="hint" open>
+          <summary>힌트 / 출력</summary>
+          <div class="details-body">
+            <div class="small">출력/힌트</div><pre><code>{'programming': {'python': 50, 'java': 30, 'Cpp': 25, 'JavaScript': 40}}
+    </code></pre>
+          </div>
+        </details>
+
+        <details class="answer">
+          <summary>정답 코드 보기</summary>
+          <div class="details-body">
+            <div class="small">정답</div><pre><code>del courses["design"]
+courses</code></pre>
+          </div>
+        </details>
+      </article>
+
+      <article class="card" id="q29">
+        <h3><span class="badge">29번</span> 문제</h3>
+        <p><strong>딕셔너리 <code>courses</code>에서 <code>"programming"</code> 항목이 존재하는지 확인하세요.</strong></p>
+
+        <details class="hint" open>
+          <summary>힌트 / 출력</summary>
+          <div class="details-body">
+            <div class="small">출력/힌트</div><pre><code>True
+    </code></pre>
+          </div>
+        </details>
+
+        <details class="answer">
+          <summary>정답 코드 보기</summary>
+          <div class="details-body">
+            <div class="small">정답 1</div><pre><code>"programming" in courses</code></pre>
+<div class="small">정답 2</div><pre><code>courses</code></pre>
+<div class="small">정답 3</div><pre><code>"Cpp" in courses</code></pre>
+<div class="small">정답 4</div><pre><code>"Cpp" in courses['programming']</code></pre>
+<div class="small">정답 5</div><pre><code>courses['programming']['Cpp']</code></pre>
+<div class="small">정답 6</div><pre><code>for name in courses['programming']:
+    print(courses['programming'][name])</code></pre>
+<div class="small">정답 7</div><pre><code>for key in courses:
+#     print(key)
+    if "Cpp" in key:
+        print("Cpp in courses")
+    elif "Cpp" in courses[key]:
+        print("Cpp in courses['programming']")</code></pre>
+          </div>
+        </details>
+      </article>
+
+      <article class="card" id="q30">
+        <h3><span class="badge">30번</span> 문제</h3>
+        <p><strong>딕셔너리 <code>courses</code>에서 <code>"design"</code> 항목을 출력하고 <code>"design"</code> 이 없다면 design key 없음 이라고 출력하도록 하세요.</strong></p>
+
+        <details class="hint" open>
+          <summary>힌트 / 출력</summary>
+          <div class="details-body">
+            <div class="small">출력/힌트</div><pre><code>design key 없음</code></pre>
+          </div>
+        </details>
+
+        <details class="answer">
+          <summary>정답 코드 보기</summary>
+          <div class="details-body">
+            <div class="small">정답</div><pre><code>courses.get('design', "design key 없음")</code></pre>
+          </div>
+        </details>
+      </article>
+
+    </section>
+
+    <footer>
+      <div class="container">
+        <div>끝.</div>
+      </div>
+    </footer>
+  </main>
+</body>
+</html>
