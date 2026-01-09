@@ -1,0 +1,1649 @@
+<!DOCTYPE html>
+
+<html lang="ko">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>가제트 만능 팔 - 딕셔너리 / 조건문 / 반복문 연습문제 (HTML)</title>
+<style>
+:root{
+  --bg:#f6f7fb;
+  --card:#ffffff;
+  --text:#1f2937;
+  --muted:#6b7280;
+  --border:#e5e7eb;
+  --accent:#2563eb;
+  --accent-soft:#eff6ff;
+  --code-bg:#0b1220;
+  --code-text:#e5e7eb;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:system-ui,-apple-system,Segoe UI,Roboto,"Noto Sans KR",Arial,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  line-height:1.65;
+}
+.container{width:min(1000px,calc(100% - 32px));margin:0 auto;}
+.header{
+  background:linear-gradient(180deg,var(--accent-soft),var(--bg));
+  border-bottom:1px solid var(--border);
+  padding:24px 0;
+}
+.title{margin:0;font-size:28px;letter-spacing:-.2px;}
+.subtitle{margin:8px 0 0;color:var(--muted);font-size:14px;}
+.toc{margin-top:14px;display:flex;flex-wrap:wrap;gap:8px;}
+.toc a{
+  display:inline-block;
+  padding:6px 10px;
+  border:1px solid var(--border);
+  background:#fff;
+  color:var(--text);
+  text-decoration:none;
+  border-radius:10px;
+  font-size:13px;
+}
+main{padding:22px 0 50px;}
+.section{margin:18px 0;}
+.card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:16px;
+  padding:16px 16px 14px;
+  box-shadow:0 8px 18px rgba(15,23,42,.05);
+  margin:12px 0;
+}
+.card h3{margin:0 0 10px;font-size:18px;}
+.badge{
+  display:inline-block;
+  padding:3px 10px;
+  border-radius:999px;
+  background:var(--accent-soft);
+  color:var(--accent);
+  border:1px solid rgba(37,99,235,.18);
+  font-size:12px;
+  vertical-align:middle;
+  margin-right:8px;
+}
+p{margin:8px 0;}
+code{
+  font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,"Liberation Mono",Consolas,monospace;
+  font-size:0.95em;
+  background:rgba(37,99,235,.08);
+  border:1px solid rgba(37,99,235,.12);
+  padding:1px 6px;
+  border-radius:7px;
+}
+pre{
+  margin:10px 0 0;
+  background:var(--code-bg);
+  color:var(--code-text);
+  border-radius:14px;
+  padding:12px 12px;
+  overflow:auto;
+  border:1px solid rgba(229,231,235,.15);
+}
+pre code{background:transparent;border:none;padding:0;color:inherit;}
+details{
+  margin-top:10px;
+  border:1px solid var(--border);
+  border-radius:14px;
+  background:#fff;
+  overflow:hidden;
+}
+details summary{
+  cursor:pointer;
+  padding:10px 12px;
+  list-style:none;
+  font-weight:650;
+}
+details summary::-webkit-details-marker{display:none;}
+.details-body{padding:0 12px 12px;}
+.small{color:var(--muted);font-size:13px;}
+.table-wrap{margin-top:10px;overflow:auto;}
+.tbl{border-collapse:separate;border-spacing:0;width:max-content;min-width:320px;border:1px solid var(--border);border-radius:12px;overflow:hidden;}
+.tbl th,.tbl td{padding:8px 12px;border-bottom:1px solid var(--border);border-right:1px solid var(--border);font-size:14px;white-space:nowrap;}
+.tbl th{background:var(--accent-soft);text-align:left;font-weight:700;}
+.tbl tr:last-child td{border-bottom:none;}
+.tbl th:last-child,.tbl td:last-child{border-right:none;}
+.tbl .num{text-align:right;}
+.diagram{margin-top:10px;border:1px dashed rgba(37,99,235,.35);background:rgba(37,99,235,.04);border-radius:14px;padding:12px;}
+footer{padding:24px 0;border-top:1px solid var(--border);color:var(--muted);font-size:13px;}
+
+.exec-result{
+  margin-top:10px;
+  padding:12px;
+  border:1px solid var(--border);
+  border-radius:14px;
+  background:#fff;
+}
+</style>
+</head>
+<body>
+<header class="header">
+<div class="container">
+<h1 class="title">가제트 만능 팔 - 딕셔너리 / 조건문 / 반복문 연습문제</h1>
+<p class="subtitle">ipynb 내용을 주피터 스타일 없이 순수 HTML/CSS로 재구성한 문서이다. 이미지로 되어 있던 표/도식은 <strong>HTML 표</strong> 또는 <strong>SVG 도식</strong>으로 변환했다. (생성일: 2025-12-28)</p>
+<nav aria-label="문항 바로가기" class="toc">
+<a href="#q1">1번</a>
+<a href="#q2">2번</a>
+<a href="#q3">3번</a>
+<a href="#q4">4번</a>
+<a href="#q5">5번</a>
+<a href="#q6">6번</a>
+<a href="#q7">7번</a>
+<a href="#q8">8번</a>
+<a href="#q9">9번</a>
+<a href="#q10">10번</a>
+<a href="#q11">11번</a>
+<a href="#q12">12번</a>
+<a href="#q13">13번</a>
+<a href="#q14">14번</a>
+<a href="#q15">15번</a>
+<a href="#q16">16번</a>
+<a href="#q17">17번</a>
+<a href="#q18">18번</a>
+<a href="#q19">19번</a>
+<a href="#q20">20번</a>
+<a href="#q21">21번</a>
+<a href="#q22">22번</a>
+<a href="#q23">23번</a>
+<a href="#q24">24번</a>
+<a href="#q25">25번</a>
+<a href="#q26">26번</a>
+<a href="#q27">27번</a>
+<a href="#q28">28번</a>
+<a href="#q29">29번</a>
+<a href="#q30">30번</a>
+<a href="#q31">31번</a>
+<a href="#q32">32번</a>
+<a href="#q33">33번</a>
+<a href="#q34">34번</a>
+<a href="#q35">35번</a>
+<a href="#q36">36번</a>
+<a href="#q37">37번</a>
+<a href="#q38">38번</a>
+<a href="#q39">39번</a>
+<a href="#q40">40번</a>
+<a href="#q41">41번</a>
+<a href="#q42">42번</a>
+<a href="#q43">43번</a>
+<a href="#q44">44번</a>
+<a href="#q45">45번</a>
+<a href="#q46">46번</a>
+<a href="#q47">47번</a>
+<a href="#q48">48번</a>
+</nav>
+</div>
+</header>
+<main class="container">
+<section class="section" id="problems">
+<article class="card" id="q1">
+<h3><span class="badge">1번</span> 문제</h3>
+<p><strong>우리 반 학생들의 이름과 나이 저장하기</strong><br/>우리 반 학생들의 이름과 나이가 적힌 명단이 있습니다. 이 명단을 파이썬 자료형 딕셔너리(dictionary)를 활용해 저장하려고 합니다. 우리 반 학생들 명단은 아래와 같을 때 저장하는 코드를 작성하고 다음과 같이 출력하세요.<br/></p>
+<div class="exec-result"><div aria-label="이름과 나이 표" class="table-wrap" role="img">
+<table class="tbl"><thead><tr><th>이름</th><th>나이</th></tr></thead><tbody><tr><td>메이킷</td><td class="num">17</td></tr><tr><td>우진</td><td class="num">9</td></tr><tr><td>시은</td><td class="num">11</td></tr><tr><td>제임스</td><td class="num">10</td></tr></tbody></table></div></div>
+<details class="hint" open="">
+<summary>힌트 / 출력</summary>
+<div class="details-body">
+<div class="small">출력/힌트</div><pre><code>{'메이킷': 17, '우진': 9, '시은': 11, '제임스': 10}</code></pre>
+</div>
+</details><details class="answer">
+<summary>정답 코드 보기</summary>
+<div class="details-body">
+<div class="small">정답</div><pre><code>class_mate = dict(메이킷=17, 우진=9, 시은=11, 제임스=10)
+class_mate</code></pre>
+</div>
+</details></article>
+<article class="card" id="q2">
+<h3><span class="badge">2번</span> 문제</h3>
+<p><strong>자기 소개하기</strong><br/>아래와 같은 내용을 저장하는 딕셔너리 자료형을 s로 만들고 s를 활용해 다음과 같이 출력하는 코드를 작성하세요.<br/><br/>---<br/>사는 곳 : 서울<br/>성별 : 여자<br/>이름 : 시은<br/>나이 : 11<br/>혈액형 : b<br/><br/>---<br/><br/>실행결과</p>
+<details class="hint" open="">
+<summary>힌트 / 출력</summary>
+<div class="details-body">
+<div class="small">출력/힌트</div><pre><code>내가 살고 있는 곳은 서울 입니다.
+나의 성별은 여자 이고 이름은 시은 입니다.
+나이는 11 살 이고 혈액형은 b 형입니다.</code></pre>
+</div>
+</details><details class="answer">
+<summary>정답 코드 보기</summary>
+<div class="details-body">
+<div class="small">정답 1</div><pre><code>s = dict([("사는 곳", "서울"),("성별", "여자"), ("이름", "시은"), ("나이", 11),
+         ("혈액형", "b")])
+s</code></pre>
+<div class="small">정답 2</div><pre><code>print(f"내가 살고 있는 곳은 {s['사는 곳']} 입니다.")
+print(f"나의 성별은 {s['성별']} 이고 이름은 {s['이름']} 입니다.")
+print(f"나이는 {s['나이']} 살 이고 혈액형은 {s['혈액형']} 형입니다.")</code></pre>
+</div>
+</details></article>
+<article class="card" id="q3">
+<h3><span class="badge">3번</span> 문제</h3>
+<p><strong>딕셔너리에 추가하기</strong><br/>아래와 같은 내용을 저장하는 딕셔너리 자료형 s를 만들고, 나이와 혈액형을 입력받아 딕셔너리 s에 입력받은 자료를 추가해 다음과 같이 출력하는 코드를 작성하세요.<br/><br/>---<br/>사는 곳: 인천 송도<br/>성별: 남자<br/>이름: 우진<br/><br/>---<br/><br/>실행결과</p>
+<details class="hint" open="">
+<summary>힌트 / 출력</summary>
+<div class="details-body">
+<div class="small">출력/힌트</div><pre><code># 입력
+나이는 몇 살인가요?9
+혈액형은 무엇인가요?b
+
+# 출력
+나의 성별은 남자 이고 이름은 우진 입니다.
+나이는 9 살 이고 혈액형은 b 형입니다.</code></pre>
+</div>
+</details><details class="answer">
+<summary>정답 코드 보기</summary>
+<div class="details-body">
+<div class="small">정답 1</div><pre><code>s = dict(사는곳="인천 송도", 성별="남자", 이름="우진")
+s</code></pre>
+<div class="small">정답 2</div><pre><code>age = int(input("나이는 몇 살인가요?"))
+blood_type = input("혈액형은 무엇인가요?").upper()
+# print(age, blood_type)
+s['나이'] = age
+s.update(혈액형=blood_type)
+print(f"나의 성별은 {s['성별']} 이고 이름은 {s['이름']} 입니다.")
+print(f"나이는 {s['나이']} 살 이고 혈액형은 {s['혈액형']} 형입니다.")</code></pre>
+</div>
+</details></article>
+<article class="card" id="q4">
+<h3><span class="badge">4번</span> 문제</h3>
+<p><strong>딕셔너리에서 삭제하기</strong><br/>다음 코드를 수행했을 때 같은 출력 결과가 나오도록 빈 칸에 들어가야 할 코드를 완성해서 입력하세요.</p>
+<details class="hint" open="">
+<summary>힌트 / 출력</summary>
+<div class="details-body">
+<div class="small">출력/힌트</div><pre><code>{'성별': '남자', '이름': '우진'}</code></pre>
+</div>
+</details><details class="answer">
+<summary>정답 코드 보기</summary>
+<div class="details-body">
+<div class="small">정답</div><pre><code>s = {'사는 곳':'인천 송도', '성별':'남자','이름':'우진'}
+# del s['사는 곳']
+s.pop('사는 곳')
+s</code></pre>
+</div>
+</details></article>
+<article class="card" id="q5">
+<h3><span class="badge">5번</span> 문제</h3>
+<p><strong>딕셔너리에서 뽑아내기 keys(), values(), items()</strong><br/>아래와 같은 코드를 수행했을 때 같은 출력 결과가 나오도록 빈 칸에 들어가야 할 코드를 완성하세요.</p>
+<details class="hint" open="">
+<summary>힌트 / 출력</summary>
+<div class="details-body">
+<div class="small">출력/힌트</div><pre><code>['사는 곳', '성별', '이름']
+['인천 송도', '남자', '우진']
+[('사는 곳', '인천 송도'), ('성별', '남자'), ('이름', '우진')]</code></pre>
+</div>
+</details><details class="answer">
+<summary>정답 코드 보기</summary>
+<div class="details-body">
+<div class="small">정답 1</div><pre><code>s = {'사는 곳':'인천 송도', '성별':'남자','이름':'우진'}</code></pre>
+<div class="small">정답 2</div><pre><code>print(list(s.keys()))
+print(list(s.values()))
+print(list(s.items()))</code></pre>
+</div>
+</details></article>
+<article class="card" id="q6">
+<h3><span class="badge">6번</span> 문제</h3>
+<p><strong>딕셔너리와 if 조건문의 만남</strong><br/>store 딕셔너리에 다음과 같이 물건이름과 가격이 저장되어 있습니다.<br/><br/>아래 실행 결과와 같이 물건의 이름을 입력하면 가격을 알려주는 코드를 작성하세요. 단, 딕셔너리에 없는 물건을 입력하면 실행을 중단합니다.<br/><br/>실행결과</p>
+<details class="hint" open="">
+<summary>힌트 / 출력</summary>
+<div class="details-body">
+<div class="small">출력/힌트 1</div><pre><code>#코드
+store = {'새우칩':1500, '옥수수칩':1800,'콜라':700,'양파칩':1300}</code></pre>
+<div class="small">출력/힌트 2</div><pre><code>물품을 입력하면 가격을 알려드립니다
+물품 이름은?새우칩
+새우칩의 가격은 1500 입니다
+물품 이름은?양파칩
+양파칩의 가격은 1300 입니다
+물품 이름은?콜라
+콜라의 가격은 700 입니다
+물품 이름은?사이다
+사이다는 등록되어 있지 않습니다</code></pre>
+</div>
+</details><details class="answer">
+<summary>정답 코드 보기</summary>
+<div class="details-body">
+<div class="small">정답</div><pre><code>store = {'새우칩':1500, '옥수수칩':1800,'콜라':700,'양파칩':1300}
+print("물품을 입력하면 가격을 알려드립니다.", end="\n\n") 
+prod_name = input("물품 이름은? ")
+print()
+if prod_name in store:
+    print(f"{prod_name}의 가격은 {store[prod_name]}원 입니다.", end="\n\n")
+else:
+    print(f"{prod_name}는 등록되어 있지 않습니다.", end="\n\n")</code></pre>
+</div>
+</details></article>
+<article class="card" id="q7">
+<h3><span class="badge">7번</span> 문제</h3>
+<p><strong>딕셔너리의 값으로 리스트 사용하기</strong><br/>우리 가게 물품 리스트는 아래와 같습니다.<br/>이 자료를 store 딕셔너리에 추가하고 아래와 같은 결과가 나오도록 코드를 작성하세요.</p>
+<table class="tbl"><thead><tr><th>물품 이름</th><th>가격(원)</th><th>개수</th></tr></thead><tbody><tr><td>새우칩</td><td class="num">1500</td><td class="num">3</td></tr><tr><td>옥수수칩</td><td class="num">1800</td><td class="num">2</td></tr><tr><td>콜라</td><td class="num">700</td><td class="num">4</td></tr><tr><td>양파칩</td><td class="num">1300</td><td class="num">1</td></tr></tbody></table>
+<details class="hint" open="">
+<summary>힌트 / 출력</summary>
+<div class="details-body">
+<div class="small">출력/힌트 1</div><pre><code>store = {'새우칩': [1500, 3], '옥수수칩': [1800, 2], '콜라': [700, 4], '양파칩': [1300, 1]}</code></pre>
+<div class="small">출력/힌트 2</div><pre><code>1 번 물품은 새우칩 이고 가격은 1500 이고 수량은 3 개입니다
+2 번 물품은 옥수수칩 이고 가격은 1800 이고 수량은 2 개입니다
+3 번 물품은 콜라 이고 가격은 700 이고 수량은 4 개입니다
+4 번 물품은 양파칩 이고 가격은 1300 이고 수량은 1 개입니다
+우리 가게는 4 개의 물건 종류가 있습니다
+우리 가게 모든 물건 수량은 10 개 있습니다
+우리 가게 모든 물건들의 가격 총합은 12200 입니다
+우리 가게 모든 물건들의 평균 가격은 1220.0 원입니다</code></pre>
+</div>
+</details>
+
+<details class="answer">
+  <summary>정답 코드 보기</summary>
+  <div class="details-body">
+
+    <!-- ===================== 1) store (반복문 미사용 → 반복문 사용) ===================== -->
+    <div class="small">store 버전 1 (반복문 미사용) — 데이터</div>
+    <pre><code>store = {'새우칩': [1500, 3], '옥수수칩': [1800, 2], '콜라': [700, 4], '양파칩': [1300, 1]}</code></pre>
+
+    <div class="small">store 버전 1 (반복문 미사용) — 정답 1</div>
+    <pre><code>names = list(store.keys())
+vals = list(store.values())
+
+print(f"1 번 물품은 {names[0]} 이고 가격은 {vals[0][0]} 이고 수량은 {vals[0][1]} 개입니다")
+print(f"2 번 물품은 {names[1]} 이고 가격은 {vals[1][0]} 이고 수량은 {vals[1][1]} 개입니다")
+print(f"3 번 물품은 {names[2]} 이고 가격은 {vals[2][0]} 이고 수량은 {vals[2][1]} 개입니다")
+print(f"4 번 물품은 {names[3]} 이고 가격은 {vals[3][0]} 이고 수량은 {vals[3][1]} 개입니다")</code></pre>
+
+    <div class="small">store 버전 1 (반복문 미사용) — 정답 2</div>
+    <pre><code>types_count = len(store)
+
+total_qty = store['새우칩'][1] + store['옥수수칩'][1] + store['콜라'][1] + store['양파칩'][1]
+total_amount = (
+    store['새우칩'][0] * store['새우칩'][1] +
+    store['옥수수칩'][0] * store['옥수수칩'][1] +
+    store['콜라'][0] * store['콜라'][1] +
+    store['양파칩'][0] * store['양파칩'][1]
+)
+
+print(f"우리 가게는 {types_count} 개의 물건 종류가 있습니다")
+print(f"우리 가게 모든 물건 수량은 {total_qty} 개 있습니다")
+print(f"우리 가게 모든 물건들의 가격 총합은 {total_amount} 입니다")
+print(f"우리 가게 모든 물건들의 평균 가격은 {total_amount/total_qty} 원입니다")</code></pre>
+
+
+    <div class="small">store 버전 2 (반복문 사용) — 정답 1</div>
+    <pre><code>for idx, (name, (price, qty)) in enumerate(store.items(), start=1):
+    print(f"{idx} 번 물품은 {name} 이고 가격은 {price} 이고 수량은 {qty} 개입니다")</code></pre>
+
+    <div class="small">store 버전 2 (반복문 사용) — 정답 2</div>
+    <pre><code>types_count = len(store)
+total_qty = 0
+total_amount = 0
+
+for name, (price, qty) in store.items():
+    total_qty += qty
+    total_amount += price * qty
+
+print(f"우리 가게는 {types_count} 개의 물건 종류가 있습니다")
+print(f"우리 가게 모든 물건 수량은 {total_qty} 개 있습니다")
+print(f"우리 가게 모든 물건들의 가격 총합은 {total_amount} 입니다")
+print(f"우리 가게 모든 물건들의 평균 가격은 {total_amount/total_qty} 원입니다")</code></pre>
+
+<br><br>
+    <!-- ===================== 2) store2 (반복문 미사용 → 반복문 사용) ===================== -->
+    <div class="small">store2 버전 1 (반복문 미사용) — 데이터</div>
+    <pre><code>store2 = dict(
+    물품이름=['새우칩', '옥수수칩', '콜라', '양파칩'],
+    가격=[1500, 1800, 700, 1300],
+    개수=[3, 2, 4, 1]
+)</code></pre>
+<br>
+    <div class="small">store2 버전 1 (반복문 미사용) — 정답 1</div>
+    <pre><code>print(f"1 번 물품은 {store2['물품이름'][0]} 이고 가격은 {store2['가격'][0]} 이고 수량은 {store2['개수'][0]} 개입니다")
+print(f"2 번 물품은 {store2['물품이름'][1]} 이고 가격은 {store2['가격'][1]} 이고 수량은 {store2['개수'][1]} 개입니다")
+print(f"3 번 물품은 {store2['물품이름'][2]} 이고 가격은 {store2['가격'][2]} 이고 수량은 {store2['개수'][2]} 개입니다")
+print(f"4 번 물품은 {store2['물품이름'][3]} 이고 가격은 {store2['가격'][3]} 이고 수량은 {store2['개수'][3]} 개입니다")</code></pre>
+
+    <div class="small">store2 버전 1 (반복문 미사용) — 정답 2</div>
+    <pre><code>types_count = len(store2['물품이름'])
+total_qty = store2['개수'][0] + store2['개수'][1] + store2['개수'][2] + store2['개수'][3]
+
+total_amount = (
+    store2['가격'][0] * store2['개수'][0] +
+    store2['가격'][1] * store2['개수'][1] +
+    store2['가격'][2] * store2['개수'][2] +
+    store2['가격'][3] * store2['개수'][3]
+)
+
+print(f"우리 가게는 {types_count} 개의 물건 종류가 있습니다")
+print(f"우리 가게 모든 물건 수량은 {total_qty} 개 있습니다")
+print(f"우리 가게 모든 물건들의 가격 총합은 {total_amount} 입니다")
+print(f"우리 가게 모든 물건들의 평균 가격은 {total_amount/total_qty} 원입니다")</code></pre>
+<br><br>
+
+
+    <div class="small">store2 버전 2 (반복문 사용) — 정답 1</div>
+    <pre><code>for idx, (name, price, qty) in enumerate(zip(store2['물품이름'], store2['가격'], store2['개수']), start=1):
+    print(f"{idx} 번 물품은 {name} 이고 가격은 {price} 이고 수량은 {qty} 개입니다")</code></pre>
+
+    <div class="small">store2 버전 2 (반복문 사용) — 정답 2</div>
+    <pre><code>types_count = len(store2['물품이름'])
+total_qty = sum(store2['개수'])
+
+total_amount = 0
+for price, qty in zip(store2['가격'], store2['개수']):
+    total_amount += price * qty
+
+print(f"우리 가게는 {types_count} 개의 물건 종류가 있습니다")
+print(f"우리 가게 모든 물건 수량은 {total_qty} 개 있습니다")
+print(f"우리 가게 모든 물건들의 가격 총합은 {total_amount} 입니다")
+print(f"우리 가게 모든 물건들의 평균 가격은 {total_amount/total_qty} 원입니다")</code></pre>
+
+  </div>
+</details>
+</article>
+<article class="card" id="q8">
+<h3><span class="badge">8번</span> 문제</h3>
+<p><strong>딕셔너리의 값으로 딕셔너리 사용하기</strong><br/>우리 반 학생들의 명단과 학생들이 각각 수업을 듣고 있는 과목과 시험 점수가 다음과 같이 표로 정리되어 있습니다.</p><br/>
+<table class="tbl"><thead><tr><th>학생 이름</th><th>과목</th><th>점수</th></tr></thead><tbody><tr><td>우진</td><td>코딩</td><td class="num">95</td></tr><tr><td>우진</td><td>수학</td><td class="num">99</td></tr><tr><td>시은</td><td>과학</td><td class="num">100</td></tr><tr><td>시은</td><td>코딩</td><td class="num">99</td></tr><tr><td>메이킷</td><td>영어</td><td class="num">85</td></tr><tr><td>메이킷</td><td>코딩</td><td class="num">100</td></tr></tbody></table>    
+<p>딕셔너리를 사용해 위 자료를 저장하고 아래와 같은 결과가 나오도록 코드를 작성하세요.</p>
+<details class="hint" open="">
+<summary>힌트 / 출력</summary>
+<div class="details-body">
+<div class="small">출력/힌트 1</div><pre><code>{'우진': {'코딩': 95, '수학': 99},
+ '시은': {'과학': 100, '코딩': 99},
+ '메이킷': {'영어': 85, '코딩': 100}}</code></pre>
+<div class="small">출력/힌트 2</div><pre><code>우진이의 코딩 점수는? 95
+시은이의 과학 점수는? 100
+메이킷의 영어 점수는? 85</code></pre>
+</div>
+</details><details class="answer">
+<summary>정답 코드 보기</summary>
+<div class="details-body">
+<div class="small">데이터</div><pre><code>test_result = dict(우진=dict(코딩=95, 수학=99), 시은=dict(과학=100, 코딩=99),
+                  메이킷=dict(영어=85, 코딩=100))
+</code></pre>
+
+<div class="small">정답 1</div><pre><code>print(f"{list((test_result.keys()))[0]}이의 {list(test_result['우진'].keys())[0]} 점수는? {test_result['우진']['코딩']}")
+print(f"{list((test_result.keys()))[1]}이의 {list(test_result['시은'].keys())[0]} 점수는? {test_result['시은']['과학']}")
+print(f"{list((test_result.keys()))[2]}의 {list(test_result['메이킷'].keys())[0]} 점수는? {test_result['메이킷']['영어']}")</code></pre>
+<div class="small">정답 2</div><pre><code>for key in test_result:
+    print(f"{key}이의 {list(test_result[key].keys())[0]} 점수는? {test_result[key][list(test_result[key].keys())[0]]}")</code></pre>
+</div>
+</details></article>
+<article class="card" id="q9">
+<h3><span class="badge">9번</span> 문제</h3>
+<p><strong>두 수 비교하기</strong><br/>다음과 같이 정수 두 개를 x, y로 입력받아 x가 y보다 크면 'makit'을, 작거나 같으면 'woojin'을 출력하는 코드를 작성하세요.<br/><br/>실행결과</p>
+<details class="hint" open="">
+<summary>힌트 / 출력</summary>
+<div class="details-body">
+<div class="small">출력/힌트</div><pre><code>첫 번째 정수를 입력하세요:7
+두 번째 정수를 입력하세요:10
+woojin</code></pre>
+</div>
+</details><details class="answer">
+<summary>정답 코드 보기</summary>
+<div class="details-body">
+<div class="small">정답 1</div><pre><code>x = int(input("첫 번째 정수를 입력하세요:"))
+y = int(input("두 번째 정수를 입력하세요:"))
+# print("x: ", x, "x type:", type(x), "y: ", y, "y type:", type(y))
+if x &gt; y :
+    print("makit")
+# elif x &lt;= y:
+else:
+    print("woojin")</code></pre>
+<div class="small">정답 2</div><pre><code>x = int(input("첫 번째 정수를 입력하세요:"))
+y = int(input("두 번째 정수를 입력하세요:"))
+print("makit") if x &gt; y else print("woojin")</code></pre>
+</div>
+</details></article>
+<article class="card" id="q10">
+<h3><span class="badge">10번</span> 문제</h3>
+<p><strong>세 개의 수 비교하기</strong><br/>다음과 같이 정수 세 개를 a, b, c로 입력받아 홀수만 출력하는 코드를 작성하세요.<br/>실행결과</p>
+<details class="hint" open="">
+<summary>힌트 / 출력</summary>
+<div class="details-body">
+<div class="small">출력/힌트</div><pre><code># 입력
+첫 번째 정수를 입력하세요:3
+두 번째 정수를 입력하세요:8
+세 번째 정수를 입력하세요:17
+
+# 홀수인 입력만 출력
+3
+17</code></pre>
+</div>
+</details><details class="answer">
+<summary>정답 코드 보기</summary>
+<div class="details-body">
+<div class="small">정답 1</div><pre><code>a = int(input("첫 번째 정수를 입력하세요:"))
+b = int(input("두 번째 정수를 입력하세요:"))
+c = int(input("세 번째 정수를 입력하세요:"))
+# print(a, b, c, type(a), type(b), type(c))
+if a % 2 == 1:
+    print(a)
+if b % 2 == 1:
+    print(b)
+if c % 2 == 1:
+    print(c)</code></pre>
+<div class="small">정답 2</div><pre><code>a = int(input("첫 번째 정수를 입력하세요:"))
+b = int(input("두 번째 정수를 입력하세요:"))
+c = int(input("세 번째 정수를 입력하세요:"))
+num = [a, b, c]
+# print(num)
+for i in num:
+    if i % 2 == 1:
+        print(i)</code></pre>
+</div>
+</details></article>
+<article class="card" id="q11">
+<h3><span class="badge">11번</span> 문제</h3>
+<p><strong>홀수 찾기</strong><br/>다음과 같이 정수 세 개를 a, b, c로 입력받아 홀수, 짝수를 구분해 출력하는 코드를 작성하세요.<br/>실행결과</p>
+<details class="hint" open="">
+<summary>힌트 / 출력</summary>
+<div class="details-body">
+<div class="small">출력/힌트</div><pre><code># 입력
+첫 번째 정수를 입력하세요:3
+두 번째 정수를 입력하세요:8
+세 번째 정수를 입력하세요:17
+
+# 출력
+3 홀수
+8 짝수
+17 홀수</code></pre>
+</div>
+</details><details class="answer">
+<summary>정답 코드 보기</summary>
+<div class="details-body">
+<div class="small">정답 1</div><pre><code>a = int(input("첫 번째 정수를 입력하세요:"))
+b = int(input("두 번째 정수를 입력하세요:"))
+c = int(input("세 번째 정수를 입력하세요:"))
+# print(a, b, c, type(a), type(b), type(c))
+print(a, "홀수") if a % 2 == 1 else print(a, "짝수")
+print(b, "홀수") if b % 2 == 1 else print(b, "짝수")
+print(c, "홀수") if c % 2 == 1 else print(c, "짝수")</code></pre>
+</div>
+
+<div class="small">정답 2</div><pre><code>nums = list(map(int, input("정수 3개를 입력하세요").split()))
+
+for num in nums:
+    print(num, "짝수") if num % 2 == 0 else print(num, "홀수")</code></pre>
+</details></article>
+<article class="card" id="q12">
+<h3><span class="badge">12번</span> 문제</h3>
+<p><strong>양수, 음수, 홀수, 짝수 구분하기</strong><br/>다음과 같이 0 이외의 정수 한 개를 입력받아, 음수 또는 양수, 짝수 또는 홀수로 구분해 출력하는 코드를 작성하세요. and와 or 연산자를 사용할 수 있으면 사용하세요.<br/>실행결과</p>
+<details class="hint" open="">
+<summary>힌트 / 출력</summary>
+<div class="details-body">
+<div class="small">출력/힌트</div><pre><code>-14
+음수이고 짝수</code></pre>
+</div>
+</details><details class="answer">
+<summary>정답 코드 보기</summary>
+<div class="details-body">
+<div class="small">정답</div><pre><code>a = int(input("0이 아닌 숫자를 입력하세요"))
+
+if a != 0:
+    # 양수이고 홀수인 경우
+    if a &gt; 0 and a % 2 == 1:
+        print(f"{a}는 양수이고 홀수")
+    # 양수이고 짝수인 경우
+    elif a &gt; 0 and a % 2 == 0:
+        print(f"{a}는 양수이고 짝수")
+    # 음수이고 홀수인 경우
+    elif a &lt; 0 and a % 2 == 1:
+        print(f"{a}는 음수이고 홀수")
+    # 음수이고 짝수인 경우
+    elif a &lt; 0 and a % 2 == 0:
+        print(f"{a}는 음수이고 짝수")
+else:
+    print("0이 아닌 숫자를 다시 입력하세요")</code></pre>
+</div>
+</details></article>
+<article class="card" id="q13">
+<h3><span class="badge">13번</span> 문제</h3>
+<p><strong>성적 결과 계산하기</strong><br/>다음 실행 결과와 같이 코딩 과목의 시험 점수를 0점 이상~100점 이하의 값으로 입력받아 학점을 출력하는 코드를 작성하세요. 코딩 점수에 따른 학점은 아래와 같습니다.<br/><br/>---<br/>90점 이상 : A학점<br/>80점 이상 ~ 90점 미만 : B학점<br/>70점 이상 ~ 80점 미만 : C학점<br/>60점 이상 ~ 70점 미만 : D학점<br/>60점 미만 : F학점<br/><br/>---<br/><br/>실행결과</p>
+<details class="hint" open="">
+<summary>힌트 / 출력</summary>
+<div class="details-body">
+<div class="small">출력/힌트</div><pre><code>코딩 점수를 입력하세요:89
+B학점</code></pre>
+</div>
+</details><details class="answer">
+<summary>정답 코드 보기</summary>
+<div class="details-body">
+<div class="small">정답</div><pre><code>score = int(input("점수를 입력하세요"))
+if 0 &lt;= score &lt;= 100:
+    if score &gt;=  90:
+        print("A학점")
+    elif 80 &lt;= score &lt; 90:
+        print("B학점")
+    elif 70 &lt;= score &lt; 80:
+        print("C학점")
+    elif 60 &lt;= score &lt; 70:
+        print("D학점")
+    elif score &lt; 60:
+        print("F학점")       
+else:
+    print("0점 이상~100점 이하의 값으로 입력해 주세요.")</code></pre>
+</div>
+</details></article>
+<article class="card" id="q14">
+<h3><span class="badge">14번</span> 문제</h3>
+<p><strong>입력에 따라 친구 이름 출력하기</strong><br/>m, j, w, s 입력에 따라 각각 makit, james, woojin, sieun을 출력하고 m, j, w, s 이외의 문자가 입력되면 howard를 출력하는 코드를 작성하세요.<br/>실행결과</p>
+<details class="hint" open="">
+<summary>힌트 / 출력</summary>
+<div class="details-body">
+<div class="small">출력/힌트</div><pre><code>s
+sieun</code></pre>
+</div>
+</details><details class="answer">
+<summary>정답 코드 보기</summary>
+<div class="details-body">
+<div class="small">정답</div><pre><code>name = input("이름 m, j, w, s 중 하나를 입력해 주세요: ").lower()
+# print(name)
+if name == "m":
+    print("Makit")
+elif name == "j":
+    print("James")
+elif name == "w":
+    print("Woojin")
+elif name == "s":
+    print("Sieun")
+else:
+    print("Howard")</code></pre>
+</div>
+</details></article>
+<article class="card" id="q15">
+<h3><span class="badge">15번</span> 문제</h3>
+<p><strong>봄, 여름, 가을, 겨울</strong><br/>1~12까지 숫자를 입력하면 해당하는 달의 계절을 다음과 같이 출력하는 코드를 작성하세요. 각 월에 따른 계절은 아래 기준으로 코드를 작성하세요.<br/><br/>---<br/><br/>12월 ~ 2월 : 겨울<br/>3월 ~ 5월 : 봄<br/>6월 ~ 8월 : 여름<br/>9월 ~ 11월 : 가을<br/><br/>---<br/><br/>실행결과</p>
+<details class="hint" open="">
+<summary>힌트 / 출력</summary>
+<div class="details-body">
+<div class="small">출력/힌트</div><pre><code>몇 월 달인가요? 8
+여름</code></pre>
+</div>
+</details><details class="answer">
+<summary>정답 코드 보기</summary>
+<div class="details-body">
+<div class="small">정답</div><pre><code>month = int(input("몇 월 달인가요? "))
+if month in [12, 1, 2]:
+    print("겨울")
+elif month in [3,4,5]:
+    print("봄")
+elif month in [6,7,8]:
+    print("여름")
+elif month in [9,10,11]:
+    print("가을")</code></pre>
+</div>
+</details></article>
+<article class="card" id="q16">
+<h3><span class="badge">16번</span> 문제</h3>
+<p><strong>12월은 31일까지 있어요</strong><br/>다음과 같이 1~12까지 달을 입력받아서, 입력받은 달은 몇 일까지 있는지 출력하는 코드를 작성하세요.  참고로 각 달의 일수는 아래와 같으며, 윤년은 고려하지 않습니다.<br/><br/>---<br/><br/>2월: 28일<br/>4월, 6월, 9월, 11월: 30일<br/>1월, 3월, 5월, 7월, 8월, 10월, 12월: 31일<br/><br/>---<br/><br/>실행결과</p>
+<details class="hint" open="">
+<summary>힌트 / 출력</summary>
+<div class="details-body">
+<div class="small">출력/힌트</div><pre><code>몇 월인가요? 12
+12 월은 31일까지 있습니다
+
+몇 월인가요? 6
+6 월은 30일까지 있습니다</code></pre>
+</div>
+</details><details class="answer">
+<summary>정답 코드 보기</summary>
+<div class="details-body">
+<div class="small">정답</div><pre><code>month = int(input("몇 월 인가요?"))
+# print(month, type(month))
+if month == 2:
+    print(f"{month}월은 28일까지 있습니다.")
+elif month in [4,6,9,11]:
+    print(f"{month}월은 30일까지 있습니다.")
+elif month in [1, 3, 5, 7, 8, 10, 12]:
+    print(f"{month}월은 31일까지 있습니다.")</code></pre>
+</div>
+</details></article>
+<article class="card" id="q17">
+<h3><span class="badge">17번</span> 문제</h3>
+<p><strong>까다로운 놀이기구 I</strong><br/>놀이공원에 있는 어떤 놀이기구를 타려면 특별한 조건이 필요합니다. 이름이 m으로 시작하거나 또는 키가 150cm 이상이고 170cm 미만이면 탈 수 있습니다. 그 외의 경우는 놀이기구를 탈 수 없습니다. 다음 두 가지 실행 결과 예시를 보고 놀이기구를 탈 수 있는 조건을 판별해 알려주는 코드를 작성하세요.<br/><br/>실행결과</p>
+<details class="hint" open="">
+<summary>힌트 / 출력</summary>
+<div class="details-body">
+<div class="small">출력/힌트</div><pre><code>이름을 입력하세요:makit
+키를 입력하세요:145.5
+탈 수 있어요
+
+이름을 입력하세요:sophia
+키를 입력하세요:171.2
+탈 수 없어요</code></pre>
+</div>
+</details><details class="answer">
+<summary>정답 코드 보기</summary>
+<div class="details-body">
+<div class="small">정답</div><pre><code>name = input("이름을 입력하세요: ").lower()
+height = float(input("키를 입력하세요: "))
+if name[0] == "m" or 150 &lt;= height &lt; 170:
+    print("탈 수 있어요.")
+else:
+    print("탈 수 없어요")</code></pre>
+</div>
+</details></article>
+<article class="card" id="q18">
+<h3><span class="badge">18번</span> 문제</h3>
+<p><strong>까다로운 놀이기구 II</strong><br/>놀이공원에 있는 놀이기구를 타려면 특별한 조건이 있습니다 . 키가 150cm 이상이고 170cm 미만이면 이 놀이기구를 탈 수 있습니다. 또는 키가 175cm 이상이고 180cm 이하면 탈 수 있습니다. 놀이기구를 탈 수 있는 조건을 판별하는 코드를 작성하세요.<br/>실행결과</p>
+<details class="hint" open="">
+<summary>힌트 / 출력</summary>
+<div class="details-body">
+<div class="small">출력/힌트 1</div><pre><code>키를 입력하세요:176
+탈 수 있어요</code></pre>
+<div class="small">출력/힌트 2</div><pre><code>키를 입력하세요:180
+탈 수 있어요</code></pre>
+<div class="small">출력/힌트 3</div><pre><code>키를 입력하세요:174
+탈 수 없어요</code></pre>
+</div>
+</details><details class="answer">
+<summary>정답 코드 보기</summary>
+<div class="details-body">
+<div class="small">정답</div><pre><code>height = int(input("키를 입력하세요: "))
+if 150 &lt;= height &lt; 170 or 175 &lt;= height &lt;=180:
+    print("탈 수 있어요.")
+else:
+    print("탈 수 없어요.")</code></pre>
+</div>
+</details></article>
+<article class="card" id="q19">
+<h3><span class="badge">19번</span> 문제</h3>
+<p><strong>까다로운 놀이기구 III</strong><br/>놀이공원 놀이기구를 타기 위해서는 특별한 조건이 있습니다. 성별이 여자이고 키가 150cm 이상, 170cm 미만이면 탈 수 있습니다. 또는 키가 5의 배수이면 탈 수 있습니다. 다음 실행 결과 예시를 보고 놀이기구를 탈수 있는 판별 기준을 알려주는 코드를 작성하세요.<br/>실행결과</p>
+<details class="hint" open="">
+<summary>힌트 / 출력</summary>
+<div class="details-body">
+<div class="small">출력/힌트</div><pre><code>키를 입력하세요:174
+성별을 입력하세요:여자
+탈 수 없어요
+
+키를 입력하세요:170
+성별을 입력하세요:여자
+탈 수 있어요
+
+키를 입력하세요:145
+성별을 입력하세요:여자
+탈 수 있어요
+
+키를 입력하세요:170
+성별을 입력하세요:남자
+탈 수 없어요</code></pre>
+</div>
+</details><details class="answer">
+<summary>정답 코드 보기</summary>
+<div class="details-body">
+<div class="small">정답</div><pre><code>height = int(input("키를 입력하세요: "))
+sex = input("성별을 입력하세요: ")
+if sex == "여자" and (150 &lt;= height &lt; 170 or height % 5 == 0):
+    print("탈 수 있어요.")
+else:
+    print("탈 수 없어요.")</code></pre>
+</div>
+</details></article>
+<article class="card" id="q20">
+<h3><span class="badge">20번</span> 문제</h3>
+<p><strong>터널 통과하기 I</strong><br/>높이가 150cm인 자동차가 있습니다. 목적지까지 가려면 3개의 터널을 지나가야 합니다. 그런데 터널의 높이가 자동차 높이보다 낮거나 같다면 자동차는 지나갈 수 없습니다. 터널의 높이가 차례대로 3개 주어질 때 자동차가 통과할 수 있는지 없는지를 판별하는 코드를 작성하세요.<br/>실행결과</p>
+<details class="hint" open="">
+<summary>힌트 / 출력</summary>
+<div class="details-body">
+<div class="small">출력/힌트</div><pre><code>165 149 155
+터널 통과 불가능
+
+158 151 170
+터널 통과 가능</code></pre>
+</div>
+</details><details class="answer">
+<summary>정답 코드 보기</summary>
+<div class="details-body">
+<div class="small">정답 1</div><pre><code>a, b, c = list(map(int, input("터널 높이 3개를 입력하세요").split()))
+# print(a, b, c, type(a), type(b), type(c))
+if a &gt;150 and b &gt; 150 and c &gt; 150:
+    print("터널 통과 가능")
+else:
+    print("터널 통과 불가능")</code></pre>
+</details></article>
+<article class="card" id="q21">
+<h3><span class="badge">21번</span> 문제</h3>
+<p><strong>올해는 윤년일까? Yes or No</strong><br/>2월이 29일까지 있는 연도를 윤년이라고 합니다. 윤년의 조건은 연도가 4의 배수이면서 100의 배수가 아니거나 400의 배수인 경우입니다. 연도를 입력하고 입력한 연도가 윤년인지 아닌지 판별하는 코드를 작성하세요.<br/>실행결과</p>
+<details class="hint" open="">
+<summary>힌트 / 출력</summary>
+<div class="details-body">
+<div class="small">출력/힌트</div><pre><code>연도를 입력하세요:2345
+2345 년은 윤년이 아닙니다
+
+연도를 입력하세요:2020
+2020 년은 윤년입니다</code></pre>
+</div>
+</details><details class="answer">
+<summary>정답 코드 보기</summary>
+<div class="details-body">
+<div class="small">정답</div><pre><code>year = int(input("연도를 입력하세요: "))
+# print(year, type(year))
+if (year % 4 == 0 and year % 100 != 0) or year % 400 == 0:
+    print(f"{year}년은 윤년입니다.")
+else:
+    print(f"{year}년은 윤년이 아닙니다.")</code></pre>
+</div>
+</details></article>
+<article class="card" id="q22">
+<h3><span class="badge">22번</span> 문제</h3>
+<p><strong>주민등록번호 분석기</strong><br/>주민등록번호는 생년월일과 성별 정보를 포함합니다. 801223-1234567는 80년 12월 23일 생일을 의미합니다. 이때 두 번째 숫자 리스트가1 또는 2로 시작하면 1900년대에 출생 사람을 의미하고, 1로 시작하면 남성, 2로 시작하면 여성을 의미합니다. 2000년대 출생한 남성은 3으로 시작하고 여성은 4로 시작합니다.<br/><br/>주민등록번호가 입력되면 다음과 같이 주민등록에 포함된 정보를 출력하도록 코드를 작성하세요. 주민등록번호 입력 시 중간에 하이픈(-)을 포함해 입력합니다.<br/>실행결과</p>
+<details class="hint" open="">
+<summary>힌트 / 출력</summary>
+<div class="details-body">
+<div class="small">출력/힌트</div><pre><code>주민등록번호 입력:801223-1234567
+남자 1980 년 출생
+
+주민등록번호 입력:110503-3456789
+남자 2011 년 출생</code></pre>
+</div>
+</details><details class="answer">
+<summary>정답 코드 보기</summary>
+<div class="details-body">
+<div class="small">정답</div><pre><code>social_id = input("주민등록번호 입력: ")
+# print(social_id, type(social_id))
+if social_id[7].startswith("1"):
+    print(f"남자 19{social_id[:2]} 년 출생")
+elif social_id[7].startswith("2"):
+    print(f"여자 19{social_id[:2]} 년 출생")
+elif social_id[7].startswith("3"):
+    print(f"남자 20{social_id[:2]} 년 출생")
+elif social_id[7].startswith("4"):
+    print(f"여자 20{social_id[:2]} 년 출생")</code></pre>
+</div>
+</details></article>
+<article class="card" id="q23">
+<h3><span class="badge">23번</span> 문제</h3>
+<p><strong>‘도, 개, 걸, 윷, 모’ 윷놀이</strong><br/>윷놀이는 4개의 윷을 던져서 뒤집어진 상태에 따라 도, 개, 걸, 윷, 모 5가지 경우로 나누어 말을 이동하는 우리나라 전통 놀이입니다.<br/><br/>---<br/><br/>도: 윷(막대) 1개가 뒤집어진 상태<br/>개: 윷(막대) 2개가 뒤집어진 상태<br/>걸: 윷(막대) 3개가 뒤집어진 상태<br/>윷: 윷(막대) 4개가 뒤집어진 상태<br/>모: 윷(막대) 하나도 뒤집어지지 않은 상태<br/><br/>---<br/><br/>다음과 같이 윷의 결과가 입력되었을 때 윷의 상태를 출력하는 코드를 작성하세요. 0은 윷이 뒤집어 지지 않은 상태이고 1은 윷이 뒤집어진 상태입니다. 윷의 상태를 1과 0으로 입력할 때 공백을 기준으로 입력합니다. 예를 들어 '1 1 1 0'과 같이 입력하면 1이 3개이므로 '걸'을 의미합니다.<br/><br/>결과</p>
+<details class="hint" open="">
+<summary>힌트 / 출력</summary>
+<div class="details-body">
+<div class="small">출력/힌트</div><pre><code>1 1 1 0
+걸</code></pre>
+</div>
+</details><details class="answer">
+<summary>정답 코드 보기</summary>
+<div class="details-body">
+<div class="small">정답</div><pre><code>yut = list(map(int, input("숫자 4개를 입력하세요: ").split()))
+# print(yut, type(yut))
+if sum(yut) == 0:
+    print("모")
+elif sum(yut) == 1:
+    print("도")
+elif sum(yut) == 2:
+    print("개")
+elif sum(yut) == 3:
+    print("걸")
+elif sum(yut) == 4:
+    print("윳")</code></pre>
+</div>
+</details></article>
+<article class="card" id="q24">
+<h3><span class="badge">24번</span> 문제</h3>
+<p><strong>표준 몸무게 알아보기</strong><br/>BMI(Body Mass Index)는 체질량 지수로 비만도를 측정하는 수치입니다. BMI를 구하기 위해서는 키, 실제 몸무게 그리고 표준 몸무게를 알아야 합니다. 표준 몸무게와 BMI를 구하는 공식과 BMI 지수에 따른 비만도 측정 결과는 아래와 같습니다.<br/><br/>---<br/><br/>BMI 지수= 몸무게(kg) / (키(m) * 키(m))<br/><br/>저체중: 18.5 미만<br/>정상: 18.5\~22.9<br/>과체중: 23\~24.9<br/>경도 비만: 25\~29.9<br/>고도 비만: 30 이상<br/><br/>---<br/><br/>예를 들어 키가 185cm이고 몸무게가 80kg이라면 BMI 지수는 24.7이 됩니다. 다음과 같이 키, 몸무게를 차례대로 입력했을 때 BMI 지수에 따른 비만도 판정 결과를 알려주는 코드를 작성하세요.<br/>실행결과</p>
+<details class="hint" open="">
+<summary>힌트 / 출력</summary>
+<div class="details-body">
+<div class="small">출력/힌트</div><pre><code>185 80
+BMI 지수는 23.37472607742878 이고 과체중입니다
+
+170 64
+BMI 지수는 22.145328719723185 이고 정상 체중입니다</code></pre>
+</div>
+</details><details class="answer">
+<summary>정답 코드 보기</summary>
+<div class="details-body">
+<div class="small">정답 1</div><pre><code>80 / (1.85 * 1.85 )</code></pre>
+<div class="small">정답 2</div><pre><code>height = int(input("키를 입력하세요. "))
+weight = int(input("몸무게를 입력하세요. "))
+# print(height, weight, type(height), type(weight))
+bmi = weight / ((height * 0.01) ** 2)
+if bmi &lt; 18.5:
+    print(f"BMI 지수는 {bmi:.2f} 이고 저체중")
+elif 18.5 &lt;= bmi &lt;= 22.9:
+    print(f"BMI 지수는 {bmi:.2f} 이고 정상체중")
+elif 23 &lt;= bmi &lt;= 24.9:
+    print(f"BMI 지수는 {bmi:.2f} 이고 과체중")
+elif 25 &lt;= bmi &lt;= 29.9:
+    print(f"BMI 지수는 {bmi:.2f} 이고 경도비만")
+elif 30 &gt;= bmi:
+    print(f"BMI 지수는 {bmi:.2f} 이고 고도비만")</code></pre>
+</div>
+</details></article>
+<article class="card" id="q25">
+<h3><span class="badge">25번</span> 문제</h3>
+<p><strong>삼각형 만들기</strong><br/>삼각형은 세 개의 직선으로 만들어집니다. 하지만 삼각형이 만들어지려면 아래와 같은 조건을 만족해야 합니다. 세 개의 직선 길이가 입력으로 주어진다면 삼각형을 만들 수 있는지 아닌지를 판단하는 코드를 작성하세요.<br/><br/>실행결과<br/><br/></p><div class="exec-result"><div aria-label="삼각형 변 a b c 도식" class="diagram" role="img">
+<svg height="160" viewbox="0 0 260 160" width="100%" xmlns="http://www.w3.org/2000/svg">
+<polygon fill="rgba(37,99,235,.18)" points="40,130 210,130 90,30" stroke="rgba(37,99,235,.6)" stroke-width="2"></polygon>
+<text fill="#1f2937" font-size="16" x="22" y="85">a</text>
+<text fill="#1f2937" font-size="16" x="125" y="150">b</text>
+<text fill="#1f2937" font-size="16" x="150" y="70">c</text>
+</svg>
+<div class="small">가장 길이가 긴 변이 <code>b</code>인 경우: <code>a + c &gt; b</code>를 만족한다.</div>
+</div></div>
+<details class="hint" open="">
+<summary>힌트 / 출력</summary>
+<div class="details-body">
+<div class="small">출력/힌트</div><pre><code>3 2 4
+삼각형 가능
+
+5 9 3
+삼각형 불가</code></pre>
+</div>
+</details><details class="answer">
+<summary>정답 코드 보기</summary>
+<div class="details-body">
+<div class="small">정답</div><pre><code>tri = list(map(int, input("숫자 3개를 입력해 주세요").split()))
+print(tri, type(tri))
+tri.sort()
+# print(tri[:2], sum(tri[:2]), tri[-1]) 
+if sum(tri[:2]) &gt; tri[-1]:
+    print("삼각형 가능")
+else:
+    print("삼각형 불가능")</code></pre>
+</div>
+</details></article>
+<article class="card" id="q26">
+<h3><span class="badge">26번</span> 문제</h3>
+<p><strong>로켓 발사 I</strong><br/>다음과 같이 1부터 10까지 출력하고 "발사!"라고 출력하는 코드를 for 반복문을 사용해 작성하세요.<br/><br/>실행결과</p>
+<details class="hint" open="">
+<summary>힌트 / 출력</summary>
+<div class="details-body">
+<div class="small">출력/힌트</div><pre><code>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+발사!</code></pre>
+</div>
+</details><details class="answer">
+<summary>정답 코드 보기</summary>
+<div class="details-body">
+<div class="small">정답 1</div><pre><code>for i in range(1, 11):
+    print(i)
+print("발사!")</code></pre>
+<div class="small">정답 2</div><pre><code>d = list(range(1,11))
+d.append("발사!")
+for i in d:
+    print(i)</code></pre>
+</div>
+</details></article>
+<article class="card" id="q27">
+<h3><span class="badge">27번</span> 문제</h3>
+<p><strong>로켓 발사 II</strong><br/>다음과 같이 1부터 10까지 출력하고 "발사!"라고 출력하는 코드를 while 반복문을 사용해 작성하세요.<br/><br/>실행결과</p>
+<details class="hint" open="">
+<summary>힌트 / 출력</summary>
+<div class="details-body">
+<div class="small">출력/힌트</div><pre><code>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+발사!</code></pre>
+</div>
+</details><details class="answer">
+<summary>정답 코드 보기</summary>
+<div class="details-body">
+<div class="small">정답</div><pre><code>i = 1
+while i &lt;= 10:
+    print(i)
+    i +=1
+print("발사!")</code></pre>
+</div>
+</details></article>
+<article class="card" id="q28">
+<h3><span class="badge">28번</span> 문제</h3>
+<p><strong>로켓 발사 10초 전</strong><br/>다음과 같이 숫자를 입력받아 1까지 카운트다운하고 마지막에 “발사!”라고 출력하는 코드를 for 반복문을 사용해 작성하세요.</p>
+<details class="hint" open="">
+<summary>힌트 / 출력</summary>
+<div class="details-body">
+<div class="small">출력/힌트</div><pre><code>카운트다운 몇 초 전인가요?10
+10
+9
+8
+7
+6
+5
+4
+3
+2
+1
+발사!</code></pre>
+</div>
+</details><details class="answer">
+<summary>정답 코드 보기</summary>
+<div class="details-body">
+<div class="small">정답 1</div><pre><code>list(range(10, 0,-1))</code></pre>
+<div class="small">정답 2</div><pre><code>num = int(input("카운트다운 몇 초 전인가요? "))
+# print(num, type(num))
+for i in list(range(num, 0,-1)):
+    print(i)
+print("발사!")</code></pre>
+</div>
+</details></article>
+<article class="card" id="q29">
+<h3><span class="badge">29번</span> 문제</h3>
+<p><strong>1부터 100까지 모두 합한 수 I</strong><br/>다음과 같이 1보다 같거나 큰 숫자를 입력받은 뒤 1부터 입력받은 숫자까지의 합을 구하는 코드를 for 반복문을 사용해 작성하세요.<br/><br/>실행결과</p>
+<details class="hint" open="">
+<summary>힌트 / 출력</summary>
+<div class="details-body">
+<div class="small">출력/힌트</div><pre><code>10
+1부터 10 까지 모두 더한 합은 55</code></pre>
+</div>
+</details><details class="answer">
+<summary>정답 코드 보기</summary>
+<div class="details-body">
+<div class="small">정답 1</div><pre><code>list(range(1, num+1))</code></pre>
+<div class="small">정답 2</div><pre><code>num = int(input("숫자를 입력하세요."))
+hap = 0
+for i in range(1, num+1):
+    hap += i
+print(f"1부터 {num} 까지 모두 더한 합은: {hap}")</code></pre>
+</div>
+</details></article>
+<article class="card" id="q30">
+<h3><span class="badge">30번</span> 문제</h3>
+<p><strong>1부터 100까지 모두 합한 수 II</strong><br/>다음과 같이 1보다 같거나 큰 수를 입력받고 1부터 입력받은 수까지의 합을 구하는 코드를 while 반복문을 사용해 코드를 작성하세요<br/><br/>실행결과</p>
+<details class="hint" open="">
+<summary>힌트 / 출력</summary>
+<div class="details-body">
+<div class="small">출력/힌트</div><pre><code># 입력
+10
+# 출력
+1부터 10 까지 모두 더한 합은 55</code></pre>
+</div>
+</details><details class="answer">
+<summary>정답 코드 보기</summary>
+<div class="details-body">
+<div class="small">정답</div><pre><code>num = int(input("숫자를 입력하세요: "))
+i = 1
+hap = 0
+while i &lt;= num:
+    hap += i
+    i += 1
+print(f"1부터 {num}까지 모두 더한 합은: {hap}")</code></pre>
+</div>
+</details></article>
+<article class="card" id="q31">
+<h3><span class="badge">31번</span> 문제</h3>
+<p><strong>음수가 나올 때까지 반복하기</strong><br/>다음과 같이 입력된 숫자가 0보다 같거나 큰 숫자이면 입력된 숫자를 출력하도록 반복하고, 음수가 입력되면 프로그램을 종료하는 코드를 while 반복문을 사용해 작성하세요.<br/><br/>실행결과</p>
+<details class="hint" open="">
+<summary>힌트 / 출력</summary>
+<div class="details-body">
+<div class="small">출력/힌트</div><pre><code>숫자를 입력하세요 10
+입력된 숫자는 10
+숫자를 입력하세요 7
+입력된 숫자는 7
+숫자를 입력하세요 100
+입력된 숫자는 100
+숫자를 입력하세요 -1
+종료합니다</code></pre>
+</div>
+</details><details class="answer">
+<summary>정답 코드 보기</summary>
+<div class="details-body">
+<div class="small">정답</div><pre><code>while True:
+    num = int(input("숫자를 입력해 주세요. "))
+    if num &gt;= 0:
+        print(f"입력된 숫자는 {num}")
+    else:
+        print("종료합니다")
+        break</code></pre>
+</div>
+</details></article>
+<article class="card" id="q32">
+<h3><span class="badge">32번</span> 문제</h3>
+<p><strong>옆으로 출력하기</strong><br/>다음과 같이 1부터 10까지 공백을 포함해서 한 줄로 출력하는 코드를 작성하세요.<br/><br/>실행결과</p>
+<details class="hint" open="">
+<summary>힌트 / 출력</summary>
+<div class="details-body">
+<div class="small">출력/힌트</div><pre><code>1 2 3 4 5 6 7 8 9 10</code></pre>
+</div>
+</details><details class="answer">
+<summary>정답 코드 보기</summary>
+<div class="details-body">
+<div class="small">정답</div><pre><code>for i in range(1, 11):
+    print(i, end=" ")</code></pre>
+</div>
+</details></article>
+<article class="card" id="q33">
+<h3><span class="badge">33번</span> 문제</h3>
+<p><strong>“1+2+3+4+5= 15”</strong><br/>다음과 같이 양의 정수 두 개를 입력받아 첫 번째 입력받은 숫자부터 두 번째 입력받은 숫자까지의 합을 구하는 코드를 작성하세요. 단, 두 번째 숫자는 첫 번째 숫자보다 큰 숫자를 입력해야 합니다.<br/><br/>실행결과</p>
+<details class="hint" open="">
+<summary>힌트 / 출력</summary>
+<div class="details-body">
+<div class="small">출력/힌트</div><pre><code>첫 번째 숫자를 입력하세요1
+두 번째 숫자를 입력하세요10
+1+2+3+4+5+6+7+8+9+10= 55</code></pre>
+</div>
+</details><details class="answer">
+<summary>정답 코드 보기</summary>
+<div class="details-body">
+<div class="small">정답</div><pre><code>a = int(input("첫 번째 숫자를 입력하세요 "))
+b = int(input("두 번째 숫자를 입력하세요 "))
+if a &lt; b:
+    hap = 0
+    for idx, i in enumerate(range(a, b+1)):
+        hap += i
+        if idx == 0:
+#             pass
+            print(i, end="")
+        else:
+            print(f"+{i}", end="")
+    print(" =", hap)
+else:
+    print("두 번째 숫자가 첫 번째 숫자보다 커야 합니다.")</code></pre>
+</div>
+</details></article>
+<article class="card" id="q34">
+<h3><span class="badge">34번</span> 문제</h3>
+<p><strong>짝수들만 합하기</strong><br/>다음과 같이 양의 정수 두 개를 입력받아 첫 번째 입력받은 숫자부터 두 번째 입력받은 숫자까지 짝수 들만의 합을 구하는 코드를 작성하세요. 단, 두 번째 숫자는 첫 번째 숫자보다 큰 숫자를 입력해야 합니다.<br/><br/>실행결과</p>
+<details class="hint" open="">
+<summary>힌트 / 출력</summary>
+<div class="details-body">
+<div class="small">출력/힌트</div><pre><code>첫 번째 숫자를 입력하세요1
+두 번째 숫자를 입력하세요10
+1부터 10까지 짝수들만의 합은 30</code></pre>
+</div>
+</details><details class="answer">
+<summary>정답 코드 보기</summary>
+<div class="details-body">
+<div class="small">정답 1</div><pre><code>a = int(input("첫 번째 숫자를 입력하세요 "))
+b = int(input("두 번째 숫자를 입력하세요 "))
+# print(a, b, type(a), type(b))
+if a &lt; b:
+    hap = 0
+    for num in range(a, b+1):
+        if num % 2 == 0:
+            hap += num
+    print(f"{a}부터 {b}까지 짝수들만의 합은 {hap}")
+else:
+    print("두 번째 숫자가 첫 번째 숫자보다 커야 합니다.")</code></pre>
+</div>
+</details></article>
+<article class="card" id="q35">
+<h3><span class="badge">35번</span> 문제</h3>
+<p><strong>for 반복문과 문자열의 만남</strong><br/>다음과 같이 문자열을 입력받아서 문자열에 포함된 문자 중에서 'a' 문자는 제외하고 출력하는 코드를 작성하세요.<br/><br/>실행결과</p>
+<details class="hint" open="">
+<summary>힌트 / 출력</summary>
+<div class="details-body">
+<div class="small">출력/힌트</div><pre><code>하나의 문자열을 입력하세요:apple makit woojin james sieun
+pple mkit woojin jmes sieu</code></pre>
+</div>
+</details><details class="answer">
+<summary>정답 코드 보기</summary>
+<div class="details-body">
+<div class="small">정답</div><pre><code>for i in "apple makit woojin james sieun":
+    if i == "a":
+        continue
+    else:
+        print(i, end="")</code></pre>
+</div>
+</details></article>
+<article class="card" id="q36">
+<h3><span class="badge">36번</span> 문제</h3>
+<p><strong>for 반복문과 리스트의 만남</strong><br/>내 친구 이름 명단이 있는 리스트를 활용해 다음과 같이 1번부터 번호를 생성해 친구를 소개하는 문구를 출력하는 코드를 작성하세요.<br/><br/>실행결과</p>
+<details class="hint" open="">
+<summary>힌트 / 출력</summary>
+<div class="details-body">
+<div class="small">출력/힌트</div><pre><code>1 번 친구 우진 을 소개합니다.
+2 번 친구 시은 을 소개합니다.
+3 번 친구 메이킷 을 소개합니다.
+4 번 친구 지연 을 소개합니다.
+5 번 친구 지훈 을 소개합니다.</code></pre>
+</div>
+</details><details class="answer">
+<summary>정답 코드 보기</summary>
+<div class="details-body">
+<div class="small">정답 1</div><pre><code>names = ['우진','시은','메이킷','지연','지훈']
+i = 0
+while i &lt; 5:
+    print(f"{i+1}번 친구 {names[i]} 을 소개합니다.")
+    i +=1</code></pre>
+<div class="small">정답 2</div><pre><code>names = ['우진','시은','메이킷','지연','지훈']
+i = 1
+for name in names:
+    print(f"{i}번 친구 {name} 을 소개합니다.")
+    i += 1</code></pre>
+<div class="small">정답 3</div><pre><code>names = ['우진','시은','메이킷','지연','지훈']
+for idx, name in enumerate(names):
+    print(f"{idx+1}번 친구 {name}을 소개합니다")</code></pre>
+</div>
+</details></article>
+<article class="card" id="q37">
+<h3><span class="badge">37번</span> 문제</h3>
+<p><strong>다음 반복문으로 바로가기(continue)</strong><br/>다음과 같이 1부터 30까지 출력하되 5의 배수는 출력하지 않도록 코드를 작성하세요.<br/><br/>실험결과</p>
+<details class="hint" open="">
+<summary>힌트 / 출력</summary>
+<div class="details-body">
+<div class="small">출력/힌트</div><pre><code>1 2 3 4 6 7 8 9 11 12 13 14 16 17 18 19 21 22 23 24 26 27 28 29</code></pre>
+</div>
+</details><details class="answer">
+<summary>정답 코드 보기</summary>
+<div class="details-body">
+<div class="small">정답</div><pre><code>for num in range(1, 31):
+    if num % 5 ==0:
+        continue
+    else:
+        print(num, end=" ")</code></pre>
+</div>
+</details></article>
+<article class="card" id="q38">
+<h3><span class="badge">38번</span> 문제</h3>
+<p><strong>반복문 깨고 바로 나가기(break)</strong><br/>다음과 같이 규칙에 따라 숫자가 나열된 것을 수열이라고 합니다. 3부터 시작해서 5씩 더해지는 수열이 있다면 수열의 100번째 숫자는 무엇인지 구하는 코드를 for 반복문을 사용해서 작성하세요.<br/><br/>23은 수열의 5번째 숫자입니다.</p>
+<details class="hint" open="">
+<summary>힌트 / 출력</summary>
+<div class="details-body">
+<div class="small">출력/힌트</div><pre><code>3 8 13 18 23 ...</code></pre>
+</div>
+</details><details class="answer">
+<summary>정답 코드 보기</summary>
+<div class="details-body">
+<div class="small">정답 1</div><pre><code>i = 1
+for num in range(3, 1000, 5):
+    if i == 101:
+        break
+    print(f"{num}은 수열의 {i}번째 숫자입니다.")
+    i += 1</code></pre>
+<div class="small">정답 2</div><pre><code>for idx,num in enumerate(range(3, 1000, 5)):
+    print(f"{num}은 수열의 {idx+1}번째 숫자입니다.")
+    if idx+1 == 100:
+        break</code></pre>
+<div class="small">정답 3</div><pre><code>i = 1
+num = 3
+while True:
+    if i &lt; 100:
+        i += 1
+        num += 5
+    else:
+        break
+    
+print(f"{num}은 수열의 {i}번째 숫자입니다.")</code></pre>
+</div>
+</details></article>
+<article class="card" id="q39">
+<h3><span class="badge">39번</span> 문제</h3>
+<p><strong>가장 작은 숫자 찾기</strong><br/>세 개의 숫자를 입력받아서 가장 작은 숫자를 출력하는 코드를 작성하세요.<br/><br/>입력결과</p>
+<details class="hint" open="">
+<summary>힌트 / 출력</summary>
+<div class="details-body">
+<div class="small">출력/힌트</div><pre><code># 입력
+7 3 9
+# 출력
+3</code></pre>
+</div>
+</details><details class="answer">
+<summary>정답 코드 보기</summary>
+<div class="details-body">
+<div class="small">정답 1</div><pre><code>nums = list(map(int, input("세 개의 숫자를 입력하세요").split()))
+# print(nums, type(nums))
+nums.sort()
+print(nums[0])</code></pre>
+<div class="small">정답 2</div><pre><code># 리스트 가장 앞 숫자를 하나 꺼내서 저장
+# 만약에 두번째 숫자가 처음 저장된 숫자보다 작으면 저장된 숫자 교체
+# 만약에 두번째 숫자가 처음 저장된 숫자보다 크면 패스
+nums = list(map(int, input("세 개의 숫자를 입력하세요").split()))
+temp = nums[0]
+for num in nums:
+    if num &lt; temp:
+        temp = num
+    else:
+        pass
+print(temp)</code></pre>
+</div>
+</details></article>
+
+<article class="card" id="q40">
+  <h3><span class="badge">40번</span> 문제</h3>
+
+  <p>
+    <strong>터널 통과하기 II</strong><br/>
+    터널을 통과하는 문제를 풀어 봅시다. 아래 예와 같이 첫 번째 줄에는 자동차의 높이를 입력하고 두 번째 줄에는 터널 3개의 높이를 입력합니다.
+  </p>
+
+  <p>실행결과</p>
+  <pre><code>150
+165 149 155</code></pre>
+
+  <p>
+    이는 자동차의 높이는 150cm이고, 자동차가 지나가야 할 터널의 높이는 각각 165cm, 149cm, 155cm라는 뜻입니다.<br/>
+    터널 3개의 높이가 하나라도 자동차 높이보다 같거나 낮으면 자동차는 지나갈 수 없습니다. 터널의 높이가 차례대로 3개 주어질 때 자동차가 지나갈 수 있는지 판단해 ‘터널 통과 가능’ 또는 ‘터널 통과 불가능’이라고 출력하고 통과 불가능한 터널의 높이를 모두 출력하는 코드를 작성하세요.
+  </p>
+
+  <p>실행결과1</p>
+  <pre><code># 입력
+150
+165 149 155
+
+# 출력
+터널 통과 불가능
+149</code></pre>
+
+  <p>실행결과2</p>
+  <pre><code># 입력
+155
+170 160 150
+
+# 출력
+터널 통과 불가능
+150</code></pre>
+
+  <p>실행결과3</p>
+  <pre><code># 입력
+160
+170 140 130
+
+# 출력
+터널 통과 불가능
+140
+130</code></pre>
+
+  <details class="answer">
+    <summary>정답 코드 보기</summary>
+    <div class="details-body">
+      <div class="small">정답</div>
+      <pre><code>car = int(input("차의 높이를 입력하세요. "))
+turnel = list(map(int, input("터널의 높이를 3개 입력하세요. ").split()))
+# print(car, turnel, type(car), type(turnel[0]))
+for height in turnel:
+    if car &gt; height:
+        print("터널 통과 불가능", height)</code></pre>
+    </div>
+  </details>
+</article>
+
+
+<article class="card" id="q41">
+<h3><span class="badge">41번</span> 문제</h3>
+<p><strong>행운의 숫자 7 모두 찾기</strong><br/>1부터 1000까지의 숫자 중에서 행운의 숫자 7은 몇 번 사용되었는지 알려주는 코드를 작성하려고 합니다. 예를 들어 1부터 20까지의 숫자 중에서 7은 7과 17에서 두 번 사용했습니다. 또한, 77은 7을 두 번 사용한 것이고 777은 세 번 사용한 것입니다.</p>
+<details class="hint" open="">
+<summary>힌트 / 출력</summary>
+<div class="details-body">
+<div class="small">출력 예시</div><pre><code>7 17 27 37 47 57 67 70 71 72 73 74 75 76 77 77 78 79 87 97 107 117 127 137 147 157 167 170 171 172 173 174 175 176 177 177 178 179 187 197 207 217 227 237 247 257 267 270 271 272 273 274 275 276 277 277 278 279 287 297 307 317 327 337 347 357 367 370 371 372 373 374 375 376 377 377 378 379 387 397 407 417 427 437 447 457 467 470 471 472 473 474 475 476 477 477 478 479 487 497 507 517 527 537 547 557 567 570 571 572 573 574 575 576 577 577 578 579 587 597 607 617 627 637 647 657 667 670 671 672 673 674 675 676 677 677 678 679 687 697 700 701 702 703 704 705 706 707 707 708 709 710 711 712 713 714 715 716 717 717 718 719 720 721 722 723 724 725 726 727 727 728 729 730 731 732 733 734 735 736 737 737 738 739 740 741 742 743 744 745 746 747 747 748 749 750 751 752 753 754 755 756 757 757 758 759 760 761 762 763 764 765 766 767 767 768 769 770 770 771 771 772 772 773 773 774 774 775 775 776 776 777 777 777 778 778 779 779 780 781 782 783 784 785 786 787 787 788 789 790 791 792 793 794 795 796 797 797 798 799 807 817 827 837 847 857 867 870 871 872 873 874 875 876 877 877 878 879 887 897 907 917 927 937 947 957 967 970 971 972 973 974 975 976 977 977 978 979 987 997 
+300</code></pre>
+</div>
+</details><details class="answer">
+<summary>정답 코드 보기</summary>
+<div class="details-body">
+<div class="small">정답</div><pre><code>count = 0
+for i in range(1, 1001):
+    for j in str(i):
+        if j == "7":
+            print(i, end= " ")
+            count += 1
+#         print(j, end=" ")
+print()
+print(count)</code></pre>
+</div>
+</details></article>
+<article class="card" id="q42">
+<h3><span class="badge">42번</span> 문제</h3>
+<p><strong>약수 구하기</strong><br/>다음과 같이 자연수 n을 입력받아 n의 양의 약수를 오름차순과 내림차순으로 각각 출력하는 코드를 작성하세요.<br/><br/>실행결과</p>
+<details class="hint" open="">
+<summary>힌트 / 출력</summary>
+<div class="details-body">
+<div class="small">출력/힌트</div><pre><code># 입력
+12
+
+# 출력
+1 2 3 4 6 12
+12 6 4 3 2 1</code></pre>
+</div>
+</details><details class="answer">
+<summary>정답 코드 보기</summary>
+<div class="details-body">
+<div class="small">정답 1</div><pre><code>n = int(input("자연수를 입력하세요 "))
+# print(n, type(n))
+for i in range(1, n+1):
+#     print(i)
+    if n % i == 0:
+        print(i, end=" ")
+print()
+for i in range(n, 0,-1):
+#     print(i)
+    if n % i == 0:
+        print(i, end=" ")</code></pre>
+<div class="small">정답 2</div><pre><code>n = int(input("자연수를 입력하세요 "))
+result = []
+for i in range(1, n+1):
+    if n % i == 0:
+        result.append(i)
+print(result)
+print(sorted(result, reverse=True))</code></pre>
+</div>
+</details></article>
+<article class="card" id="q43">
+<h3><span class="badge">43번</span> 문제</h3>
+<p><strong>리스트 최대, 최소, 평균 구하기 I</strong><br/>다음과 같이 정수 n개를 입력받아 입력받은 수들 중에서 최댓값, 최솟값, 평균을 출력하는 코드를 작성하세요.<br/><br/>실행결과</p>
+<details class="hint" open="">
+<summary>힌트 / 출력</summary>
+<div class="details-body">
+<div class="small">출력/힌트</div><pre><code># 입력
+# 첫째 줄에 입력되는 정수의 개수 n이 주어집니다.
+# 둘째 줄에 n개의 정수가 공백으로 구분되어 입력됩니다.
+5
+3 2 -20 100 35
+
+# 출력
+리스트 최댓값 100
+리스트 최솟값 -20
+리스트 평균값 24.0</code></pre>
+</div>
+</details><details class="answer">
+<summary>정답 코드 보기</summary>
+<div class="details-body">
+<div class="small">정답</div><pre><code>n_num = int(input("입력받을 숫자 개수 "))
+nums = list(map(int, input(f"숫자를 {n_num}개 입력하세요 ").split()))
+if len(nums) == n_num:
+    print(f"최대값{max(nums)}, 최솟값{min(nums)}, 평균값{sum(nums)/len(nums)}")
+else:
+    print("입력받을 숫자 개수만큼 숫자를 입력해 주세요")</code></pre>
+</div>
+</details></article>
+<article class="card" id="q44">
+<h3><span class="badge">44번</span> 문제</h3>
+<p><strong>리스트 최대, 최소, 평균 구하기 II</strong><br/>다음과 같이 정수 n개를 입력받아 최댓값, 최솟값, 평균을 구하고 출력하는 코드를 작성하세요. 단, 내장 함수를 사용하지 말고 작성해 보세요. 첫째 줄에 입력되는 정수의 개수 n이 주어지고 둘째 줄에 n개의 정수가 공백으로 구분되어 입력됩니다.<br/><br/>실행결과</p>
+<details class="hint" open="">
+<summary>힌트 / 출력</summary>
+<div class="details-body">
+<div class="small">출력/힌트</div><pre><code># 입력
+5
+3 2 -20 100 35
+
+# 출력
+리스트 최댓값 100
+리스트 최솟값 -20
+리스트 평균값 24.0</code></pre>
+</div>
+</details><details class="answer">
+<summary>정답 코드 보기</summary>
+<div class="details-body">
+<div class="small">정답 1</div><pre><code>s = list(range(1,6))
+s</code></pre>
+<div class="small">정답 2</div><pre><code># 최솟값
+temp = s[0]
+for i in s:
+    if i &lt; temp:
+        temp = i
+print(temp)
+# 최대값
+temp = s[0]
+for i in s:
+    if i &gt; temp:
+        temp = i
+print(temp)
+# 평균
+hap = 0
+for i in s:
+    hap += i
+print(hap/len(s))</code></pre>
+<div class="small">정답 3</div><pre><code>n_num = int(input("입력받을 숫자 개수 "))
+nums = list(map(int, input(f"숫자를 {n_num}개 입력하세요 ").split()))
+if len(nums) == n_num:
+    # 최솟값
+    temp = nums[0]
+    for i in nums:
+        if i &lt; temp:
+            temp = i
+    print(temp)
+    # 최대값
+    temp = nums[0]
+    for i in nums:
+        if i &gt; temp:
+            temp = i
+    print(temp)
+    # 평균
+    hap = 0
+    for i in nums:
+        hap += i
+    print(hap/len(nums))
+else:
+    print("입력받을 숫자 개수만큼 숫자를 입력해 주세요")</code></pre>
+</div>
+</details></article>
+<article class="card" id="q45">
+<h3><span class="badge">45번</span> 문제</h3>
+<p><strong>각 자릿수의 합 구하기 I</strong><br/>다음과 같이 자연수가 입력되면 자연수의 각 자릿수의 합을 구하는 코드를 작성하세요. 예를 들어 1234가 입력되었다면 각 자릿수의 합은 1+2+3+4 = 10 입니다.<br/><br/>실행결과</p>
+<details class="hint" open="">
+<summary>힌트 / 출력</summary>
+<div class="details-body">
+<div class="small">출력/힌트</div><pre><code># 입력
+1234
+
+# 출력
+10</code></pre>
+</div>
+</details><details class="answer">
+<summary>정답 코드 보기</summary>
+<div class="details-body">
+<div class="small">정답</div><pre><code>num = input("숫자를 입력하세요 ")
+print(num)
+hap = 0
+for i in num:
+    hap += int(i)
+print(hap)</code></pre>
+</div>
+</details></article>
+<article class="card" id="q46">
+<h3><span class="badge">46번</span> 문제</h3>
+<p><strong>각 자릿수의 합 구하기 II</strong><br/>자연수가 입력되면 자연수의 각 자릿수의 합을 구하는 코드를 작성하세요. 예를 들어 1234가 입력되었다면 각 자릿수의 합은 1+2+3+4를 하여 10입니다. 나머지 연산자 %와 몫 연산자 //를 사용해 &lt;문제 45&gt;과는 다른 방법으로 문제를 해결하세요.</p>
+<details class="hint" open="">
+<summary>힌트 / 출력</summary>
+<div class="details-body">
+<div class="small">출력 예시</div><pre><code>123 4
+12 3
+1 2
+0 1
+10</code></pre>
+</div>
+</details><details class="answer">
+<summary>정답 코드 보기</summary>
+<div class="details-body">
+<div class="small">정답</div><pre><code># 앞 3자리는 // 연산자로 구함
+# 가장 마지막 자리는 % 연산자로 구함
+n = 1234
+hap = 0
+for i in str(n):
+    x = n % 10
+    n = n // 10
+    hap += x
+    print(n, x)
+print(hap)</code></pre>
+</div>
+</details></article>
+<article class="card" id="q47">
+<h3><span class="badge">47번</span> 문제</h3>
+<p><strong>카이사르 암호</strong><br/>카이사르의 암호는 알파벳 순서대로 세 글자를 뒤로 밀어서 암호문을 만들고, 세 글자를 앞으로 당겨서 암호를 푸는 방식입니다. 예를 들어 'ABCXYZ'를 카이사르 암호 방식을 사용해 암호화하면 'DEFABC'가 됩니다. 다음과 같이 문자열을 입력받아 카이사르 암호 방식을 사용해 암호문을 생성하고 출력하는 코드를 작성하세요.<br/><br/>실행결과</p>
+<details class="hint" open="">
+<summary>힌트 / 출력</summary>
+<div class="details-body">
+<div class="small">출력/힌트</div><pre><code># 입력
+MAKIT
+
+# 출력
+PDNLW</code></pre>
+</div>
+</details><details class="answer">
+<summary>정답 코드 보기</summary>
+<div class="details-body">
+<div class="small">정답 1</div><pre><code># 44032 - 54643
+ord("핳")</code></pre>
+<div class="small">정답 2</div><pre><code>chars = input("영문자를 입력하세요")
+for char in chars:
+    print(chr(ord(char)+3), end="")
+#     print(chr(ord(char)+3), end="")</code></pre>
+</div>
+</details></article>
+<article class="card" id="q48">
+<h3><span class="badge">48번</span> 문제</h3>
+<p><strong>소문자는 대문자로, 대문자는 소문자로 변환하기</strong><br/>다음과 같이 영어 문장을 입력받아 대문자는 소문자로 변환하고, 소문자는 대문자로 변환하는 코드를 작성하세요.<br/><br/>실행결과</p>
+<details class="hint" open="">
+<summary>힌트 / 출력</summary>
+<div class="details-body">
+<div class="small">출력/힌트</div><pre><code># 입력
+Makit Code Lab !!
+
+# 출력
+mAKIT cODE lAB !!</code></pre>
+</div>
+</details><details class="answer">
+<summary>정답 코드 보기</summary>
+<div class="details-body">
+<div class="small">정답 1</div><pre><code>ord('A')</code></pre>
+<div class="small">정답 2</div><pre><code>chr(ord('a') - 32)</code></pre>
+<div class="small">정답 3</div><pre><code>string = input("문장을 입력해 주세요. ")
+result = ""
+for char in string:
+    # 영문 대문자
+    if 65 &lt;= ord(char) &lt;= 90:
+        result += chr(ord(char) + 32)
+    # 영문 소문자    
+    elif 97 &lt;= ord(char) &lt;= 122:
+        result += chr(ord(char) - 32)
+    else:
+        result += char
+print(result)</code></pre>
+<div class="small">정답 4</div><pre><code># 숫자를 입력받아서 두번째 숫자가 첫 번째 숫자보다 큰지 확인
+# 두번째 숫자가 첫 번째 숫자보다 작으면 다시 입력
+# 두번째 숫자가 첫 번째 숫자보다 크면
+# 첫 번째 숫자부터 두 번째 숫자 범위까지 숫자 생성
+# 반복문으로 숫자가 짝수인지 판별
+# 짝수만 더해서 결과를 출력하고 정지
+# 5회 잘못 입력하면 "제한 횟수를 초과하셨습니다."를 출력하고 종료
+count = 1
+while True:
+    num1 = int(input("첫 번째 숫자를 입력하세요: "))
+    num2 = int(input("두 번째 숫자를 입력하세요: "))
+    # print(num1, num2, type(num1), type(num2))
+    if num1 &lt; num2:
+        hap = 0
+        for i in range(num1, num2+1):
+            if i % 2 == 0:
+                hap += i
+                print(i, end=" ")
+        print()
+        print(f"짝수들만의 합 {hap}")
+        break
+    else:
+        if count &lt; 5:
+            print("첫 번째 숫자가 두 번째 숫자보다 작아야 합니다. 다시 입력해 주세요.")
+            print(f"{count} 회 입력하였습니다.")
+            count += 1
+        else:
+            print(f"{count}/5, 제한 횟수를 초과하셨습니다.")
+            break</code></pre>
+</div>
+</details></article>
+</section>
+<footer>
+<div class="container">끝.</div>
+</footer>
+</main>
+</body>
+</html>
