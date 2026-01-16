@@ -1,0 +1,1580 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>연습문제 15 — 클래스 만들기 (강의안 기반)</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="header">
+    <div class="container">
+      <span class="badge">Python · Jupyter Notebook</span>
+      <h1 class="title">연습문제 15 — 클래스 만들기 (강의안 기반)</h1>
+      <p class="subtitle">강의안(15클래스만들기.ipynb)의 핵심: 클래스/인스턴스, 메서드, 생성자(__init__), 상속, 오버라이딩, (파이썬에서의) 오버로딩 개념, 클래스 속성 vs 인스턴스 속성, 비공개 속성, 정적메서드(@staticmethod), 클래스메서드(@classmethod)을 모두 실습한다.</p>
+      <nav class="toc" aria-label="목차">
+        <a href="#sec1">1) 클래스/인스턴스/생성자/메서드 (1~15)</a>
+        <a href="#sec2">2) 상속 &amp; 오버라이딩 &amp; 오버로딩 개념 (16~25)</a>
+        <a href="#sec3">3) 클래스 속성/비공개 속성/정적·클래스 메서드 (26~35)</a>
+        <a href="#sec4">4) 종합 연습 (36~40)</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+<section class="section" id="sec1">
+  <h2>1) 클래스/인스턴스/생성자/메서드 (1~15)</h2>
+  <article class="card" id="q1">
+  <h3><span class="badge">1번</span> 문제</h3>
+
+  <div class="q-box">
+    <p class="q-desc"><strong>클래스 만들기 — Person 기본</strong><br/><code>Person</code> 클래스를 만들고, <code>say_hello()</code> 메서드를 작성하세요. 호출하면 <code>Hello!</code>를 출력해야 합니다.</p>
+  </div>
+
+  <details class="qa hint" open>
+    <summary>힌트 / 출력</summary>
+    <div class="details-body">
+      <div class="muted">호출 예시</div>
+      <pre><code>p = Person()
+p.say_hello()</code></pre>
+      <div class="muted">출력 예시</div>
+      <pre><code>Hello!</code></pre>
+    </div>
+  </details>
+
+  <details class="qa answer">
+    <summary>정답 코드 보기</summary>
+    <div class="details-body">
+      <div class="badge code">정답</div>
+      <pre><code>class Person:
+    def say_hello(self):
+        print(&#x27;Hello!&#x27;)
+
+p = Person()
+p.say_hello()</code></pre>
+    </div>
+  </details>
+</article>
+
+<article class="card" id="q2">
+  <h3><span class="badge">2번</span> 문제</h3>
+
+  <div class="q-box">
+    <p class="q-desc"><strong>인스턴스 변수 — 이름 저장하기</strong><br/><code>Person</code> 클래스에 인스턴스 변수 <code>name</code>을 저장하고, <code>introduce()</code> 메서드로 <code>저는 (name)입니다</code>를 출력하세요.</p>
+  </div>
+
+  <details class="qa hint" open>
+    <summary>힌트 / 출력</summary>
+    <div class="details-body">
+      <div class="muted">호출 예시</div>
+      <pre><code>p = Person(&#x27;민수&#x27;)
+p.introduce()</code></pre>
+      <div class="muted">출력 예시</div>
+      <pre><code>저는 민수입니다</code></pre>
+    </div>
+  </details>
+
+  <details class="qa answer">
+    <summary>정답 코드 보기</summary>
+    <div class="details-body">
+      <div class="badge code">정답</div>
+      <pre><code>class Person:
+    def __init__(self, name):
+        self.name = name
+
+    def introduce(self):
+        print(f&#x27;저는 {self.name}입니다&#x27;)
+
+p = Person(&#x27;민수&#x27;)
+p.introduce()</code></pre>
+    </div>
+  </details>
+</article>
+
+<article class="card" id="q3">
+  <h3><span class="badge">3번</span> 문제</h3>
+
+  <div class="q-box">
+    <p class="q-desc"><strong>생성자(__init__) — 나이까지 저장</strong><br/><code>Person(name, age)</code> 형태로 생성자를 만들고, <code>show()</code> 메서드로 <code>이름: (name), 나이: (age)</code>를 출력하세요.</p>
+  </div>
+
+  <details class="qa hint" open>
+    <summary>힌트 / 출력</summary>
+    <div class="details-body">
+      <div class="muted">호출 예시</div>
+      <pre><code>p = Person(&#x27;지현&#x27;, 25)
+p.show()</code></pre>
+      <div class="muted">출력 예시</div>
+      <pre><code>이름: 지현, 나이: 25</code></pre>
+    </div>
+  </details>
+
+  <details class="qa answer">
+    <summary>정답 코드 보기</summary>
+    <div class="details-body">
+      <div class="badge code">정답</div>
+      <pre><code>class Person:
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+
+    def show(self):
+        print(f&#x27;이름: {self.name}, 나이: {self.age}&#x27;)
+
+p = Person(&#x27;지현&#x27;, 25)
+p.show()</code></pre>
+    </div>
+  </details>
+</article>
+
+<article class="card" id="q4">
+  <h3><span class="badge">4번</span> 문제</h3>
+
+  <div class="q-box">
+    <p class="q-desc"><strong>메서드(method) — 1년 나이 증가</strong><br/><code>Person</code> 클래스에 <code>birthday()</code> 메서드를 작성하세요. 호출하면 나이가 1 증가하고 <code>나이: (age)</code>를 출력하세요.</p>
+  </div>
+
+  <details class="qa hint" open>
+    <summary>힌트 / 출력</summary>
+    <div class="details-body">
+      <div class="muted">호출 예시</div>
+      <pre><code>p = Person(&#x27;지현&#x27;, 25)
+p.birthday()</code></pre>
+      <div class="muted">출력 예시</div>
+      <pre><code>나이: 26</code></pre>
+    </div>
+  </details>
+
+  <details class="qa answer">
+    <summary>정답 코드 보기</summary>
+    <div class="details-body">
+      <div class="badge code">정답</div>
+      <pre><code>class Person:
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+
+    def birthday(self):
+        self.age += 1
+        print(f&#x27;나이: {self.age}&#x27;)
+
+p = Person(&#x27;지현&#x27;, 25)
+p.birthday()</code></pre>
+    </div>
+  </details>
+</article>
+
+<article class="card" id="q5">
+  <h3><span class="badge">5번</span> 문제</h3>
+
+  <div class="q-box">
+    <p class="q-desc"><strong>인스턴스 여러 개 — 서로 다른 상태</strong><br/><code>Counter</code> 클래스를 만들고, 인스턴스 변수 <code>value</code>를 0으로 시작하세요. <code>inc()</code>를 호출하면 1 증가 후 현재 값을 출력하세요. 인스턴스를 2개 만들어 서로 독립인지 확인하세요.</p>
+  </div>
+
+  <details class="qa hint" open>
+    <summary>힌트 / 출력</summary>
+    <div class="details-body">
+      <div class="muted">호출 예시</div>
+      <pre><code>a = Counter()
+b = Counter()
+a.inc()
+a.inc()
+b.inc()</code></pre>
+      <div class="muted">출력 예시</div>
+      <pre><code>1
+2
+1</code></pre>
+    </div>
+  </details>
+
+  <details class="qa answer">
+    <summary>정답 코드 보기</summary>
+    <div class="details-body">
+      <div class="badge code">정답</div>
+      <pre><code>class Counter:
+    def __init__(self):
+        self.value = 0
+
+    def inc(self):
+        self.value += 1
+        print(self.value)
+
+a = Counter()
+b = Counter()
+a.inc()
+a.inc()
+b.inc()</code></pre>
+    </div>
+  </details>
+</article>
+
+<article class="card" id="q6">
+  <h3><span class="badge">6번</span> 문제</h3>
+
+  <div class="q-box">
+    <p class="q-desc"><strong>클래스 실전 — Rectangle 넓이/둘레</strong><br/><code>Rectangle(w, h)</code> 클래스를 만들고 <code>area()</code>, <code>perimeter()</code> 메서드를 작성하세요. 각각 넓이와 둘레를 반환하세요.</p>
+  </div>
+
+  <details class="qa hint" open>
+    <summary>힌트 / 출력</summary>
+    <div class="details-body">
+      <div class="muted">호출 예시</div>
+      <pre><code>r = Rectangle(3, 5)
+print(r.area())
+print(r.perimeter())</code></pre>
+      <div class="muted">출력 예시</div>
+      <pre><code>15
+16</code></pre>
+    </div>
+  </details>
+
+  <details class="qa answer">
+    <summary>정답 코드 보기</summary>
+    <div class="details-body">
+      <div class="badge code">정답</div>
+      <pre><code>class Rectangle:
+    def __init__(self, w, h):
+        self.w = w
+        self.h = h
+
+    def area(self):
+        return self.w * self.h
+
+    def perimeter(self):
+        return 2 * (self.w + self.h)
+
+r = Rectangle(3, 5)
+print(r.area())
+print(r.perimeter())</code></pre>
+    </div>
+  </details>
+</article>
+
+<article class="card" id="q7">
+  <h3><span class="badge">7번</span> 문제</h3>
+
+  <div class="q-box">
+    <p class="q-desc"><strong>클래스 실전 — BankAccount 입금/출금</strong><br/><code>BankAccount(balance)</code> 클래스를 만들고 <code>deposit(amount)</code>, <code>withdraw(amount)</code> 메서드를 작성하세요. 출금 후 잔액을 반환하세요.</p>
+  </div>
+
+  <details class="qa hint" open>
+    <summary>힌트 / 출력</summary>
+    <div class="details-body">
+      <div class="muted">호출 예시</div>
+      <pre><code>acc = BankAccount(10000)
+acc.deposit(2000)
+print(acc.withdraw(3000))</code></pre>
+      <div class="muted">출력 예시</div>
+      <pre><code>9000</code></pre>
+    </div>
+  </details>
+
+  <details class="qa answer">
+    <summary>정답 코드 보기</summary>
+    <div class="details-body">
+      <div class="badge code">정답</div>
+      <pre><code>class BankAccount:
+    def __init__(self, balance):
+        self.balance = balance
+
+    def deposit(self, amount):
+        self.balance += amount
+
+    def withdraw(self, amount):
+        self.balance -= amount
+        return self.balance
+
+acc = BankAccount(10000)
+acc.deposit(2000)
+print(acc.withdraw(3000))</code></pre>
+    </div>
+  </details>
+</article>
+
+<article class="card" id="q8">
+  <h3><span class="badge">8번</span> 문제</h3>
+
+  <div class="q-box">
+    <p class="q-desc"><strong>클래스 실전 — BankAccount 잔액 부족 처리</strong><br/>위 <code>BankAccount</code>에 잔액 부족이면 출금하지 말고 <code>잔액 부족</code>을 출력한 뒤 현재 잔액을 반환하도록 수정하세요.</p>
+  </div>
+
+  <details class="qa hint" open>
+    <summary>힌트 / 출력</summary>
+    <div class="details-body">
+      <div class="muted">호출 예시</div>
+      <pre><code>acc = BankAccount(1000)
+print(acc.withdraw(3000))</code></pre>
+      <div class="muted">출력 예시</div>
+      <pre><code>잔액 부족
+1000</code></pre>
+    </div>
+  </details>
+
+  <details class="qa answer">
+    <summary>정답 코드 보기</summary>
+    <div class="details-body">
+      <div class="badge code">정답</div>
+      <pre><code>class BankAccount:
+    def __init__(self, balance):
+        self.balance = balance
+
+    def withdraw(self, amount):
+        if amount &gt; self.balance:
+            print(&#x27;잔액 부족&#x27;)
+            return self.balance
+        self.balance -= amount
+        return self.balance
+
+acc = BankAccount(1000)
+print(acc.withdraw(3000))</code></pre>
+    </div>
+  </details>
+</article>
+
+<article class="card" id="q9">
+  <h3><span class="badge">9번</span> 문제</h3>
+
+  <div class="q-box">
+    <p class="q-desc"><strong>클래스 실전 — Student 평균 점수</strong><br/><code>Student(name, scores)</code> 클래스를 만들고 <code>average()</code> 메서드로 평균을 반환하세요.</p>
+  </div>
+
+  <details class="qa hint" open>
+    <summary>힌트 / 출력</summary>
+    <div class="details-body">
+      <div class="muted">호출 예시</div>
+      <pre><code>s = Student(&#x27;민수&#x27;, [80, 90, 70])
+print(s.average())</code></pre>
+      <div class="muted">출력 예시</div>
+      <pre><code>80.0</code></pre>
+    </div>
+  </details>
+
+  <details class="qa answer">
+    <summary>정답 코드 보기</summary>
+    <div class="details-body">
+      <div class="badge code">정답</div>
+      <pre><code>class Student:
+    def __init__(self, name, scores):
+        self.name = name
+        self.scores = scores
+
+    def average(self):
+        return sum(self.scores) / len(self.scores)
+
+s = Student(&#x27;민수&#x27;, [80, 90, 70])
+print(s.average())</code></pre>
+    </div>
+  </details>
+</article>
+
+<article class="card" id="q10">
+  <h3><span class="badge">10번</span> 문제</h3>
+
+  <div class="q-box">
+    <p class="q-desc"><strong>클래스 실전 — Todo 완료 처리</strong><br/><code>Todo(text)</code> 클래스를 만들고, 완료 여부 <code>done</code>을 False로 시작하세요. <code>finish()</code> 메서드를 호출하면 done=True로 바꾸고 <code>완료</code>를 출력하세요.</p>
+  </div>
+
+  <details class="qa hint" open>
+    <summary>힌트 / 출력</summary>
+    <div class="details-body">
+      <div class="muted">호출 예시</div>
+      <pre><code>t = Todo(&#x27;공부하기&#x27;)
+t.finish()
+print(t.done)</code></pre>
+      <div class="muted">출력 예시</div>
+      <pre><code>완료
+True</code></pre>
+    </div>
+  </details>
+
+  <details class="qa answer">
+    <summary>정답 코드 보기</summary>
+    <div class="details-body">
+      <div class="badge code">정답</div>
+      <pre><code>class Todo:
+    def __init__(self, text):
+        self.text = text
+        self.done = False
+
+    def finish(self):
+        self.done = True
+        print(&#x27;완료&#x27;)
+
+t = Todo(&#x27;공부하기&#x27;)
+t.finish()
+print(t.done)</code></pre>
+    </div>
+  </details>
+</article>
+
+<article class="card" id="q11">
+  <h3><span class="badge">11번</span> 문제</h3>
+
+  <div class="q-box">
+    <p class="q-desc"><strong>상속 — Animal/Dog</strong><br/><code>Animal</code> 클래스에 <code>sound()</code> 메서드를 만들고 <code>Dog</code>가 상속받게 하세요. Dog는 sound를 오버라이딩하여 <code>멍멍</code>을 출력하세요.</p>
+  </div>
+
+  <details class="qa hint" open>
+    <summary>힌트 / 출력</summary>
+    <div class="details-body">
+      <div class="muted">호출 예시</div>
+      <pre><code>a = Animal()
+d = Dog()
+a.sound()
+d.sound()</code></pre>
+      <div class="muted">출력 예시</div>
+      <pre><code>동물 소리
+멍멍</code></pre>
+    </div>
+  </details>
+
+  <details class="qa answer">
+    <summary>정답 코드 보기</summary>
+    <div class="details-body">
+      <div class="badge code">정답</div>
+      <pre><code>class Animal:
+    def sound(self):
+        print(&#x27;동물 소리&#x27;)
+
+class Dog(Animal):
+    def sound(self):
+        print(&#x27;멍멍&#x27;)
+
+a = Animal()
+d = Dog()
+a.sound()
+d.sound()</code></pre>
+    </div>
+  </details>
+</article>
+
+<article class="card" id="q12">
+  <h3><span class="badge">12번</span> 문제</h3>
+
+  <div class="q-box">
+    <p class="q-desc"><strong>상속 — Vehicle/Car 생성자</strong><br/><code>Vehicle</code> 클래스에 생성자(<code>__init__</code>)로 <code>brand</code>를 저장하세요. <code>Car</code>가 상속받고, <code>info()</code> 메서드로 브랜드를 출력하세요.</p>
+  </div>
+
+  <details class="qa hint" open>
+    <summary>힌트 / 출력</summary>
+    <div class="details-body">
+      <div class="muted">호출 예시</div>
+      <pre><code>c = Car(&#x27;Hyundai&#x27;)
+c.info()</code></pre>
+      <div class="muted">출력 예시</div>
+      <pre><code>brand: Hyundai</code></pre>
+    </div>
+  </details>
+
+  <details class="qa answer">
+    <summary>정답 코드 보기</summary>
+    <div class="details-body">
+      <div class="badge code">정답</div>
+      <pre><code>class Vehicle:
+    def __init__(self, brand):
+        self.brand = brand
+
+class Car(Vehicle):
+    def info(self):
+        print(f&#x27;brand: {self.brand}&#x27;)
+
+c = Car(&#x27;Hyundai&#x27;)
+c.info()</code></pre>
+    </div>
+  </details>
+</article>
+
+<article class="card" id="q13">
+  <h3><span class="badge">13번</span> 문제</h3>
+
+  <div class="q-box">
+    <p class="q-desc"><strong>오버라이딩 — greet 메시지 변경</strong><br/><code>Parent</code>의 <code>greet()</code>는 <code>안녕</code>을 출력합니다. <code>Child</code>는 오버라이딩하여 <code>안녕! 저는 자식입니다</code>를 출력하세요.</p>
+  </div>
+
+  <details class="qa hint" open>
+    <summary>힌트 / 출력</summary>
+    <div class="details-body">
+      <div class="muted">호출 예시</div>
+      <pre><code>p = Parent()
+c = Child()
+p.greet()
+c.greet()</code></pre>
+      <div class="muted">출력 예시</div>
+      <pre><code>안녕
+안녕! 저는 자식입니다</code></pre>
+    </div>
+  </details>
+
+  <details class="qa answer">
+    <summary>정답 코드 보기</summary>
+    <div class="details-body">
+      <div class="badge code">정답</div>
+      <pre><code>class Parent:
+    def greet(self):
+        print(&#x27;안녕&#x27;)
+
+class Child(Parent):
+    def greet(self):
+        print(&#x27;안녕! 저는 자식입니다&#x27;)
+
+p = Parent()
+c = Child()
+p.greet()
+c.greet()</code></pre>
+    </div>
+  </details>
+</article>
+
+<article class="card" id="q14">
+  <h3><span class="badge">14번</span> 문제</h3>
+
+  <div class="q-box">
+    <p class="q-desc"><strong>상속 실전 — Shape/Circle 면적</strong><br/><code>Shape</code>에 <code>area()</code> 메서드를 만들고 기본은 0을 반환하게 하세요. <code>Circle(r)</code>이 상속받아 면적을 오버라이딩하여 반환하세요. (pi=3.14)</p>
+  </div>
+
+  <details class="qa hint" open>
+    <summary>힌트 / 출력</summary>
+    <div class="details-body">
+      <div class="muted">호출 예시</div>
+      <pre><code>s = Shape()
+c = Circle(2)
+print(s.area())
+print(c.area())</code></pre>
+      <div class="muted">출력 예시</div>
+      <pre><code>0
+12.56</code></pre>
+    </div>
+  </details>
+
+  <details class="qa answer">
+    <summary>정답 코드 보기</summary>
+    <div class="details-body">
+      <div class="badge code">정답</div>
+      <pre><code>class Shape:
+    def area(self):
+        return 0
+
+class Circle(Shape):
+    def __init__(self, r):
+        self.r = r
+
+    def area(self):
+        return 3.14 * self.r * self.r
+
+s = Shape()
+c = Circle(2)
+print(s.area())
+print(c.area())</code></pre>
+    </div>
+  </details>
+</article>
+
+<article class="card" id="q15">
+  <h3><span class="badge">15번</span> 문제</h3>
+
+  <div class="q-box">
+    <p class="q-desc"><strong>상속 실전 — Employee/Manager</strong><br/><code>Employee(name)</code>는 <code>work()</code>에서 <code>(name) working</code>을 출력합니다. <code>Manager</code>는 오버라이딩해서 <code>(name) managing</code>을 출력하세요.</p>
+  </div>
+
+  <details class="qa hint" open>
+    <summary>힌트 / 출력</summary>
+    <div class="details-body">
+      <div class="muted">호출 예시</div>
+      <pre><code>e = Employee(&#x27;A&#x27;)
+m = Manager(&#x27;B&#x27;)
+e.work()
+m.work()</code></pre>
+      <div class="muted">출력 예시</div>
+      <pre><code>A working
+B managing</code></pre>
+    </div>
+  </details>
+
+  <details class="qa answer">
+    <summary>정답 코드 보기</summary>
+    <div class="details-body">
+      <div class="badge code">정답</div>
+      <pre><code>class Employee:
+    def __init__(self, name):
+        self.name = name
+
+    def work(self):
+        print(f&#x27;{self.name} working&#x27;)
+
+class Manager(Employee):
+    def work(self):
+        print(f&#x27;{self.name} managing&#x27;)
+
+e = Employee(&#x27;A&#x27;)
+m = Manager(&#x27;B&#x27;)
+e.work()
+m.work()</code></pre>
+    </div>
+  </details>
+</article>
+</section>
+<section class="section" id="sec2">
+  <h2>2) 상속 &amp; 오버라이딩 &amp; 오버로딩 개념 (16~25)</h2>
+  <article class="card" id="q16">
+  <h3><span class="badge">16번</span> 문제</h3>
+
+  <div class="q-box">
+    <p class="q-desc"><strong>오버로딩 흉내 — 기본값으로 처리</strong><br/>파이썬은 같은 이름의 메서드를 여러 개 만들 수 없습니다. 대신 기본값으로 처리합니다. <code>Printer</code> 클래스에 <code>print_msg(msg, times=1)</code> 메서드를 만들어 msg를 times번 출력하세요.</p>
+  </div>
+
+  <details class="qa hint" open>
+    <summary>힌트 / 출력</summary>
+    <div class="details-body">
+      <div class="muted">호출 예시</div>
+      <pre><code>p = Printer()
+p.print_msg(&#x27;hi&#x27;)
+p.print_msg(&#x27;hi&#x27;, 3)</code></pre>
+      <div class="muted">출력 예시</div>
+      <pre><code>hi
+hi
+hi
+hi</code></pre>
+    </div>
+  </details>
+
+  <details class="qa answer">
+    <summary>정답 코드 보기</summary>
+    <div class="details-body">
+      <div class="badge code">정답</div>
+      <pre><code>class Printer:
+    def print_msg(self, msg, times=1):
+        for _ in range(times):
+            print(msg)
+
+p = Printer()
+p.print_msg(&#x27;hi&#x27;)
+p.print_msg(&#x27;hi&#x27;, 3)</code></pre>
+    </div>
+  </details>
+</article>
+
+<article class="card" id="q17">
+  <h3><span class="badge">17번</span> 문제</h3>
+
+  <div class="q-box">
+    <p class="q-desc"><strong>오버로딩 흉내 — *args로 처리</strong><br/><code>Adder</code> 클래스에 <code>add(*args)</code> 메서드를 작성하세요. 인자가 1개면 그 값, 2개면 합, 3개 이상이면 모두 합을 반환하세요.</p>
+  </div>
+
+  <details class="qa hint" open>
+    <summary>힌트 / 출력</summary>
+    <div class="details-body">
+      <div class="muted">호출 예시</div>
+      <pre><code>a = Adder()
+print(a.add(5))
+print(a.add(3,4))
+print(a.add(1,2,3,4))</code></pre>
+      <div class="muted">출력 예시</div>
+      <pre><code>5
+7
+10</code></pre>
+    </div>
+  </details>
+
+  <details class="qa answer">
+    <summary>정답 코드 보기</summary>
+    <div class="details-body">
+      <div class="badge code">정답</div>
+      <pre><code>class Adder:
+    def add(self, *args):
+        if len(args) == 1:
+            return args[0]
+        return sum(args)
+
+a = Adder()
+print(a.add(5))
+print(a.add(3,4))
+print(a.add(1,2,3,4))</code></pre>
+    </div>
+  </details>
+</article>
+
+<article class="card" id="q18">
+  <h3><span class="badge">18번</span> 문제</h3>
+
+  <div class="q-box">
+    <p class="q-desc"><strong>클래스 속성 — 공유 값 확인</strong><br/><code>Cat</code> 클래스에 클래스 속성 <code>species = 'cat'</code>을 두고, 인스턴스 2개에서 모두 출력하세요.</p>
+  </div>
+
+  <details class="qa hint" open>
+    <summary>힌트 / 출력</summary>
+    <div class="details-body">
+      <div class="muted">호출 예시</div>
+      <pre><code>c1 = Cat()
+c2 = Cat()
+print(c1.species)
+print(c2.species)</code></pre>
+      <div class="muted">출력 예시</div>
+      <pre><code>cat
+cat</code></pre>
+    </div>
+  </details>
+
+  <details class="qa answer">
+    <summary>정답 코드 보기</summary>
+    <div class="details-body">
+      <div class="badge code">정답</div>
+      <pre><code>class Cat:
+    species = &#x27;cat&#x27;
+
+c1 = Cat()
+c2 = Cat()
+print(c1.species)
+print(c2.species)</code></pre>
+    </div>
+  </details>
+</article>
+
+<article class="card" id="q19">
+  <h3><span class="badge">19번</span> 문제</h3>
+
+  <div class="q-box">
+    <p class="q-desc"><strong>클래스 속성 — 인스턴스에서 덮어쓰기</strong><br/>위 <code>Cat</code>에서 한 인스턴스의 <code>species</code>를 'tiger'로 바꾸고 두 인스턴스를 출력해 차이를 확인하세요.</p>
+  </div>
+
+  <details class="qa hint" open>
+    <summary>힌트 / 출력</summary>
+    <div class="details-body">
+      <div class="muted">호출 예시</div>
+      <pre><code>c1 = Cat()
+c2 = Cat()
+c1.species = &#x27;tiger&#x27;
+print(c1.species)
+print(c2.species)
+print(Cat.species)</code></pre>
+      <div class="muted">출력 예시</div>
+      <pre><code>tiger
+cat
+cat</code></pre>
+    </div>
+  </details>
+
+  <details class="qa answer">
+    <summary>정답 코드 보기</summary>
+    <div class="details-body">
+      <div class="badge code">정답</div>
+      <pre><code>class Cat:
+    species = &#x27;cat&#x27;
+
+c1 = Cat()
+c2 = Cat()
+c1.species = &#x27;tiger&#x27;
+print(c1.species)
+print(c2.species)
+print(Cat.species)</code></pre>
+    </div>
+  </details>
+</article>
+
+<article class="card" id="q20">
+  <h3><span class="badge">20번</span> 문제</h3>
+
+  <div class="q-box">
+    <p class="q-desc"><strong>클래스 속성 — 인스턴스 개수 세기</strong><br/><code>Book</code> 클래스에 클래스 속성 <code>count</code>를 두고, 인스턴스를 만들 때마다 1씩 증가시키세요. 3개 만들고 <code>Book.count</code>를 출력하세요.</p>
+  </div>
+
+  <details class="qa hint" open>
+    <summary>힌트 / 출력</summary>
+    <div class="details-body">
+      <div class="muted">호출 예시</div>
+      <pre><code>b1 = Book(&#x27;A&#x27;)
+b2 = Book(&#x27;B&#x27;)
+b3 = Book(&#x27;C&#x27;)
+print(Book.count)</code></pre>
+      <div class="muted">출력 예시</div>
+      <pre><code>3</code></pre>
+    </div>
+  </details>
+
+  <details class="qa answer">
+    <summary>정답 코드 보기</summary>
+    <div class="details-body">
+      <div class="badge code">정답</div>
+      <pre><code>class Book:
+    count = 0
+
+    def __init__(self, title):
+        self.title = title
+        Book.count += 1
+
+b1 = Book(&#x27;A&#x27;)
+b2 = Book(&#x27;B&#x27;)
+b3 = Book(&#x27;C&#x27;)
+print(Book.count)</code></pre>
+    </div>
+  </details>
+</article>
+
+<article class="card" id="q21">
+  <h3><span class="badge">21번</span> 문제</h3>
+
+  <div class="q-box">
+    <p class="q-desc"><strong>비공개 속성 — __balance</strong><br/><code>Wallet</code> 클래스에 비공개 속성 <code>__balance</code>를 만들고, <code>deposit</code>과 <code>get_balance</code> 메서드로만 접근할 수 있게 하세요.</p>
+  </div>
+
+  <details class="qa hint" open>
+    <summary>힌트 / 출력</summary>
+    <div class="details-body">
+      <div class="muted">호출 예시</div>
+      <pre><code>w = Wallet(1000)
+w.deposit(500)
+print(w.get_balance())</code></pre>
+      <div class="muted">출력 예시</div>
+      <pre><code>1500</code></pre>
+    </div>
+  </details>
+
+  <details class="qa answer">
+    <summary>정답 코드 보기</summary>
+    <div class="details-body">
+      <div class="badge code">정답</div>
+      <pre><code>class Wallet:
+    def __init__(self, balance):
+        self.__balance = balance
+
+    def deposit(self, amount):
+        self.__balance += amount
+
+    def get_balance(self):
+        return self.__balance
+
+w = Wallet(1000)
+w.deposit(500)
+print(w.get_balance())</code></pre>
+    </div>
+  </details>
+</article>
+
+<article class="card" id="q22">
+  <h3><span class="badge">22번</span> 문제</h3>
+
+  <div class="q-box">
+    <p class="q-desc"><strong>비공개 속성 — 직접 접근 시도해보기</strong><br/>위 Wallet에서 <code>w.__balance</code>로 직접 접근하면 오류가 납니다. try/except로 오류 메시지를 출력해보세요.</p>
+  </div>
+
+  <details class="qa hint" open>
+    <summary>힌트 / 출력</summary>
+    <div class="details-body">
+      <div class="muted">호출 예시</div>
+      <pre><code>w = Wallet(1000)
+try:
+    print(w.__balance)
+except Exception as e:
+    print(type(e).__name__)</code></pre>
+      <div class="muted">출력 예시</div>
+      <pre><code>AttributeError</code></pre>
+    </div>
+  </details>
+
+  <details class="qa answer">
+    <summary>정답 코드 보기</summary>
+    <div class="details-body">
+      <div class="badge code">정답</div>
+      <pre><code>class Wallet:
+    def __init__(self, balance):
+        self.__balance = balance
+
+w = Wallet(1000)
+try:
+    print(w.__balance)
+except Exception as e:
+    print(type(e).__name__)</code></pre>
+    </div>
+  </details>
+</article>
+
+<article class="card" id="q23">
+  <h3><span class="badge">23번</span> 문제</h3>
+
+  <div class="q-box">
+    <p class="q-desc"><strong>정적메서드 — 두 수 중 큰 값</strong><br/><code>MathUtil</code> 클래스에 정적 메서드 <code>max2(a, b)</code>를 만들고 큰 값을 반환하세요.</p>
+  </div>
+
+  <details class="qa hint" open>
+    <summary>힌트 / 출력</summary>
+    <div class="details-body">
+      <div class="muted">호출 예시</div>
+      <pre><code>print(MathUtil.max2(3, 7))</code></pre>
+      <div class="muted">출력 예시</div>
+      <pre><code>7</code></pre>
+    </div>
+  </details>
+
+  <details class="qa answer">
+    <summary>정답 코드 보기</summary>
+    <div class="details-body">
+      <div class="badge code">정답</div>
+      <pre><code>class MathUtil:
+    @staticmethod
+    def max2(a, b):
+        return a if a &gt; b else b
+
+print(MathUtil.max2(3, 7))</code></pre>
+    </div>
+  </details>
+</article>
+
+<article class="card" id="q24">
+  <h3><span class="badge">24번</span> 문제</h3>
+
+  <div class="q-box">
+    <p class="q-desc"><strong>정적메서드 — 문자열 검사</strong><br/><code>TextUtil</code> 클래스에 정적 메서드 <code>is_long(s, n=5)</code>를 만들고 문자열 길이가 n 이상이면 True를 반환하세요.</p>
+  </div>
+
+  <details class="qa hint" open>
+    <summary>힌트 / 출력</summary>
+    <div class="details-body">
+      <div class="muted">호출 예시</div>
+      <pre><code>print(TextUtil.is_long(&#x27;hello&#x27;))
+print(TextUtil.is_long(&#x27;hi&#x27;))</code></pre>
+      <div class="muted">출력 예시</div>
+      <pre><code>True
+False</code></pre>
+    </div>
+  </details>
+
+  <details class="qa answer">
+    <summary>정답 코드 보기</summary>
+    <div class="details-body">
+      <div class="badge code">정답</div>
+      <pre><code>class TextUtil:
+    @staticmethod
+    def is_long(s, n=5):
+        return len(s) &gt;= n
+
+print(TextUtil.is_long(&#x27;hello&#x27;))
+print(TextUtil.is_long(&#x27;hi&#x27;))</code></pre>
+    </div>
+  </details>
+</article>
+
+<article class="card" id="q25">
+  <h3><span class="badge">25번</span> 문제</h3>
+
+  <div class="q-box">
+    <p class="q-desc"><strong>클래스메서드 — 대체 생성자 from_string</strong><br/><code>Point</code> 클래스에 x,y를 저장하는 생성자를 만들고, 클래스메서드 <code>from_string('3,4')</code>으로 Point를 만드는 기능을 추가하세요.</p>
+  </div>
+
+  <details class="qa hint" open>
+    <summary>힌트 / 출력</summary>
+    <div class="details-body">
+      <div class="muted">호출 예시</div>
+      <pre><code>p = Point.from_string(&#x27;3,4&#x27;)
+print(p.x, p.y)</code></pre>
+      <div class="muted">출력 예시</div>
+      <pre><code>3 4</code></pre>
+    </div>
+  </details>
+
+  <details class="qa answer">
+    <summary>정답 코드 보기</summary>
+    <div class="details-body">
+      <div class="badge code">정답</div>
+      <pre><code>class Point:
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+
+    @classmethod
+    def from_string(cls, s):
+        a, b = s.split(&#x27;,&#x27;)
+        return cls(int(a), int(b))
+
+p = Point.from_string(&#x27;3,4&#x27;)
+print(p.x, p.y)</code></pre>
+    </div>
+  </details>
+</article>
+</section>
+<section class="section" id="sec3">
+  <h2>3) 클래스 속성/비공개 속성/정적·클래스 메서드 (26~35)</h2>
+  <article class="card" id="q26">
+  <h3><span class="badge">26번</span> 문제</h3>
+
+  <div class="q-box">
+    <p class="q-desc"><strong>클래스메서드 — 인스턴스 개수 세기(대체 생성자 사용)</strong><br/><code>User</code> 클래스에 클래스 속성 <code>count</code>를 두고, <code>__init__</code>에서 증가시키세요. 또한 클래스메서드 <code>guest()</code>는 이름이 'guest'인 사용자를 만들어 반환하세요. guest를 2번 만들고 count 출력하세요.</p>
+  </div>
+
+  <details class="qa hint" open>
+    <summary>힌트 / 출력</summary>
+    <div class="details-body">
+      <div class="muted">호출 예시</div>
+      <pre><code>u1 = User.guest()
+u2 = User.guest()
+print(User.count)
+print(u1.name)</code></pre>
+      <div class="muted">출력 예시</div>
+      <pre><code>2
+guest</code></pre>
+    </div>
+  </details>
+
+  <details class="qa answer">
+    <summary>정답 코드 보기</summary>
+    <div class="details-body">
+      <div class="badge code">정답</div>
+      <pre><code>class User:
+    count = 0
+
+    def __init__(self, name):
+        self.name = name
+        User.count += 1
+
+    @classmethod
+    def guest(cls):
+        return cls(&#x27;guest&#x27;)
+
+u1 = User.guest()
+u2 = User.guest()
+print(User.count)
+print(u1.name)</code></pre>
+    </div>
+  </details>
+</article>
+
+<article class="card" id="q27">
+  <h3><span class="badge">27번</span> 문제</h3>
+
+  <div class="q-box">
+    <p class="q-desc"><strong>클래스 — Calculator 사칙연산 메서드</strong><br/><code>Calculator</code> 클래스에 <code>add(a,b)</code>, <code>sub(a,b)</code>, <code>mul(a,b)</code>, <code>div(a,b)</code> 메서드를 작성하세요. div는 0으로 나누면 <code>None</code>을 반환하세요.</p>
+  </div>
+
+  <details class="qa hint" open>
+    <summary>힌트 / 출력</summary>
+    <div class="details-body">
+      <div class="muted">호출 예시</div>
+      <pre><code>c = Calculator()
+print(c.add(3,4))
+print(c.div(10,0))</code></pre>
+      <div class="muted">출력 예시</div>
+      <pre><code>7
+None</code></pre>
+    </div>
+  </details>
+
+  <details class="qa answer">
+    <summary>정답 코드 보기</summary>
+    <div class="details-body">
+      <div class="badge code">정답</div>
+      <pre><code>class Calculator:
+    def add(self, a, b):
+        return a + b
+    def sub(self, a, b):
+        return a - b
+    def mul(self, a, b):
+        return a * b
+    def div(self, a, b):
+        if b == 0:
+            return None
+        return a / b
+
+c = Calculator()
+print(c.add(3,4))
+print(c.div(10,0))</code></pre>
+    </div>
+  </details>
+</article>
+
+<article class="card" id="q28">
+  <h3><span class="badge">28번</span> 문제</h3>
+
+  <div class="q-box">
+    <p class="q-desc"><strong>인스턴스 변수 — 온도 변환기</strong><br/><code>Temperature</code> 클래스에 섭씨(c)를 저장하고 <code>to_f()</code>로 화씨를 반환하세요. (F = C*9/5 + 32)</p>
+  </div>
+
+  <details class="qa hint" open>
+    <summary>힌트 / 출력</summary>
+    <div class="details-body">
+      <div class="muted">호출 예시</div>
+      <pre><code>t = Temperature(0)
+print(t.to_f())</code></pre>
+      <div class="muted">출력 예시</div>
+      <pre><code>32.0</code></pre>
+    </div>
+  </details>
+
+  <details class="qa answer">
+    <summary>정답 코드 보기</summary>
+    <div class="details-body">
+      <div class="badge code">정답</div>
+      <pre><code>class Temperature:
+    def __init__(self, c):
+        self.c = c
+    def to_f(self):
+        return self.c * 9/5 + 32
+
+t = Temperature(0)
+print(t.to_f())</code></pre>
+    </div>
+  </details>
+</article>
+
+<article class="card" id="q29">
+  <h3><span class="badge">29번</span> 문제</h3>
+
+  <div class="q-box">
+    <p class="q-desc"><strong>상속 — Animal/Cat</strong><br/><code>Cat</code> 클래스가 <code>Animal</code>을 상속받고 <code>sound()</code>를 오버라이딩해 <code>야옹</code>을 출력하세요.</p>
+  </div>
+
+  <details class="qa hint" open>
+    <summary>힌트 / 출력</summary>
+    <div class="details-body">
+      <div class="muted">호출 예시</div>
+      <pre><code>c = Cat()
+c.sound()</code></pre>
+      <div class="muted">출력 예시</div>
+      <pre><code>야옹</code></pre>
+    </div>
+  </details>
+
+  <details class="qa answer">
+    <summary>정답 코드 보기</summary>
+    <div class="details-body">
+      <div class="badge code">정답</div>
+      <pre><code>class Animal:
+    def sound(self):
+        print(&#x27;동물 소리&#x27;)
+
+class Cat(Animal):
+    def sound(self):
+        print(&#x27;야옹&#x27;)
+
+c = Cat()
+c.sound()</code></pre>
+    </div>
+  </details>
+</article>
+
+<article class="card" id="q30">
+  <h3><span class="badge">30번</span> 문제</h3>
+
+  <div class="q-box">
+    <p class="q-desc"><strong>오버라이딩 — 속도 제한 적용</strong><br/><code>Car</code> 클래스에 <code>speed</code>를 저장하고 <code>accelerate(amount)</code>로 speed를 올리세요. <code>SportsCar</code>는 상속받아 speed가 200을 넘으면 200으로 제한되게 오버라이딩하세요.</p>
+  </div>
+
+  <details class="qa hint" open>
+    <summary>힌트 / 출력</summary>
+    <div class="details-body">
+      <div class="muted">호출 예시</div>
+      <pre><code>s = SportsCar(195)
+s.accelerate(10)
+print(s.speed)</code></pre>
+      <div class="muted">출력 예시</div>
+      <pre><code>200</code></pre>
+    </div>
+  </details>
+
+  <details class="qa answer">
+    <summary>정답 코드 보기</summary>
+    <div class="details-body">
+      <div class="badge code">정답</div>
+      <pre><code>class Car:
+    def __init__(self, speed):
+        self.speed = speed
+    def accelerate(self, amount):
+        self.speed += amount
+
+class SportsCar(Car):
+    def accelerate(self, amount):
+        self.speed += amount
+        if self.speed &gt; 200:
+            self.speed = 200
+
+s = SportsCar(195)
+s.accelerate(10)
+print(s.speed)</code></pre>
+    </div>
+  </details>
+</article>
+
+<article class="card" id="q31">
+  <h3><span class="badge">31번</span> 문제</h3>
+
+  <div class="q-box">
+    <p class="q-desc"><strong>클래스 속성 — 기본 세율</strong><br/><code>Tax</code> 클래스에 클래스 속성 <code>rate=0.1</code>을 두고, <code>calc(price)</code> 인스턴스 메서드로 price*rate를 반환하세요.</p>
+  </div>
+
+  <details class="qa hint" open>
+    <summary>힌트 / 출력</summary>
+    <div class="details-body">
+      <div class="muted">호출 예시</div>
+      <pre><code>t = Tax()
+print(t.calc(10000))</code></pre>
+      <div class="muted">출력 예시</div>
+      <pre><code>1000.0</code></pre>
+    </div>
+  </details>
+
+  <details class="qa answer">
+    <summary>정답 코드 보기</summary>
+    <div class="details-body">
+      <div class="badge code">정답</div>
+      <pre><code>class Tax:
+    rate = 0.1
+    def calc(self, price):
+        return price * Tax.rate
+
+t = Tax()
+print(t.calc(10000))</code></pre>
+    </div>
+  </details>
+</article>
+
+<article class="card" id="q32">
+  <h3><span class="badge">32번</span> 문제</h3>
+
+  <div class="q-box">
+    <p class="q-desc"><strong>정적메서드 — 날짜 문자열 검증(간단)</strong><br/><code>DateUtil</code>에 정적메서드 <code>is_yyyy_mm_dd(s)</code>를 작성하세요. 길이가 10이고 5번째와 8번째가 '-'이면 True를 반환하세요.</p>
+  </div>
+
+  <details class="qa hint" open>
+    <summary>힌트 / 출력</summary>
+    <div class="details-body">
+      <div class="muted">호출 예시</div>
+      <pre><code>print(DateUtil.is_yyyy_mm_dd(&#x27;2026-01-05&#x27;))
+print(DateUtil.is_yyyy_mm_dd(&#x27;20260105&#x27;))</code></pre>
+      <div class="muted">출력 예시</div>
+      <pre><code>True
+False</code></pre>
+    </div>
+  </details>
+
+  <details class="qa answer">
+    <summary>정답 코드 보기</summary>
+    <div class="details-body">
+      <div class="badge code">정답</div>
+      <pre><code>class DateUtil:
+    @staticmethod
+    def is_yyyy_mm_dd(s):
+        return len(s) == 10 and s[4] == &#x27;-&#x27; and s[7] == &#x27;-&#x27;
+
+print(DateUtil.is_yyyy_mm_dd(&#x27;2026-01-05&#x27;))
+print(DateUtil.is_yyyy_mm_dd(&#x27;20260105&#x27;))</code></pre>
+    </div>
+  </details>
+</article>
+
+<article class="card" id="q33">
+  <h3><span class="badge">33번</span> 문제</h3>
+
+  <div class="q-box">
+    <p class="q-desc"><strong>클래스메서드 — 원둘레 객체 만들기</strong><br/><code>Circle</code> 클래스에 r을 저장하고 둘레를 반환하는 <code>circumference()</code>를 만드세요. 그리고 클래스메서드 <code>unit()</code>는 r=1인 Circle을 반환하게 하세요. (pi=3.14)</p>
+  </div>
+
+  <details class="qa hint" open>
+    <summary>힌트 / 출력</summary>
+    <div class="details-body">
+      <div class="muted">호출 예시</div>
+      <pre><code>c = Circle.unit()
+print(c.circumference())</code></pre>
+      <div class="muted">출력 예시</div>
+      <pre><code>6.28</code></pre>
+    </div>
+  </details>
+
+  <details class="qa answer">
+    <summary>정답 코드 보기</summary>
+    <div class="details-body">
+      <div class="badge code">정답</div>
+      <pre><code>class Circle:
+    def __init__(self, r):
+        self.r = r
+    def circumference(self):
+        return 2 * 3.14 * self.r
+    @classmethod
+    def unit(cls):
+        return cls(1)
+
+c = Circle.unit()
+print(c.circumference())</code></pre>
+    </div>
+  </details>
+</article>
+
+<article class="card" id="q34">
+  <h3><span class="badge">34번</span> 문제</h3>
+
+  <div class="q-box">
+    <p class="q-desc"><strong>비공개 속성 — 비밀번호 저장</strong><br/><code>Account</code> 클래스에 비공개 속성 <code>__password</code>를 저장하고, <code>check(pw)</code> 메서드에서 일치하면 True를 반환하세요.</p>
+  </div>
+
+  <details class="qa hint" open>
+    <summary>힌트 / 출력</summary>
+    <div class="details-body">
+      <div class="muted">호출 예시</div>
+      <pre><code>a = Account(&#x27;1234&#x27;)
+print(a.check(&#x27;1111&#x27;))
+print(a.check(&#x27;1234&#x27;))</code></pre>
+      <div class="muted">출력 예시</div>
+      <pre><code>False
+True</code></pre>
+    </div>
+  </details>
+
+  <details class="qa answer">
+    <summary>정답 코드 보기</summary>
+    <div class="details-body">
+      <div class="badge code">정답</div>
+      <pre><code>class Account:
+    def __init__(self, password):
+        self.__password = password
+    def check(self, pw):
+        return pw == self.__password
+
+a = Account(&#x27;1234&#x27;)
+print(a.check(&#x27;1111&#x27;))
+print(a.check(&#x27;1234&#x27;))</code></pre>
+    </div>
+  </details>
+</article>
+
+<article class="card" id="q35">
+  <h3><span class="badge">35번</span> 문제</h3>
+
+  <div class="q-box">
+    <p class="q-desc"><strong>클래스 — Product 할인 적용</strong><br/><code>Product(name, price)</code>를 만들고 <code>discount(rate)</code>에서 price를 (1-rate)로 갱신하세요. 갱신 후 price를 반환하세요.</p>
+  </div>
+
+  <details class="qa hint" open>
+    <summary>힌트 / 출력</summary>
+    <div class="details-body">
+      <div class="muted">호출 예시</div>
+      <pre><code>p = Product(&#x27;pen&#x27;, 1000)
+print(p.discount(0.2))</code></pre>
+      <div class="muted">출력 예시</div>
+      <pre><code>800.0</code></pre>
+    </div>
+  </details>
+
+  <details class="qa answer">
+    <summary>정답 코드 보기</summary>
+    <div class="details-body">
+      <div class="badge code">정답</div>
+      <pre><code>class Product:
+    def __init__(self, name, price):
+        self.name = name
+        self.price = price
+    def discount(self, rate):
+        self.price = self.price * (1 - rate)
+        return self.price
+
+p = Product(&#x27;pen&#x27;, 1000)
+print(p.discount(0.2))</code></pre>
+    </div>
+  </details>
+</article>
+</section>
+<section class="section" id="sec4">
+  <h2>4) 종합 연습 (36~40)</h2>
+  <article class="card" id="q36">
+  <h3><span class="badge">36번</span> 문제</h3>
+
+  <div class="q-box">
+    <p class="q-desc"><strong>클래스 — Team 멤버 추가</strong><br/><code>Team(name)</code> 클래스에 멤버 리스트를 두고 <code>add_member(member)</code>로 멤버를 추가하세요. <code>count()</code>로 멤버 수를 반환하세요.</p>
+  </div>
+
+  <details class="qa hint" open>
+    <summary>힌트 / 출력</summary>
+    <div class="details-body">
+      <div class="muted">호출 예시</div>
+      <pre><code>t = Team(&#x27;A&#x27;)
+t.add_member(&#x27;kim&#x27;)
+t.add_member(&#x27;lee&#x27;)
+print(t.count())</code></pre>
+      <div class="muted">출력 예시</div>
+      <pre><code>2</code></pre>
+    </div>
+  </details>
+
+  <details class="qa answer">
+    <summary>정답 코드 보기</summary>
+    <div class="details-body">
+      <div class="badge code">정답</div>
+      <pre><code>class Team:
+    def __init__(self, name):
+        self.name = name
+        self.members = []
+    def add_member(self, member):
+        self.members.append(member)
+    def count(self):
+        return len(self.members)
+
+t = Team(&#x27;A&#x27;)
+t.add_member(&#x27;kim&#x27;)
+t.add_member(&#x27;lee&#x27;)
+print(t.count())</code></pre>
+    </div>
+  </details>
+</article>
+
+<article class="card" id="q37">
+  <h3><span class="badge">37번</span> 문제</h3>
+
+  <div class="q-box">
+    <p class="q-desc"><strong>상속 + super() — Student 생성자 확장</strong><br/> <code>Person(name)</code> 클래스를 만들고, <code>Student(Person)</code>가 이를 상속받아 <code>grade</code>까지 저장하도록 작성하세요. Student의 생성자에서 <code>super().__init__(name)</code>을 사용하세요. <code>info()</code>는 <code>name=(name), grade=(grade)</code>를 출력합니다.</p>
+  </div>
+
+  <details class="qa hint" open>
+    <summary>힌트 / 출력</summary>
+    <div class="details-body">
+      <div class="muted">호출 예시</div>
+      <pre><code>s = Student(&#x27;민수&#x27;, 3)
+s.info()</code></pre>
+      <div class="muted">출력 예시</div>
+      <pre><code>name=민수, grade=3</code></pre>
+    </div>
+  </details>
+
+  <details class="qa answer">
+    <summary>정답 코드 보기</summary>
+    <div class="details-body">
+      <div class="badge code">정답</div>
+      <pre><code>class Person:
+    def __init__(self, name):
+        self.name = name
+
+class Student(Person):
+    def __init__(self, name, grade):
+        super().__init__(name)
+        self.grade = grade
+
+    def info(self):
+        print(f&#x27;name={self.name}, grade={self.grade}&#x27;)
+
+s = Student(&#x27;민수&#x27;, 3)
+s.info()</code></pre>
+    </div>
+  </details>
+</article>
+
+<article class="card" id="q38">
+  <h3><span class="badge">38번</span> 문제</h3>
+
+  <div class="q-box">
+    <p class="q-desc"><strong>클래스메서드 — Book.from_dict 대체 생성자</strong><br/> <code>Book(title, price)</code> 클래스를 만들고, 클래스메서드 <code>from_dict(d)</code>를 작성하세요. 딕셔너리 <code>{'title': ..., 'price': ...}</code>로부터 Book 인스턴스를 만들어 반환해야 합니다.</p>
+  </div>
+
+  <details class="qa hint" open>
+    <summary>힌트 / 출력</summary>
+    <div class="details-body">
+      <div class="muted">호출 예시</div>
+      <pre><code>d = {&#x27;title&#x27;: &#x27;Python&#x27;, &#x27;price&#x27;: 12000}
+b = Book.from_dict(d)
+print(b.title, b.price)</code></pre>
+      <div class="muted">출력 예시</div>
+      <pre><code>Python 12000</code></pre>
+    </div>
+  </details>
+
+  <details class="qa answer">
+    <summary>정답 코드 보기</summary>
+    <div class="details-body">
+      <div class="badge code">정답</div>
+      <pre><code>class Book:
+    def __init__(self, title, price):
+        self.title = title
+        self.price = price
+
+    @classmethod
+    def from_dict(cls, d):
+        return cls(d[&#x27;title&#x27;], d[&#x27;price&#x27;])
+
+d = {&#x27;title&#x27;: &#x27;Python&#x27;, &#x27;price&#x27;: 12000}
+b = Book.from_dict(d)
+print(b.title, b.price)</code></pre>
+    </div>
+  </details>
+</article>
+
+<article class="card" id="q39">
+  <h3><span class="badge">39번</span> 문제</h3>
+
+  <div class="q-box">
+    <p class="q-desc"><strong>정적메서드 — 점수 유효성 검사</strong><br/> <code>ScoreUtil</code> 클래스에 정적메서드 <code>is_valid(score)</code>를 작성하세요. 점수가 0~100(포함) 범위면 True, 아니면 False를 반환해야 합니다.</p>
+  </div>
+
+  <details class="qa hint" open>
+    <summary>힌트 / 출력</summary>
+    <div class="details-body">
+      <div class="muted">호출 예시</div>
+      <pre><code>print(ScoreUtil.is_valid(100))
+print(ScoreUtil.is_valid(-1))
+print(ScoreUtil.is_valid(101))</code></pre>
+      <div class="muted">출력 예시</div>
+      <pre><code>True
+False
+False</code></pre>
+    </div>
+  </details>
+
+  <details class="qa answer">
+    <summary>정답 코드 보기</summary>
+    <div class="details-body">
+      <div class="badge code">정답</div>
+      <pre><code>class ScoreUtil:
+    @staticmethod
+    def is_valid(score):
+        return 0 &lt;= score &lt;= 100
+
+print(ScoreUtil.is_valid(100))
+print(ScoreUtil.is_valid(-1))
+print(ScoreUtil.is_valid(101))</code></pre>
+    </div>
+  </details>
+</article>
+
+<article class="card" id="q40">
+  <h3><span class="badge">40번</span> 문제</h3>
+
+  <div class="q-box">
+    <p class="q-desc"><strong>클래스메서드 — 설정값 변경하기</strong><br/> <code>Config</code> 클래스에 클래스 속성 <code>mode='dev'</code>를 두세요. 클래스메서드 <code>set_mode(new_mode)</code>로 mode를 바꾸고, <code>get_mode()</code>로 현재 mode를 반환하세요.</p>
+  </div>
+
+  <details class="qa hint" open>
+    <summary>힌트 / 출력</summary>
+    <div class="details-body">
+      <div class="muted">호출 예시</div>
+      <pre><code>print(Config.get_mode())
+Config.set_mode(&#x27;prod&#x27;)
+print(Config.get_mode())</code></pre>
+      <div class="muted">출력 예시</div>
+      <pre><code>dev
+prod</code></pre>
+    </div>
+  </details>
+
+  <details class="qa answer">
+    <summary>정답 코드 보기</summary>
+    <div class="details-body">
+      <div class="badge code">정답</div>
+      <pre><code>class Config:
+    mode = &#x27;dev&#x27;
+
+    @classmethod
+    def set_mode(cls, new_mode):
+        cls.mode = new_mode
+
+    @classmethod
+    def get_mode(cls):
+        return cls.mode
+
+print(Config.get_mode())
+Config.set_mode(&#x27;prod&#x27;)
+print(Config.get_mode())</code></pre>
+    </div>
+  </details>
+</article>
+</section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <p class="footer-text">HTML 파일과 styles.css를 같은 폴더에 두고 열면 스타일이 적용된다.</p>
+    </div>
+  </footer>
+</body>
+</html>

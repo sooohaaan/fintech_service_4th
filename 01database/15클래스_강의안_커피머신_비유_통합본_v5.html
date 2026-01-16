@@ -1,0 +1,688 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>클래스 만들기 강의안 (커피머신 비유 · 상세 확장판)</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="header">
+    <div class="container">
+      <span class="badge">Python OOP · Class</span>
+      <h1 class="title">클래스 만들기 강의안 (커피머신 비유 · 상세 확장판)</h1>
+      <p class="subtitle">초보자도 이해할 만큼 아주 자세하게, 하지만 중급 이상 강의에서도 부족하지 않도록 클래스/인스턴스/self/메서드/상속/오버라이딩까지 설명합니다.</p>
+      <nav class="toc" aria-label="목차">
+        <a href="#sec-0">0. 목표와 비유</a>
+        <a href="#sec-1">1. 클래스가 왜 필요한가</a>
+<a href="#sec-2">2. 클래스란 무엇인가</a>
+<a href="#sec-3">3. 클래스 사용 방법 (아주 중요 · 원래 강의안 스타일로 상세)</a>
+<a href="#sec-4">4. __init__ 메서드 (출고 시 기본 세팅)</a>
+<a href="#sec-5">5. 속성(Attribute) – 커피머신의 상태</a>
+<a href="#sec-6">6. 메서드(Method) – 커피머신의 버튼(기능)</a>
+<a href="#sec-7">7. self의 의미 (초보자가 가장 많이 헷갈리는 포인트)</a>
+<a href="#sec-8">8. 메서드 확장 – 메뉴 버튼 늘리기</a>
+<a href="#sec-9">9. 상속(Inheritance) – 기능 업그레이드 키트</a>
+<a href="#sec-10">10. 오버라이딩(Overriding) – 기존 버튼 성능 교체</a>
+<a href="#sec-11">11. 전체 개념 요약</a>
+<a href="#sec-12">12. (종합 실습) 단계별로 직접 만들어보기</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="section" id="sec-0"><h2>0. 목표와 비유</h2><div class="card"><p class="p"># 클래스 만들기 강의안 (커피머신 비유 · 상세 확장판)</p>
+<div class="note"><p class="p">목표: <strong>초보자도 이해할 만큼 아주 자세하게</strong>, 하지만 <strong>중급 이상 강의에서도 부족하지 않도록</strong> 클래스/인스턴스/self/메서드/상속/오버라이딩까지 탄탄하게 설명한다.  비유(끝까지 일관 유지) - <strong>클래스(Class)</strong>: ☕ 커피머신 <strong>공장(설계도)</strong> - <strong>인스턴스(Instance)</strong>: 공장에서 만들어져 <strong>사용자에게 배송된 커피머신(실물 1대)</strong> - <strong>속성(Attribute)</strong>: 물/원두 같은 <strong>머신의 상태(현재 값)</strong> - <strong>메서드(Method)</strong>: 에스프레소/룽고/아메리카노/스팀 같은 <strong>버튼(기능)</strong> - <strong>self</strong>: 버튼을 누른 <strong>“내(사용자) 머신”</strong> - <strong>상속(Inheritance)</strong>: 🔧 기존 머신에 끼우는 <strong>기능 업그레이드 키트</strong></p></div></div></section><section class="section" id="sec-1">
+<h2>1. 클래스가 왜 필요한가</h2>
+<div class="card">
+<h3>1-1. 절차적 방식이나 함수 방식의 한계</h3>
+<p class="p">❌ 기존 방식의 비유: 커피머신 1대를 여러 사람이 돌려 쓰는 상황</p>
+<ul class="list"><li>회사에 커피머신이 <strong>1대</strong>뿐이다.</li><li>여러 사람이 번갈아 커피를 뽑는다.</li><li>머신의 상태(물/원두)는 <strong>모두가 공유</strong>한다.</li></ul>
+<pre><code class="language-python">water = 1000
+beans = 500
+
+def make_espresso():
+    global water, beans
+    water -= 50
+    beans -= 20</code></pre>
+<p class="p">이 방식이 현실에서 불편한 이유:</p>
+<ul class="list"><li>샐리는 연하게, 존은 진하게 마시고 싶은데 <strong>개인 맞춤 세팅이 불가능</strong></li><li>샐리가 커피를 뽑으면 물이 줄어들고, 그게 <strong>존에게 그대로 영향</strong></li><li>“에스프레소 버튼”은 있는데, “<strong>누구의 머신인지</strong>”가 없다(사용자별 상태를 분리할 방법이 없다)</li></ul>
+<p class="p">👉 즉, 기능은 있어도 <strong>사용자별로 독립적인 ‘내 머신’</strong>을 가질 수 없는 구조다.</p>
+</div>
+<div class="card">
+<h3>1-2. 클래스가 해결하는 문제 (공장 비유)</h3>
+<p class="p">이 문제를 해결하려면 발상을 바꿔야 한다.</p>
+<ul class="list"><li>커피머신 1대를 돌려 쓰는 게 아니라</li><li><strong>커피머신을 만들어서 사람마다 한 대씩 배송</strong>해주면 된다.</li></ul>
+<p class="p">즉,</p>
+<ul class="list"><li>먼저 <strong>커피머신 공장(클래스)</strong> 을 만들고</li><li>공장에서 사용자의 수만큼 머신을 생산(인스턴스 생성)해서</li><li>각자에게 배송한다.</li></ul>
+<p class="p">그러면:</p>
+<ul class="list"><li>샐리 머신과 존 머신은 <strong>서로 다른 물통/원두통</strong>을 갖는다.</li><li>샐리가 커피를 뽑아도 존 머신에는 영향이 없다.</li><li>개인별 세팅(초기 물/원두 등)도 가능하다.</li></ul>
+<p class="p">👉 이때의 <strong>공장 = 클래스(Class)</strong>, <strong>배송된 머신 1대 = 인스턴스(Instance)</strong> 이다.</p>
+</div>
+</section><section class="section" id="sec-2">
+<h2>2. 클래스란 무엇인가</h2>
+<div class="card">
+<h3>2-1. 클래스 = 커피머신 공장(설계도)</h3>
+<p class="p">클래스는 <strong>객체를 만들기 위한 설계도/공장</strong>이다.</p>
+<ul class="list"><li>클래스 자체는 “실물 머신”이 아니다.</li><li>“이런 모양의 머신을 만들겠다”는 규칙을 정의한다.</li></ul>
+<pre><code class="language-python">class CoffeeMachine:
+    pass</code></pre>
+<p class="p">이 코드의 의미:</p>
+<ul class="list"><li>&quot;커피머신이라는 공장(설계도)을 하나 만들었다&quot;</li><li>아직 기능/상태는 없는 빈 공장</li></ul>
+</div>
+</section><section class="section" id="sec-3">
+<h2>3. 클래스 사용 방법 (아주 중요 · 원래 강의안 스타일로 상세)</h2>
+<div class="card">
+<h3>3-1. 변수에 클래스를 담아서 인스턴스 생성</h3>
+<p class="p">클래스를 실제로 쓰려면 <strong>인스턴스</strong>를 만들어야 한다.</p>
+<div class="note"><p class="p">인스턴스 생성 공식 - <strong>인스턴스 변수명 = 클래스명()</strong></p></div>
+<p class="p">예:</p>
+<pre><code class="language-python">sally_machine = CoffeeMachine()</code></pre>
+<p class="p">한 줄을 아주 자세히 해석하면:</p>
+<ul class="list"><li><code>CoffeeMachine</code> : 커피머신 공장(설계도)</li><li><code>CoffeeMachine()</code> : 공장에서 커피머신을 <strong>1대 생산</strong></li><li><code>sally_machine</code> : 그 머신을 <strong>샐리에게 배송</strong>했다고 생각하면 된다(샐리의 머신을 가리키는 변수)</li></ul>
+<p class="p">👉 이렇게 이름을 지으면 학생이 바로 느낀다:</p>
+<ul class="list"><li><code>sally_machine</code> = “샐리가 쓰는 커피머신”</li></ul>
+</div>
+<div class="card">
+<h3>3-2. 인스턴스를 생성하고 나면 메서드를 사용할 수 있다</h3>
+<p class="p">인스턴스를 만든 뒤에는 다음 형태로 기능(버튼)을 사용한다.</p>
+<div class="note"><p class="p">사용 공식 - <strong>인스턴스변수명.메서드()</strong></p></div>
+<p class="p">예:</p>
+<pre><code class="language-python">sally_machine.espresso()</code></pre>
+<p class="p">비유:</p>
+<ul class="list"><li>샐리가 자기 커피머신에서 “에스프레소 버튼”을 누르는 것</li></ul>
+</div>
+</section><section class="section" id="sec-4">
+<h2>4. __init__ 메서드 (출고 시 기본 세팅)</h2>
+<div class="card">
+<h3>4-1. __init__은 “출고 시 자동 세팅”</h3>
+<p class="p"><code>__init__</code>은 인스턴스를 만드는 순간 <strong>자동 실행</strong>되는 특별한 메서드다.</p>
+<p class="p">현실 비유:</p>
+<ul class="list"><li>공장에서 머신을 만들 때</li><li>&quot;물은 얼마 채워서 보낼까? 원두는 얼마 넣을까?&quot; 같은 <strong>출고 기본 세팅</strong></li></ul>
+<pre><code class="language-python">class CoffeeMachine:
+    def __init__(self, water, beans):
+        self.water = water
+        self.beans = beans</code></pre>
+<p class="p">이제 인스턴스를 만들 때 출고 세팅을 같이 넣는다.</p>
+<pre><code class="language-python">sally_machine = CoffeeMachine(1000, 500)</code></pre>
+<p class="p">해석:</p>
+<ul class="list"><li>공장에서 만든 샐리 머신에는</li><li>물 1000ml, 원두 500g을 채워서 배송했다.</li></ul>
+</div>
+</section><section class="section" id="sec-5">
+<h2>5. 속성(Attribute) – 커피머신의 상태</h2>
+<div class="card">
+<p class="p">속성은 인스턴스가 가진 <strong>현재 상태 값</strong>이다.</p>
+</div>
+<div class="card">
+<pre><code class="language-python">print(sally_machine.water)
+print(sally_machine.beans)</code></pre>
+</div>
+<div class="card">
+<p class="p">설명:</p>
+</div>
+<div class="card">
+<ul class="list"><li><code>sally_machine.water</code>는 “샐리 머신 물통 상태”</li><li>속성은 인스턴스마다 독립적이다.</li></ul>
+</div>
+</section><section class="section" id="sec-6">
+<h2>6. 메서드(Method) – 커피머신의 버튼(기능)</h2>
+<div class="card">
+<h3>6-1. 메서드는 클래스 안에 있는 함수</h3>
+<p class="p">메서드는 “클래스 안에 정의된 함수”이며,</p>
+<p class="p">인스턴스가 할 수 있는 행동(기능)이다.</p>
+<p class="p">비유:</p>
+<ul class="list"><li><code>espresso()</code> : 에스프레소 버튼</li><li><code>lungo()</code> : 룽고 버튼</li><li><code>americano()</code> : 아메리카노 버튼</li><li><code>steam()</code> : 스팀 기능</li></ul>
+</div>
+<div class="card">
+<h3>6-2. (기존 예제 흐름) 에스프레소 버튼 만들기</h3>
+<pre><code class="language-python">class CoffeeMachine:
+    def __init__(self, water, beans):
+        self.water = water
+        self.beans = beans
+
+    def espresso(self):
+        print(&quot;에스프레소 추출&quot;)
+        self.water -= 50
+        self.beans -= 20</code></pre>
+<p class="p">사용:</p>
+<pre><code class="language-python">sally_machine = CoffeeMachine(1000, 500)
+sally_machine.espresso()
+print(sally_machine.water, sally_machine.beans)</code></pre>
+</div>
+</section><section class="section" id="sec-7">
+<h2>7. self의 의미 (초보자가 가장 많이 헷갈리는 포인트)</h2>
+<div class="card">
+<h3>7-1. self = ‘버튼을 누른 그 머신’ (사용자 관점으로 이해)</h3>
+<p class="p"><code>self</code>는 <strong>현재 메서드를 호출한 인스턴스</strong>를 뜻한다.</p>
+<ul class="list"><li><code>sally_machine.espresso()</code>를 실행하면</li><li><code>espresso(self)</code>에서 <code>self</code>는 곧 <strong>sally_machine</strong> 이다.</li></ul>
+<p class="p">즉,</p>
+<ul class="list"><li><code>self.water</code>는 “샐리 머신의 물”</li><li><code>self.beans</code>는 “샐리 머신의 원두”</li></ul>
+</div>
+<div class="card">
+<h3>7-2. 사용자 2명 예제로 self 확실히 잡기</h3>
+<pre><code class="language-python">sally_machine = CoffeeMachine(1000, 500)
+john_machine = CoffeeMachine(800, 300)
+
+sally_machine.espresso()
+john_machine.espresso()
+
+print(&quot;Sally:&quot;, sally_machine.water, sally_machine.beans)
+print(&quot;John:&quot;, john_machine.water, john_machine.beans)</code></pre>
+<p class="p">설명:</p>
+<ul class="list"><li>샐리가 버튼을 누르면 샐리 머신만 변한다.</li><li>존이 버튼을 누르면 존 머신만 변한다.</li><li>서로의 상태가 절대 섞이지 않는다.</li></ul>
+<p class="p">👉 이게 바로 “개인별 머신 배송(인스턴스)”의 핵심 장점이다.</p>
+</div>
+</section><section class="section" id="sec-8">
+<h2>8. 메서드 확장 – 메뉴 버튼 늘리기</h2>
+<div class="card">
+<p class="p">기존 흐름을 유지하며 메뉴를 확장한다.</p>
+</div>
+<div class="card">
+<pre><code class="language-python">class CoffeeMachine:
+    def __init__(self, water, beans):
+        self.water = water
+        self.beans = beans
+
+    def espresso(self):
+        print(&quot;에스프레소&quot;)
+        self.water -= 50
+        self.beans -= 20
+
+    def americano(self):
+        print(&quot;아메리카노&quot;)
+        self.water -= 150
+        self.beans -= 20
+
+    def lungo(self):
+        print(&quot;룽고&quot;)
+        self.water -= 120
+        self.beans -= 20</code></pre>
+</div>
+<div class="card">
+<p class="p">비유:</p>
+</div>
+<div class="card">
+<ul class="list"><li>공장에서 만든 커피머신에 버튼이 추가되는 것</li></ul>
+</div>
+</section><section class="section" id="sec-9">
+<h2>9. 상속(Inheritance) – 기능 업그레이드 키트</h2>
+<div class="card">
+<h3>9-1. 상속이 필요한 이유</h3>
+<p class="p">모든 커피머신이 같은 기능을 가지진 않는다.</p>
+<ul class="list"><li>기본 모델: 에스프레소/아메리카노 정도</li><li>프리미엄 모델: 여기에 스팀, 라떼 기능까지</li></ul>
+<p class="p">이때 “기본 모델 설계도를 재사용하면서” 기능만 추가하고 싶다.</p>
+<p class="p">👉 그래서 상속을 사용한다.</p>
+</div>
+<div class="card">
+<h3>9-2. 상속 기본 형태 (기존 예제 흐름 유지)</h3>
+<pre><code class="language-python">class PremiumCoffeeMachine(CoffeeMachine):
+    def steam(self):
+        print(&quot;우유 스팀&quot;)</code></pre>
+<p class="p">비유:</p>
+<ul class="list"><li>기본 커피머신에 <strong>스팀 업그레이드 키트</strong>를 장착한 버전</li></ul>
+<p class="p">사용:</p>
+<pre><code class="language-python">sally_premium_machine = PremiumCoffeeMachine(1000, 500)
+sally_premium_machine.espresso()   # 기본 기능
+sally_premium_machine.steam()      # 업그레이드 기능</code></pre>
+</div>
+</section><section class="section" id="sec-10">
+<h2>10. 오버라이딩(Overriding) – 기존 버튼 성능 교체</h2>
+<div class="card">
+<p class="p">오버라이딩은:</p>
+</div>
+<div class="card">
+<ul class="list"><li>&quot;같은 버튼 이름&quot;을 쓰되</li><li>내부 동작을 새 버전으로 <strong>덮어쓰는 것</strong>이다.</li></ul>
+</div>
+<div class="card">
+<pre><code class="language-python">class PremiumCoffeeMachine(CoffeeMachine):
+    def americano(self):
+        print(&quot;프리미엄 아메리카노&quot;)
+        self.water -= 160
+        self.beans -= 25</code></pre>
+</div>
+<div class="card">
+<p class="p">비유:</p>
+</div>
+<div class="card">
+<ul class="list"><li>‘아메리카노 버튼’은 그대로인데</li><li>프리미엄 모델에서 더 진하고 고급스럽게 추출되도록 업그레이드된 것</li></ul>
+</div>
+</section><section class="section" id="sec-11">
+<h2>11. 전체 개념 요약</h2>
+<div class="card">
+<table class="table"><thead><tr><th>개념</th><th>비유</th><th>한 줄 요약</th></tr></thead><tbody><tr><td>클래스</td><td>커피머신 공장</td><td>객체를 만드는 설계도</td></tr><tr><td>인스턴스</td><td>배송된 커피머신</td><td>실제로 사용하는 머신 1대</td></tr><tr><td>속성</td><td>물/원두 상태</td><td>머신의 현재 값</td></tr><tr><td>메서드</td><td>버튼(기능)</td><td>머신이 할 수 있는 행동</td></tr><tr><td>self</td><td>내 머신</td><td>버튼 누른 그 인스턴스</td></tr><tr><td>상속</td><td>업그레이드 키트</td><td>기존 설계도 재사용 + 기능 추가</td></tr><tr><td>오버라이딩</td><td>버튼 성능 교체</td><td>같은 이름의 기능을 새로 구현</td></tr></tbody></table>
+</div>
+</section><section class="section" id="sec-12">
+<h2>12. (종합 실습) 단계별로 직접 만들어보기</h2>
+<div class="card">
+<ol class="ol"><li><code>CoffeeMachine</code> 만들기</li></ol>
+</div>
+<div class="card">
+<ul class="list"><li><code>__init__</code>으로 물/원두 세팅</li><li><code>espresso()</code> 구현</li></ul>
+</div>
+<div class="card">
+<ol class="ol"><li>사용자 2명 만들기</li></ol>
+</div>
+<div class="card">
+<ul class="list"><li><code>sally_machine</code>, <code>john_machine</code></li><li>각자 커피 뽑고 상태 확인</li></ul>
+</div>
+<div class="card">
+<ol class="ol"><li>메뉴 확장</li></ol>
+</div>
+<div class="card">
+<ul class="list"><li><code>americano()</code>, <code>lungo()</code> 추가</li></ul>
+</div>
+<div class="card">
+<ol class="ol"><li>프리미엄 머신 만들기(상속)</li></ol>
+</div>
+<div class="card">
+<ul class="list"><li><code>PremiumCoffeeMachine(CoffeeMachine)</code></li><li><code>steam()</code> 추가</li></ul>
+</div>
+<div class="card">
+<ol class="ol"><li>오버라이딩 도전</li></ol>
+</div>
+<div class="card">
+<ul class="list"><li>프리미엄 <code>americano()</code>를 더 고급 버전으로 변경</li></ul>
+</div>
+<div class="card">
+<h3>마지막 메시지</h3>
+<div class="note"><p class="p">클래스는 문법 암기 과목이 아니라, 현실 세계(사람마다 다른 커피머신)를 코드로 옮기는 방법이다.</p></div>
+<p class="p">이 비유가 이해되면,</p>
+<ul class="list"><li>은행 계좌(사용자마다 잔고/거래내역이 다른 객체)</li><li>데이터 수집기(사이트마다 설정이 다른 객체)</li></ul>
+<p class="p">도 같은 방식으로 만들 수 있다.</p>
+</div>
+</section>
+  
+<section class="section" id="sec-13">
+  <h2>13. (고급) 클래스 확장 개념을 실무처럼 익히기</h2>
+
+  <div class="card">
+    <p class="p">이제부터는 “커피머신을 더 똑똑하게 만드는 기능”들을 배우는 파트예요. 실제 서비스(제품) 개발에서 정말 자주 등장합니다.</p>
+  </div>
+
+  <h3>1) 인스턴스 속성 vs 클래스 속성</h3>
+  <div class="card">
+    <p class="p"><strong>인스턴스 속성</strong>은 “각 사용자의 커피머신”마다 달라요. 즉, <strong>기계 1대(인스턴스) 전용 상태</strong>입니다.</p>
+    <ul class="list">
+      <li>예) <code>water_ml</code>(물통에 남은 물), <code>beans_g</code>(원두 잔량), <code>owner_name</code>(사용자 이름)</li>
+    </ul>
+    <p class="p"><strong>클래스 속성</strong>은 “공장에서 만든 모든 커피머신이 공통으로 공유”하는 값이에요. 즉, <strong>모든 기계가 같은 기준을 함께 사용</strong>합니다.</p>
+    <ul class="list">
+      <li>예) <code>brand</code>(브랜드), <code>default_voltage</code>(기본 전압), <code>max_shots</code>(기본 규격)</li>
+    </ul>
+  </div>
+  <div class="card">
+<pre><code class="language-python">class CoffeeMachine:
+    brand = "EasyCafe"         # ✅ 클래스 속성(공유 규격)
+    default_voltage = 220      # ✅ 클래스 속성(공유 규격)
+
+    def __init__(self, owner_name, water_ml):
+        self.owner_name = owner_name  # ✅ 인스턴스 속성(개별 상태)
+        self.water_ml = water_ml      # ✅ 인스턴스 속성(개별 상태)
+
+sally = CoffeeMachine("샐리", 800)
+bob = CoffeeMachine("밥", 400)
+
+print(CoffeeMachine.brand)  # 모든 머신 공통
+print(sally.owner_name, sally.water_ml)
+print(bob.owner_name, bob.water_ml)</code></pre>
+  </div>
+  <div class="card">
+<pre><code>EasyCafe
+샐리 800
+밥 400</code></pre>
+  </div>
+
+  <h3>2) 비공개 속성(프라이빗)과 비공개 클래스 속성</h3>
+  <div class="card">
+    <p class="p">커피머신 내부의 <strong>보안 PIN</strong>, <strong>정비용 시리얼 키</strong>처럼 사용자가 함부로 만지면 안 되는 값이 있죠. 그런 값은 “외부에서 직접 접근하지 말라”는 의도로 <code>__</code>를 붙여 숨깁니다.</p>
+    <ul class="list">
+      <li><strong>비공개 인스턴스 속성</strong>: <code>self.__pin</code> (각 기계별로 다른 PIN)</li>
+      <li><strong>비공개 클래스 속성</strong>: <code>__factory_key</code> (공장 레벨의 내부 키, 공통 공유)</li>
+    </ul>
+    <p class="p muted">참고: 파이썬은 완전 차단이 아니라, 이름을 바꿔서(네임 맹글링) “직접 접근을 어렵게” 만드는 방식이에요.</p>
+  </div>
+  <div class="card">
+<pre><code class="language-python">class CoffeeMachine:
+    __factory_key = "FACTORY-ONLY"   # ✅ 비공개 클래스 속성
+
+    def __init__(self, owner_name):
+        self.owner_name = owner_name
+        self.__pin = "1234"          # ✅ 비공개 인스턴스 속성
+
+    def show_service_menu(self, pin):
+        if pin == self.__pin:
+            return "🛠️ 정비 메뉴 열림"
+        return "⛔ PIN 불일치"
+
+machine = CoffeeMachine("샐리")
+print(machine.show_service_menu("0000"))
+print(machine.show_service_menu("1234"))</code></pre>
+  </div>
+  <div class="card">
+<pre><code>⛔ PIN 불일치
+🛠️ 정비 메뉴 열림</code></pre>
+  </div>
+
+  <h3>3) 오버라이딩(Overriding) — ‘같은 버튼, 다른 결과’</h3>
+  <div class="card">
+    <p class="p">기본 커피머신의 <code>brew()</code> 버튼은 아메리카노를 내리는데, 라떼 머신은 <strong>같은 버튼을 눌러도 라떼가 나오게</strong> 바꿀 수 있어요.</p>
+    <p class="p">👉 <strong>메서드 이름은 같지만</strong> 자식 클래스에서 <strong>동작을 재정의</strong>하는 것이 오버라이딩입니다.</p>
+  </div>
+  <div class="card">
+<pre><code class="language-python">class CoffeeMachine:
+    def brew(self):
+        return "☕ 아메리카노 추출"
+
+class LatteMachine(CoffeeMachine):
+    def brew(self):  # ✅ 오버라이딩
+        return "🥛☕ 라떼 추출"
+
+basic = CoffeeMachine()
+latte = LatteMachine()
+
+print(basic.brew())
+print(latte.brew())</code></pre>
+  </div>
+  <div class="card">
+<pre><code>☕ 아메리카노 추출
+🥛☕ 라떼 추출</code></pre>
+  </div>
+
+  
+<h3>4) 오버로딩(Overloading) — ‘같은 이름, 다른 인자 조합’</h3>
+
+<div class="card">
+  <p class="p">
+    현실의 커피머신으로 치면, 버튼 이름은 “ADD(추가)”로 동일하지만
+    상황에 따라 <strong>샷 2개 추가</strong>, <strong>샷 3개 추가</strong>, <strong>특정 재료는 빼기</strong>처럼
+    <strong>입력(인자) 개수/타입</strong>에 따라 동작이 달라지는 걸 말해요.
+  </p>
+  <p class="p">
+    다만 파이썬은 Java/C++처럼 <em>언어 차원에서</em> “진짜 오버로딩”을 지원하지 않습니다.
+    그래서 보통은 <strong>기본값 매개변수</strong>나 <strong>*args</strong>로 비슷하게 구현했죠.
+  </p>
+</div>
+
+<div class="card">
+  <h4 class="h4">✅ (실습) 외부 패키지로 “진짜 오버로딩” 해보기: <code>multipledispatch</code></h4>
+  <p class="p">
+    이번에는 외부 패키지 <code>multipledispatch</code>를 설치해서,
+    <strong>인자의 개수/타입에 따라 같은 메서드 이름을 여러 개 등록</strong>해보겠습니다.
+  </p>
+
+  <p class="p"><strong>1) 설치</strong> (아래 둘 중 하나)</p>
+  <pre class="code"><code class="language-bash"># (권장) pip 설치
+pip install multipledispatch
+
+# conda 환경이라면(가능한 경우)
+conda install -c conda-forge multipledispatch</code></pre>
+
+  <p class="p"><strong>2) 코드 작성</strong> (실습용)</p>
+  <pre class="code"><code class="language-python">from multipledispatch import dispatch
+
+class OverloadingEx2:
+    @dispatch(int, int)
+    def add(self, x, y):
+        return x + y
+
+    @dispatch(int, int, int)
+    def add(self, x, y, z):
+        return x + y + z
+
+    @dispatch(int, int, int, int)
+    def add(self, x, y, z, a):
+        return x + y + z - a
+
+    @dispatch(float, float, float, float)
+    def add(self, x, y, z, a):
+        return (x + y) - (z * a)
+
+
+m = OverloadingEx2()
+print(m.add(1, 2))
+print(m.add(1, 2, 3))
+print(m.add(1, 2, 3, 4))
+print(m.add(1.0, 2.0, 3.0, 4.0))</code></pre>
+
+  <p class="p"><strong>3) 실행 결과(예상)</strong></p>
+  <pre class="code"><code>3
+6
+2
+-9.0</code></pre>
+
+  <p class="p">
+    같은 <code>add</code> 이름인데도, <strong>인자 개수</strong>와 <strong>타입</strong>에 따라
+    “다른 레시피(동작)”가 선택됩니다.
+    즉, 커피머신으로 치면 <em>같은 버튼을 눌러도 투입 재료/옵션 조합에 따라 다른 음료 레시피를 실행</em>하는 느낌이에요.
+  </p>
+
+  <div class="callout">
+    <p class="p"><strong>주의!</strong></p>
+    <ul class="list">
+      <li><strong>타입이 애매하면</strong> 어떤 오버로드가 선택될지 헷갈릴 수 있어요. (예: <code>1</code> vs <code>1.0</code>)</li>
+      <li>프로젝트에서는 “오버로딩을 꼭 써야만 하는지” 먼저 고민하고, 가능하면 <strong>명확한 메서드 이름</strong>으로 나누는 게 더 읽기 좋을 때도 많습니다.</li>
+    </ul>
+  </div>
+</div>
+<h3>5) 정적 메서드(@staticmethod) — ‘기계 없어도 되는 안내판’</h3>
+  <div class="card">
+    <p class="p">커피머신이 없어도 “원두 보관법” 같은 안내는 할 수 있죠. 이처럼 <strong>인스턴스(self)도 필요 없고</strong>, <strong>클래스(cls)도 필요 없는</strong> 독립 기능이 정적 메서드입니다.</p>
+  </div>
+  <div class="card">
+<pre><code class="language-python">class CoffeeMachine:
+    @staticmethod
+    def bean_storage_tip():
+        return "✅ 원두는 밀봉 + 서늘한 곳에 보관하세요!"
+
+print(CoffeeMachine.bean_storage_tip())</code></pre>
+  </div>
+
+  <h3>6) 클래스 메서드(@classmethod) — ‘공장 규격으로 새 기계 찍어내기’</h3>
+  <div class="card">
+    <p class="p">클래스 메서드는 “공장(클래스)” 관점에서 동작합니다. 그래서 첫 인자가 <code>self</code>가 아니라 <code>cls</code>(클래스 자체)예요.</p>
+    <p class="p">대표 용도는 <strong>대안 생성자</strong>(factory method)입니다. 예를 들면 “기본 세팅으로 빠르게 배송되는 모델”을 만드는 기능이죠.</p>
+  </div>
+  <div class="card">
+<pre><code class="language-python">class CoffeeMachine:
+    def __init__(self, owner_name, water_ml):
+        self.owner_name = owner_name
+        self.water_ml = water_ml
+
+    @classmethod
+    def default_model(cls, owner_name):
+        # ✅ 공장 기본 세팅으로 만들어 주는 생성 방식
+        return cls(owner_name, water_ml=600)
+
+m = CoffeeMachine.default_model("샐리")
+print(m.owner_name, m.water_ml)</code></pre>
+  </div>
+  <div class="card">
+<pre><code>샐리 600</code></pre>
+  </div>
+
+  <h3>7) 추상 클래스(ABC) — ‘최소 기능 규격서(반드시 있어야 하는 버튼)’</h3>
+  <div class="card">
+    <p class="p">커피머신을 만들 때 “전원 버튼은 반드시 있어야 한다”, “추출 버튼은 반드시 있어야 한다” 같은 <strong>최소 규격</strong>이 있죠.</p>
+    <p class="p"><strong>추상 클래스</strong>는 그 “규격서” 역할을 합니다.</p>
+    <ul class="list">
+      <li>추상 클래스 자체로는 “완제품(인스턴스)”을 만들지 못해요.</li>
+      <li>대신 “이 기능(메서드)은 무조건 구현해라!”를 강제합니다.</li>
+    </ul>
+  </div>
+  <div class="card">
+<pre><code class="language-python">from abc import ABC, abstractmethod
+
+class BaseMachine(ABC):
+    @abstractmethod
+    def brew(self):
+        pass  # ✅ 반드시 자식이 구현해야 함
+
+class AmericanoMachine(BaseMachine):
+    def brew(self):
+        return "☕ 아메리카노 추출"
+
+class LatteMachine(BaseMachine):
+    def brew(self):
+        return "🥛☕ 라떼 추출"
+
+a = AmericanoMachine()
+l = LatteMachine()
+print(a.brew())
+print(l.brew())</code></pre>
+  </div>
+  <div class="card">
+<pre><code>☕ 아메리카노 추출
+🥛☕ 라떼 추출</code></pre>
+  </div>
+
+  <div class="card note">
+    <p class="p"><strong>핵심</strong>: 추상 클래스를 쓰면 “커피머신이라면 brew()는 무조건 있어야 한다”가 보장돼서, 팀 개발에서 인터페이스(규격)가 단단해집니다.</p>
+  </div>
+
+  <h3>✅ 정리</h3>
+  <div class="card">
+    <ul class="list">
+      <li><strong>인스턴스 속성</strong>: 사용자 집에 있는 커피머신 1대의 상태</li>
+      <li><strong>클래스 속성</strong>: 공장 규격(모든 기계 공유)</li>
+      <li><strong>비공개 속성</strong>: 내부 회로/보안 PIN 같은 “건드리면 안 되는 값”</li>
+      <li><strong>오버라이딩</strong>: 같은 버튼 이름, 자식 머신에서 동작을 바꿈</li>
+      <li><strong>오버로딩(파이썬식)</strong>: 입력(옵션)에 따라 결과가 달라지게 설계</li>
+      <li><strong>정적 메서드</strong>: 기계 없어도 되는 독립 안내 기능</li>
+      <li><strong>클래스 메서드</strong>: 공장(클래스) 기준으로 객체를 만드는 방식(대안 생성자)</li>
+      <li><strong>추상 클래스</strong>: “필수 버튼 규격서” (반드시 구현할 기능을 강제)</li>
+    </ul>
+  </div>
+</section>
+
+<section class="section" id="sec-14">
+  <h2>14. (심화) 캡슐화·재사용·표현력 높이기</h2>
+
+  <div class="card">
+    <h3>1) property (게터/세터) — “뚜껑 열지 말고 버튼으로만 물통 확인/충전”</h3>
+    <p class="p">
+      커피머신의 물통을 직접 열어 들여다보거나 손으로 붓게 두면 고장 나기 쉽습니다.
+      대신 <strong>전용 버튼</strong>으로만 상태를 확인하고 충전하게 만드는 게 안전하죠.
+      이것이 바로 <strong>property(게터/세터)</strong>입니다.
+    </p>
+    <ul class="list">
+      <li>겉으로는 <code>machine.water</code>처럼 <strong>속성 접근</strong>처럼 보임</li>
+      <li>내부에서는 <strong>검증 로직</strong>이 포함된 메서드가 실행됨</li>
+    </ul>
+
+    <pre class="code"><code class="language-python">class CoffeeMachine:
+    def __init__(self):
+        self._water = 0   # 내부용(직접 접근 X)
+
+    @property
+    def water(self):
+        # 👉 물통 확인 버튼
+        return self._water
+
+    @water.setter
+    def water(self, amount):
+        # 👉 물통 충전 버튼 (검증 포함)
+        if amount < 0:
+            raise ValueError("물의 양은 음수가 될 수 없습니다.")
+        self._water = amount
+
+
+m = CoffeeMachine()
+m.water = 500      # 버튼으로 충전
+print(m.water)     # 버튼으로 확인</code></pre>
+
+    <pre class="code"><code>500</code></pre>
+  </div>
+
+  <div class="card">
+    <h3>2) 상속·다형성 심화 + super() — “부품(부모 기능) 재사용”</h3>
+    <p class="p">
+      라떼 머신은 기본 커피머신의 부품(전원, 펌프, 추출)을 그대로 쓰고,
+      <strong>우유 스팀 기능만 추가</strong>한 제품입니다.
+      이때 부모 기능을 그대로 가져오는 키워드가 <code>super()</code>입니다.
+    </p>
+
+    <pre class="code"><code class="language-python">class CoffeeMachine:
+    def brew(self):
+        return "☕ 기본 커피 추출"
+
+class LatteMachine(CoffeeMachine):
+    def brew(self):
+        base = super().brew()   # ✅ 부모 부품 재사용
+        return base + " + 🥛 우유 스팀"</code></pre>
+
+    <pre class="code"><code class="language-python">m1 = CoffeeMachine()
+m2 = LatteMachine()
+
+print(m1.brew())
+print(m2.brew())</code></pre>
+
+    <pre class="code"><code>☕ 기본 커피 추출
+☕ 기본 커피 추출 + 🥛 우유 스팀</code></pre>
+
+    <p class="p">
+      이렇게 하면 <strong>공통 로직은 한 번만 작성</strong>하고,
+      자식 클래스에서는 “다른 점만” 확장할 수 있어 유지보수가 쉬워집니다.
+    </p>
+  </div>
+
+  <div class="card">
+    <h3>3) 매직 메서드 (__str__, __repr__) — “기계 상태 라벨 출력”</h3>
+    <p class="p">
+      커피머신 옆면에 붙은 <strong>상태 라벨</strong>처럼,
+      객체를 출력했을 때 “사람이 읽기 쉬운 설명”을 붙여주는 기능이
+      <code>__str__</code>와 <code>__repr__</code>입니다.
+    </p>
+
+    <ul class="list">
+      <li><code>__str__</code> : 사용자용 라벨 (print용)</li>
+      <li><code>__repr__</code> : 개발자/디버깅용 상세 라벨</li>
+    </ul>
+
+    <pre class="code"><code class="language-python">class CoffeeMachine:
+    def __init__(self, owner, water):
+        self.owner = owner
+        self.water = water
+
+    def __str__(self):
+        return f"☕ {self.owner}의 커피머신 (물 {self.water}ml)"
+
+    def __repr__(self):
+        return f"CoffeeMachine(owner={self.owner!r}, water={self.water})"
+
+
+m = CoffeeMachine("샐리", 400)
+print(m)
+m</code></pre>
+
+    <pre class="code"><code>☕ 샐리의 커피머신 (물 400ml)
+CoffeeMachine(owner='샐리', water=400)</code></pre>
+
+    <p class="p">
+      실무에서는 로그, 디버깅, Jupyter Notebook 출력에서
+      객체 상태를 빠르게 파악하는 데 매우 중요합니다.
+    </p>
+  </div>
+
+  <div class="card">
+    <h3>✅ 정리</h3>
+    <ul class="list">
+      <li><strong>property</strong> : 직접 만지지 말고, 버튼으로만 상태 제어</li>
+      <li><strong>super()</strong> : 부모 부품을 재사용해서 중복 제거</li>
+      <li><strong>__str__/__repr__</strong> : 객체에 “읽을 수 있는 라벨” 붙이기</li>
+    </ul>
+  </div>
+</section>
+
+</main>
+
+  <footer class="footer">
+    <div class="container">
+      <p class="footer-text">Generated on 2026-01-15 · Source: Markdown → HTML</p>
+    </div>
+  </footer>
+
+
+
+
+
+</body>
+</html>
