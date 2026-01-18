@@ -1,0 +1,762 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>연습문제 08 — 서식지정자와 문자열 포맷팅</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="header">
+    <div class="container">
+      <span class="badge">Python · Jupyter Notebook</span>
+      <h1 class="title">연습문제 08 — 서식지정자와 문자열 포맷팅</h1>
+      <p class="subtitle">노트북(08서식지정자와_문자열_포멧팅.ipynb) 내용을 모두 실습할 수 있도록 구성한 연습문제이다. (% 서식지정자, format 메서드, f-string, 정렬/자리수/채움 포함)</p>
+      <nav class="toc" aria-label="목차">
+        <a href="#sec1">1) % 서식지정자</a>
+        <a href="#sec2">2) format() 메서드</a>
+        <a href="#sec3">3) f-string</a>
+        <a href="#sec4">4) 정렬/자리수/채움</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+<section class="section" id="sec1">
+  <h2>1) % 서식지정자</h2>
+  <article class="card" id="q1">
+  <h3><span class="badge">1번</span> 문제</h3>
+
+  <div class="q-box">
+    <p class="q-desc"><strong>문자열 %s 넣기</strong><br/>아래 변수 <code>subject</code>를 사용해 <code>이 수업의 이름은 (과목) 입니다.</code> 형태로 출력하시오.<br/><br/><code>subject = "국어"</code></p>
+  </div>
+
+  <details class="qa hint" open>
+    <summary>힌트 / 출력</summary>
+    <div class="details-body">
+      <div class='muted'>출력 예시</div><pre><code>이 수업의 이름은 국어 입니다.</code></pre>
+    </div>
+  </details>
+
+  <details class="qa answer">
+    <summary>정답 코드 보기</summary>
+    <div class="details-body">
+      <div class="badge code">정답</div>
+      <pre><code>subject = &quot;국어&quot;
+print(&quot;이 수업의 이름은 %s 입니다.&quot; % subject)</code></pre>
+    </div>
+  </details>
+</article>
+
+<article class="card" id="q2">
+  <h3><span class="badge">2번</span> 문제</h3>
+
+  <div class="q-box">
+    <p class="q-desc"><strong>리스트를 돌며 %s 출력</strong><br/>과목 리스트를 for문으로 돌며 모두 아래 형식으로 출력하시오.<br/><br/><code>subjects = ["국어","수학","사회","영어"]</code></p>
+  </div>
+
+  <details class="qa hint" open>
+    <summary>힌트 / 출력</summary>
+    <div class="details-body">
+      <div class='muted'>출력 예시</div><pre><code>이 수업의 이름은 국어 입니다.
+이 수업의 이름은 수학 입니다.
+이 수업의 이름은 사회 입니다.
+이 수업의 이름은 영어 입니다.</code></pre>
+    </div>
+  </details>
+
+  <details class="qa answer">
+    <summary>정답 코드 보기</summary>
+    <div class="details-body">
+      <div class="badge code">정답</div>
+      <pre><code>subjects = [&quot;국어&quot;,&quot;수학&quot;,&quot;사회&quot;,&quot;영어&quot;]
+for s in subjects:
+    print(&quot;이 수업의 이름은 %s 입니다.&quot; % s)</code></pre>
+    </div>
+  </details>
+</article>
+
+<article class="card" id="q3">
+  <h3><span class="badge">3번</span> 문제</h3>
+
+  <div class="q-box">
+    <p class="q-desc"><strong>%d로 정수 출력</strong><br/>정수 <code>year = 2025</code>를 사용해 <code>올해는 2025년 입니다.</code>를 출력하시오.</p>
+  </div>
+
+  <details class="qa hint" open>
+    <summary>힌트 / 출력</summary>
+    <div class="details-body">
+      <div class='muted'>출력 예시</div><pre><code>올해는 2025년 입니다.</code></pre>
+    </div>
+  </details>
+
+  <details class="qa answer">
+    <summary>정답 코드 보기</summary>
+    <div class="details-body">
+      <div class="badge code">정답</div>
+      <pre><code>year = 2025
+print(&quot;올해는 %d년 입니다.&quot; % year)</code></pre>
+    </div>
+  </details>
+</article>
+
+<article class="card" id="q4">
+  <h3><span class="badge">4번</span> 문제</h3>
+
+  <div class="q-box">
+    <p class="q-desc"><strong>%f로 실수 출력</strong><br/><code>temp = 36.5</code>를 사용해 <code>사람의 정상 체온은 약 36.500000도 입니다.</code>처럼 %f 기본 출력(소수점 6자리)로 출력하시오.</p>
+  </div>
+
+  <details class="qa hint" open>
+    <summary>힌트 / 출력</summary>
+    <div class="details-body">
+      <div class='muted'>출력 예시</div><pre><code>사람의 정상 체온은 약 36.500000도 입니다.</code></pre>
+    </div>
+  </details>
+
+  <details class="qa answer">
+    <summary>정답 코드 보기</summary>
+    <div class="details-body">
+      <div class="badge code">정답</div>
+      <pre><code>temp = 36.5
+print(&quot;사람의 정상 체온은 약 %f도 입니다.&quot; % temp)</code></pre>
+    </div>
+  </details>
+</article>
+
+<article class="card" id="q5">
+  <h3><span class="badge">5번</span> 문제</h3>
+
+  <div class="q-box">
+    <p class="q-desc"><strong>%.1f로 소수점 1자리</strong><br/><code>temp = 36.5</code>를 소수점 1자리로 표시해 출력하시오. (예: 36.5)</p>
+  </div>
+
+  <details class="qa hint" open>
+    <summary>힌트 / 출력</summary>
+    <div class="details-body">
+      <div class='muted'>출력 예시</div><pre><code>사람의 정상 체온은 약 36.5도 입니다.</code></pre>
+    </div>
+  </details>
+
+  <details class="qa answer">
+    <summary>정답 코드 보기</summary>
+    <div class="details-body">
+      <div class="badge code">정답</div>
+      <pre><code>temp = 36.5
+print(&quot;사람의 정상 체온은 약 %.1f도 입니다.&quot; % temp)</code></pre>
+    </div>
+  </details>
+</article>
+
+<article class="card" id="q6">
+  <h3><span class="badge">6번</span> 문제</h3>
+
+  <div class="q-box">
+    <p class="q-desc"><strong>%길이s로 자리수 맞추기</strong><br/>문자열 <code>"01"</code>을 3칸 폭으로 출력하시오. (왼쪽 공백이 생겨야 한다.)</p>
+  </div>
+
+  <details class="qa hint" open>
+    <summary>힌트 / 출력</summary>
+    <div class="details-body">
+      <div class='muted'>출력 예시</div><pre><code> 01</code></pre>
+    </div>
+  </details>
+
+  <details class="qa answer">
+    <summary>정답 코드 보기</summary>
+    <div class="details-body">
+      <div class="badge code">정답</div>
+      <pre><code>print(&quot;%3s&quot; % &quot;01&quot;)</code></pre>
+    </div>
+  </details>
+</article>
+
+<article class="card" id="q7">
+  <h3><span class="badge">7번</span> 문제</h3>
+
+  <div class="q-box">
+    <p class="q-desc"><strong>%10d로 숫자 폭 맞추기</strong><br/>아래 두 숫자를 동일한 폭(10칸)으로 맞춰 출력하시오.<br/><br/><code>150000</code>, <code>15000</code></p>
+  </div>
+
+  <details class="qa hint" open>
+    <summary>힌트 / 출력</summary>
+    <div class="details-body">
+      <div class='muted'>출력 예시</div><pre><code>가격은     150000 입니다.
+가격은      15000 입니다.</code></pre>
+    </div>
+  </details>
+
+  <details class="qa answer">
+    <summary>정답 코드 보기</summary>
+    <div class="details-body">
+      <div class="badge code">정답</div>
+      <pre><code>print(&quot;가격은 %10d 입니다.&quot; % 150000)
+print(&quot;가격은 %10d 입니다.&quot; % 15000)</code></pre>
+    </div>
+  </details>
+</article>
+
+<article class="card" id="q8">
+  <h3><span class="badge">8번</span> 문제</h3>
+
+  <div class="q-box">
+    <p class="q-desc"><strong>여러 값 동시에 넣기</strong><br/>다음 튜플을 사용해 날짜를 출력하시오.<br/><br/><code>(2025, 3, 17)</code><br/><br/>형식: <code>오늘은 2025년  3월 17일 입니다.</code> (월은 폭 2, 연도는 폭 4)</p>
+  </div>
+
+  <details class="qa hint" open>
+    <summary>힌트 / 출력</summary>
+    <div class="details-body">
+      <div class='muted'>출력 예시</div><pre><code>오늘은 2025년  3월 17일 입니다.</code></pre>
+    </div>
+  </details>
+
+  <details class="qa answer">
+    <summary>정답 코드 보기</summary>
+    <div class="details-body">
+      <div class="badge code">정답</div>
+      <pre><code>y, m, d = (2025, 3, 17)
+print(&quot;오늘은 %4d년 %2d월 %2d일 입니다.&quot; % (y, m, d))</code></pre>
+    </div>
+  </details>
+</article>
+
+<article class="card" id="q9">
+  <h3><span class="badge">9번</span> 문제</h3>
+
+  <div class="q-box">
+    <p class="q-desc"><strong>zip + %s/%d 출력</strong><br/>아래 리스트를 <code>zip</code>으로 묶어 한 줄씩 출력하시오.<br/><br/><code>company = ["삼성전자","LG전자","현대차","대한항공","하나투어"]</code><br/><code>stock = [71800,121000,195000,31900,86600]</code><br/><br/>형식: <code>삼성전자의 주가는 71800 입니다.</code></p>
+  </div>
+
+  <details class="qa hint" open>
+    <summary>힌트 / 출력</summary>
+    <div class="details-body">
+      <div class='muted'>출력 예시(앞 2줄)</div><pre><code>삼성전자의 주가는 71800 입니다.
+LG전자의 주가는 121000 입니다.</code></pre>
+    </div>
+  </details>
+
+  <details class="qa answer">
+    <summary>정답 코드 보기</summary>
+    <div class="details-body">
+      <div class="badge code">정답</div>
+      <pre><code>company = [&quot;삼성전자&quot;,&quot;LG전자&quot;,&quot;현대차&quot;,&quot;대한항공&quot;,&quot;하나투어&quot;]
+stock = [71800,121000,195000,31900,86600]
+for com, st in zip(company, stock):
+    print(&quot;%s의 주가는 %d 입니다.&quot; % (com, st))</code></pre>
+    </div>
+  </details>
+</article>
+</section>
+
+<section class="section" id="sec2">
+  <h2>2) format() 메서드</h2>
+  <article class="card" id="q10">
+  <h3><span class="badge">10번</span> 문제</h3>
+
+  <div class="q-box">
+    <p class="q-desc"><strong>format 기본 {}</strong><br/><code>format()</code>을 사용해 아래 문장을 출력하시오.<br/><br/><code>"{}의 주가는 {} 입니다."</code>에 <code>("삼성전자", 71800)</code>를 넣기</p>
+  </div>
+
+  <details class="qa hint" open>
+    <summary>힌트 / 출력</summary>
+    <div class="details-body">
+      <div class='muted'>출력 예시</div><pre><code>삼성전자의 주가는 71800 입니다.</code></pre>
+    </div>
+  </details>
+
+  <details class="qa answer">
+    <summary>정답 코드 보기</summary>
+    <div class="details-body">
+      <div class="badge code">정답</div>
+      <pre><code>print(&quot;{}의 주가는 {} 입니다.&quot;.format(&quot;삼성전자&quot;, 71800))</code></pre>
+    </div>
+  </details>
+</article>
+
+<article class="card" id="q11">
+  <h3><span class="badge">11번</span> 문제</h3>
+
+  <div class="q-box">
+    <p class="q-desc"><strong>format 인덱스 {0}{1}</strong><br/><code>{0}</code>, <code>{1}</code> 인덱스를 사용해 동일한 문장을 출력하시오.</p>
+  </div>
+
+  <details class="qa hint" open>
+    <summary>힌트 / 출력</summary>
+    <div class="details-body">
+      <div class='muted'>출력 예시</div><pre><code>삼성전자의 주가는 71800 입니다.</code></pre>
+    </div>
+  </details>
+
+  <details class="qa answer">
+    <summary>정답 코드 보기</summary>
+    <div class="details-body">
+      <div class="badge code">정답</div>
+      <pre><code>print(&quot;{0}의 주가는 {1} 입니다.&quot;.format(&quot;삼성전자&quot;, 71800))</code></pre>
+    </div>
+  </details>
+</article>
+
+<article class="card" id="q12">
+  <h3><span class="badge">12번</span> 문제</h3>
+
+  <div class="q-box">
+    <p class="q-desc"><strong>format 인덱스 순서 바꾸기</strong><br/><code>"{1}의 주가는 {0} 입니다."</code> 형태로 인덱스를 뒤집어 출력하시오.</p>
+  </div>
+
+  <details class="qa hint" open>
+    <summary>힌트 / 출력</summary>
+    <div class="details-body">
+      <div class='muted'>출력 예시</div><pre><code>71800의 주가는 삼성전자 입니다.</code></pre>
+    </div>
+  </details>
+
+  <details class="qa answer">
+    <summary>정답 코드 보기</summary>
+    <div class="details-body">
+      <div class="badge code">정답</div>
+      <pre><code>print(&quot;{1}의 주가는 {0} 입니다.&quot;.format(&quot;삼성전자&quot;, 71800))</code></pre>
+    </div>
+  </details>
+</article>
+
+<article class="card" id="q13">
+  <h3><span class="badge">13번</span> 문제</h3>
+
+  <div class="q-box">
+    <p class="q-desc"><strong>여러 줄 format()</strong><br/>아래 문장을 <code>format()</code>으로 완성해 여러 줄로 출력하시오.<br/><br/><code>{0}의 주가는{1}원입니다</code><br/><code>{0}의 상한가는 {3}</code><br/><code>{0}의 하한가는 {2}입니다.</code><br/><br/>값: <code>("삼성전자", 71500, 50200, 93000)</code></p>
+  </div>
+
+  <details class="qa hint" open>
+    <summary>힌트 / 출력</summary>
+    <div class="details-body">
+      <div class='muted'>출력 예시</div><pre><code>삼성전자의 주가는71500원입니다
+삼성전자의 상한가는 93000
+삼성전자의 하한가는 50200입니다.</code></pre>
+    </div>
+  </details>
+
+  <details class="qa answer">
+    <summary>정답 코드 보기</summary>
+    <div class="details-body">
+      <div class="badge code">정답</div>
+      <pre><code>print(&quot;{0}의 주가는{1}원입니다.\n{0}의 상한가는 {3}\n{0}의 하한가는 {2}입니다.&quot;.format(&quot;삼성전자&quot;, 71500, 50200, 93000))</code></pre>
+    </div>
+  </details>
+</article>
+
+<article class="card" id="q14">
+  <h3><span class="badge">14번</span> 문제</h3>
+
+  <div class="q-box">
+    <p class="q-desc"><strong>zip + format 출력</strong><br/><code>zip(company, stock)</code>으로 돌며 아래 형식으로 출력하시오.<br/><br/><code>{0}의 주가는{1}원입니다</code></p>
+  </div>
+
+  <details class="qa hint" open>
+    <summary>힌트 / 출력</summary>
+    <div class="details-body">
+      <div class='muted'>출력 예시(앞 2줄)</div><pre><code>삼성전자의 주가는71800원입니다
+LG전자의 주가는121000원입니다</code></pre>
+    </div>
+  </details>
+
+  <details class="qa answer">
+    <summary>정답 코드 보기</summary>
+    <div class="details-body">
+      <div class="badge code">정답</div>
+      <pre><code>company = [&quot;삼성전자&quot;,&quot;LG전자&quot;,&quot;현대차&quot;,&quot;대한항공&quot;,&quot;하나투어&quot;]
+stock = [71800,121000,195000,31900,86600]
+for com, sto in zip(company, stock):
+    print(&quot;{0}의 주가는{1}원입니다&quot;.format(com, sto))</code></pre>
+    </div>
+  </details>
+</article>
+
+<article class="card" id="q15">
+  <h3><span class="badge">15번</span> 문제</h3>
+
+  <div class="q-box">
+    <p class="q-desc"><strong>f-string 기본 출력</strong><br/>다음 리스트의 첫 번째 값을 f-string으로 출력하시오.<br/><br/><code>company = ["삼성전자", ...]</code>, <code>stock = [71800, ...]</code><br/><br/>형식: <code>삼성전자의 주가는 71800 입니다.</code></p>
+  </div>
+
+  <details class="qa hint" open>
+    <summary>힌트 / 출력</summary>
+    <div class="details-body">
+      <div class='muted'>출력 예시</div><pre><code>삼성전자의 주가는 71800 입니다.</code></pre>
+    </div>
+  </details>
+
+  <details class="qa answer">
+    <summary>정답 코드 보기</summary>
+    <div class="details-body">
+      <div class="badge code">정답</div>
+      <pre><code>company = [&quot;삼성전자&quot;,&quot;LG전자&quot;,&quot;현대차&quot;,&quot;대한항공&quot;,&quot;하나투어&quot;]
+stock = [71800,121000,195000,31900,86600]
+print(f&quot;{company[0]}의 주가는 {stock[0]} 입니다.&quot;)</code></pre>
+    </div>
+  </details>
+</article>
+</section>
+
+<section class="section" id="sec3">
+  <h2>3) f-string</h2>
+  <article class="card" id="q16">
+  <h3><span class="badge">16번</span> 문제</h3>
+
+  <div class="q-box">
+    <p class="q-desc"><strong>f-string 변수 넣기</strong><br/>아래 변수를 이용해 f-string으로 출력하시오.<br/><br/><code>sam = "삼성전자"</code><br/><code>sto = 71800</code></p>
+  </div>
+
+  <details class="qa hint" open>
+    <summary>힌트 / 출력</summary>
+    <div class="details-body">
+      <div class='muted'>출력 예시</div><pre><code>삼성전자의 주가는 71800 입니다.</code></pre>
+    </div>
+  </details>
+
+  <details class="qa answer">
+    <summary>정답 코드 보기</summary>
+    <div class="details-body">
+      <div class="badge code">정답</div>
+      <pre><code>sam = &quot;삼성전자&quot;
+sto = 71800
+print(f&quot;{sam}의 주가는 {sto} 입니다.&quot;)</code></pre>
+    </div>
+  </details>
+</article>
+
+<article class="card" id="q17">
+  <h3><span class="badge">17번</span> 문제</h3>
+
+  <div class="q-box">
+    <p class="q-desc"><strong>f-string + zip 출력</strong><br/><code>zip(company, stock)</code>을 돌며 f-string으로 모두 출력하시오.</p>
+  </div>
+
+  <details class="qa hint" open>
+    <summary>힌트 / 출력</summary>
+    <div class="details-body">
+      <div class='muted'>출력 예시(앞 2줄)</div><pre><code>삼성전자의 주가는 71800 입니다.
+LG전자의 주가는 121000 입니다.</code></pre>
+    </div>
+  </details>
+
+  <details class="qa answer">
+    <summary>정답 코드 보기</summary>
+    <div class="details-body">
+      <div class="badge code">정답</div>
+      <pre><code>company = [&quot;삼성전자&quot;,&quot;LG전자&quot;,&quot;현대차&quot;,&quot;대한항공&quot;,&quot;하나투어&quot;]
+stock = [71800,121000,195000,31900,86600]
+for com, sto in zip(company, stock):
+    print(f&quot;{com}의 주가는 {sto} 입니다.&quot;)</code></pre>
+    </div>
+  </details>
+</article>
+
+<article class="card" id="q18">
+  <h3><span class="badge">18번</span> 문제</h3>
+
+  <div class="q-box">
+    <p class="q-desc"><strong>format으로 왼쪽 정렬 <</strong><br/><code>"삼성전자"</code>를 폭 10칸으로 왼쪽 정렬해 출력하시오. (뒤쪽 공백이 생겨야 한다.)</p>
+  </div>
+
+  <details class="qa hint" open>
+    <summary>힌트 / 출력</summary>
+    <div class="details-body">
+      <div class='muted'>출력 예시</div><pre><code>삼성전자      </code></pre>
+    </div>
+  </details>
+
+  <details class="qa answer">
+    <summary>정답 코드 보기</summary>
+    <div class="details-body">
+      <div class="badge code">정답</div>
+      <pre><code>print(&quot;{0:&lt;10}&quot;.format(&quot;삼성전자&quot;))</code></pre>
+    </div>
+  </details>
+</article>
+
+<article class="card" id="q19">
+  <h3><span class="badge">19번</span> 문제</h3>
+
+  <div class="q-box">
+    <p class="q-desc"><strong>format으로 오른쪽 정렬 ></strong><br/><code>"삼성전자"</code>를 폭 10칸으로 오른쪽 정렬해 출력하시오. (앞쪽 공백이 생겨야 한다.)</p>
+  </div>
+
+  <details class="qa hint" open>
+    <summary>힌트 / 출력</summary>
+    <div class="details-body">
+      <div class='muted'>출력 예시</div><pre><code>      삼성전자</code></pre>
+    </div>
+  </details>
+
+  <details class="qa answer">
+    <summary>정답 코드 보기</summary>
+    <div class="details-body">
+      <div class="badge code">정답</div>
+      <pre><code>print(&quot;{:&gt;10}&quot;.format(&quot;삼성전자&quot;))</code></pre>
+    </div>
+  </details>
+</article>
+</section>
+
+<section class="section" id="sec4">
+  <h2>4) 정렬/자리수/채움</h2>
+  <article class="card" id="q20">
+  <h3><span class="badge">20번</span> 문제</h3>
+
+  <div class="q-box">
+    <p class="q-desc"><strong>%10s로 오른쪽 정렬</strong><br/>% 서식지정자로도 폭 10칸 오른쪽 정렬 출력하시오.</p>
+  </div>
+
+  <details class="qa hint" open>
+    <summary>힌트 / 출력</summary>
+    <div class="details-body">
+      <div class='muted'>출력 예시</div><pre><code>      삼성전자</code></pre>
+    </div>
+  </details>
+
+  <details class="qa answer">
+    <summary>정답 코드 보기</summary>
+    <div class="details-body">
+      <div class="badge code">정답</div>
+      <pre><code>print(&quot;%10s&quot; % &quot;삼성전자&quot;)</code></pre>
+    </div>
+  </details>
+</article>
+
+<article class="card" id="q21">
+  <h3><span class="badge">21번</span> 문제</h3>
+
+  <div class="q-box">
+    <p class="q-desc"><strong>f-string 왼쪽 정렬</strong><br/>f-string의 서식지정(<code>:&lt;10</code>)으로 왼쪽 정렬 출력하시오.</p>
+  </div>
+
+  <details class="qa hint" open>
+    <summary>힌트 / 출력</summary>
+    <div class="details-body">
+      <div class='muted'>출력 예시</div><pre><code>삼성전자      </code></pre>
+    </div>
+  </details>
+
+  <details class="qa answer">
+    <summary>정답 코드 보기</summary>
+    <div class="details-body">
+      <div class="badge code">정답</div>
+      <pre><code>print(f&quot;{&#x27;삼성전자&#x27;:&lt;10}&quot;)</code></pre>
+    </div>
+  </details>
+</article>
+
+<article class="card" id="q22">
+  <h3><span class="badge">22번</span> 문제</h3>
+
+  <div class="q-box">
+    <p class="q-desc"><strong>f-string 오른쪽 정렬</strong><br/>f-string의 서식지정(<code>:&gt;10</code>)으로 오른쪽 정렬 출력하시오.</p>
+  </div>
+
+  <details class="qa hint" open>
+    <summary>힌트 / 출력</summary>
+    <div class="details-body">
+      <div class='muted'>출력 예시</div><pre><code>      삼성전자</code></pre>
+    </div>
+  </details>
+
+  <details class="qa answer">
+    <summary>정답 코드 보기</summary>
+    <div class="details-body">
+      <div class="badge code">정답</div>
+      <pre><code>print(f&quot;{&#x27;삼성전자&#x27;:&gt;10}&quot;)</code></pre>
+    </div>
+  </details>
+</article>
+
+<article class="card" id="q23">
+  <h3><span class="badge">23번</span> 문제</h3>
+
+  <div class="q-box">
+    <p class="q-desc"><strong>format 자리수 02d (월)</strong><br/><code>month = 1</code>을 사용해 <code>01월</code> 형태로 출력하시오. (두 자리, 빈 자리는 0으로 채움)</p>
+  </div>
+
+  <details class="qa hint" open>
+    <summary>힌트 / 출력</summary>
+    <div class="details-body">
+      <div class='muted'>출력 예시</div><pre><code>01월</code></pre>
+    </div>
+  </details>
+
+  <details class="qa answer">
+    <summary>정답 코드 보기</summary>
+    <div class="details-body">
+      <div class="badge code">정답</div>
+      <pre><code>month = 1
+print(&quot;{0:02d}월&quot;.format(month))</code></pre>
+    </div>
+  </details>
+</article>
+
+<article class="card" id="q24">
+  <h3><span class="badge">24번</span> 문제</h3>
+
+  <div class="q-box">
+    <p class="q-desc"><strong>f-string 자리수 02d (시/분)</strong><br/><code>si=7</code>, <code>bun=5</code>일 때 <code>07시 05분</code> 형태로 출력하시오.</p>
+  </div>
+
+  <details class="qa hint" open>
+    <summary>힌트 / 출력</summary>
+    <div class="details-body">
+      <div class='muted'>출력 예시</div><pre><code>07시 05분</code></pre>
+    </div>
+  </details>
+
+  <details class="qa answer">
+    <summary>정답 코드 보기</summary>
+    <div class="details-body">
+      <div class="badge code">정답</div>
+      <pre><code>si = 7
+bun = 5
+print(f&quot;{si:02d}시 {bun:02d}분&quot;)</code></pre>
+    </div>
+  </details>
+</article>
+
+<article class="card" id="q25">
+  <h3><span class="badge">25번</span> 문제</h3>
+
+  <div class="q-box">
+    <p class="q-desc"><strong>0으로 채우기 (문자열 정렬)</strong><br/><code>1</code>을 폭 4칸으로 만들되 왼쪽을 0으로 채워 문자열로 만들고 출력하시오. (결과: <code>0001</code>)</p>
+  </div>
+
+  <details class="qa hint" open>
+    <summary>힌트 / 출력</summary>
+    <div class="details-body">
+      <div class='muted'>출력 예시</div><pre><code>0001</code></pre>
+    </div>
+  </details>
+
+  <details class="qa answer">
+    <summary>정답 코드 보기</summary>
+    <div class="details-body">
+      <div class="badge code">정답</div>
+      <pre><code>print(&quot;{0:0&gt;4}&quot;.format(1))</code></pre>
+    </div>
+  </details>
+</article>
+
+<article class="card" id="q26">
+  <h3><span class="badge">26번</span> 문제</h3>
+
+  <div class="q-box">
+    <p class="q-desc"><strong>*로 채우기 (문자열 정렬)</strong><br/>문자열 <code>"달러"</code>를 폭 4칸으로 만들되 왼쪽을 <code>*</code>로 채워 출력하시오. (결과: <code>**달러</code>)</p>
+  </div>
+
+  <details class="qa hint" open>
+    <summary>힌트 / 출력</summary>
+    <div class="details-body">
+      <div class='muted'>출력 예시</div><pre><code>**달러</code></pre>
+    </div>
+  </details>
+
+  <details class="qa answer">
+    <summary>정답 코드 보기</summary>
+    <div class="details-body">
+      <div class="badge code">정답</div>
+      <pre><code>print(&quot;{0:*&gt;4}&quot;.format(&quot;달러&quot;))</code></pre>
+    </div>
+  </details>
+</article>
+
+<article class="card" id="q27">
+  <h3><span class="badge">27번</span> 문제</h3>
+
+  <div class="q-box">
+    <p class="q-desc"><strong>임의 문자로 채우기 + 왼쪽정렬</strong><br/>f-string을 이용해 <code>"달러"</code>를 폭 10칸으로 왼쪽 정렬하고 빈칸은 <code>$</code>로 채우시오. (결과: <code>달러$$$$$$$$</code>)</p>
+  </div>
+
+  <details class="qa hint" open>
+    <summary>힌트 / 출력</summary>
+    <div class="details-body">
+      <div class='muted'>출력 예시</div><pre><code>달러$$$$$$$$</code></pre>
+    </div>
+  </details>
+
+  <details class="qa answer">
+    <summary>정답 코드 보기</summary>
+    <div class="details-body">
+      <div class="badge code">정답</div>
+      <pre><code>print(f&quot;{&#x27;달러&#x27;:$&lt;10}&quot;)</code></pre>
+    </div>
+  </details>
+</article>
+
+<article class="card" id="q28">
+  <h3><span class="badge">28번</span> 문제</h3>
+
+  <div class="q-box">
+    <p class="q-desc"><strong>숫자 01~10 만들기 (URL 붙이기)</strong><br/>아래 URL과 반복문을 사용해 1~10까지를 두 자리로 만들어 붙여 출력하시오.<br/><br/><code>url = "https://finance.naver.com/sise/sise_trans_style.naver?sosok="</code><br/>출력은 01~10으로 끝나야 한다.</p>
+  </div>
+
+  <details class="qa hint" open>
+    <summary>힌트 / 출력</summary>
+    <div class="details-body">
+      <div class='muted'>출력 예시(앞 3줄)</div><pre><code>https://finance.naver.com/sise/sise_trans_style.naver?sosok=01
+https://finance.naver.com/sise/sise_trans_style.naver?sosok=02
+https://finance.naver.com/sise/sise_trans_style.naver?sosok=03</code></pre>
+    </div>
+  </details>
+
+  <details class="qa answer">
+    <summary>정답 코드 보기</summary>
+    <div class="details-body">
+      <div class="badge code">정답</div>
+      <pre><code>url = &quot;https://finance.naver.com/sise/sise_trans_style.naver?sosok=&quot;
+for i in range(1, 11):
+    print(f&quot;{url}{i:02d}&quot;)</code></pre>
+    </div>
+  </details>
+</article>
+
+<article class="card" id="q29">
+  <h3><span class="badge">29번</span> 문제</h3>
+
+  <div class="q-box">
+    <p class="q-desc"><strong>실전: 시계처럼 출력(선택)</strong><br/>(선택) 아래 조건으로 간단한 시계 표시를 구현하시오.<br/><br/>- <code>si</code>와 <code>bun</code>을 0으로 시작한다.<br/>- 매 반복마다 <code>bun</code>을 1씩 증가시키고, 60이 되면 0으로 만들고 <code>si</code>를 1 증가시킨다.<br/>- 출력은 <code>HH시 MM분</code> (두 자리) 형식이며 <code>end="\r"</code>로 같은 줄에 덮어쓴다.<br/>- 5초 정도만 실행하고 종료해도 된다.</p>
+  </div>
+
+  <details class="qa hint" open>
+    <summary>힌트 / 출력</summary>
+    <div class="details-body">
+      <div class='muted'>힌트(형식)</div><pre><code>00시 00분
+00시 01분
+...
+00시 59분
+01시 00분</code></pre>
+    </div>
+  </details>
+
+  <details class="qa answer">
+    <summary>정답 코드 보기</summary>
+    <div class="details-body">
+      <div class="badge code">정답</div>
+      <pre><code>import time
+si, bun = 0, 0
+start = time.time()
+while time.time() - start &lt; 5:
+    print(f&quot;{si:02d}시 {bun:02d}분&quot;, end=&quot;\r&quot;)
+    time.sleep(0.1)
+    bun += 1
+    if bun == 60:
+        bun = 0
+        si += 1
+print()  # 줄바꿈</code></pre>
+    </div>
+  </details>
+</article>
+</section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <p class="footer-text">styles.css를 같은 폴더에 두고 열면 스타일이 적용된다.</p>
+    </div>
+  </footer>
+</body>
+</html>
