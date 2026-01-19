@@ -1,0 +1,516 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <title>Python datetime 모듈 완전 정복 (강사용 · 순수 HTML)</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<main>
+
+<section id="1-datetime" class="section">
+  <div class="container">
+    <h2>1. `datetime` 모듈이 필요한 이유</h2>
+    <p>문자열 <code>&quot;2026-01-19&quot;</code> 는 <strong>사람이 읽기엔 편하지만, 프로그램이 계산하기에는 불편</strong>합니다.</p>
+<ul>
+<li>문자열은 기본적으로 “텍스트”이기 때문에  </li>
+<li>`+ 7일` 같은 날짜 계산이 직접 불가능하고</li>
+<li>요일/주차/연차 같은 계산도 직접 구현해야 합니다.</li>
+<li>`datetime` 객체는 날짜/시간을 <strong>계산 가능한 값(객체)</strong>으로 다루기 때문에  </li>
+<li>날짜 차이(기간) 계산</li>
+<li>정렬/비교</li>
+<li>포맷 표준화</li>
+<li>주차/요일/연차 산출</li>
+</ul>
+<p>  등을 안전하게 수행할 수 있습니다.</p>
+<h3>핀테크에서 왜 중요한가?</h3>
+<ul>
+<li>예치/대출의 <strong>기간(일수)</strong> 계산 → 이자/연체 산정</li>
+<li>정산/결제의 <strong>D+N</strong> 로직 구현</li>
+<li>거래/로그/리포트의 <strong>표준 타임스탬프</strong> 처리</li>
+<li>해외/서버 로그 <strong>UTC 저장 → 로컬(KST) 표시</strong> 정합성</li>
+</ul><h3>🔍 실습 1-1: 문자열 날짜는 계산이 안 된다</h3><pre><code>
+a = &quot;2026-01-19&quot;
+b = &quot;2026-01-01&quot;
+# print(a - b)  # ❌ TypeError
+print(&quot;문자열은 날짜 계산 불가 (예: a - b)&quot;)
+</code></pre><h3>🔍 실습 1-2: `date` 객체는 날짜 차이를 계산할 수 있다</h3><pre><code>
+from datetime import date
+d1 = date(2026, 1, 19)
+d2 = date(2026, 1, 1)
+print(&quot;date 차이:&quot;, d1 - d2)
+print(&quot;일수:&quot;, (d1 - d2).days)
+</code></pre><h3>💳 핀테크 미니 예제: 예치 기간(일수) 기반 단순 일할 이자(교육용)</h3><pre><code>
+from datetime import date
+deposit_start = date(2026, 1, 2)
+deposit_end   = date(2026, 1, 19)
+days = (deposit_end - deposit_start).days
+
+principal = 10_000_000
+annual_rate = 0.03
+
+interest = principal * annual_rate * (days / 365)  # 단순 일할 이자(교육용)
+print(&quot;예치 기간(일):&quot;, days)
+print(&quot;단순 일할 이자(원):&quot;, round(interest))
+</code></pre><hr>
+  </div>
+</section>
+
+<section id="2-datetime" class="section">
+  <div class="container">
+    <h2>2. `datetime` 모듈 구성</h2>
+    <ul>
+<li>`date` : 날짜(년/월/일)</li>
+<li>`time` : 시간(시/분/초)</li>
+<li>`datetime` : 날짜 + 시간</li>
+<li>`timedelta` : 두 시점의 차이(기간)</li>
+<li>`timezone` : 시간대(UTC, KST 등)</li>
+</ul>
+<h3>각 클래스는 언제 쓰나?</h3>
+<ul>
+<li><strong>`date`</strong>: “거래 기준일”, “정산 기준일”처럼 <strong>날짜만</strong> 필요한 경우</li>
+<li><strong>`time`</strong>: “09:00 장 시작”, “15:30 장 마감”처럼 <strong>시간만</strong> 필요한 경우</li>
+<li><strong>`datetime`</strong>: “체결 시각”, “승인 시각”, “로그 시간”처럼 <strong>날짜+시간</strong>이 필요한 경우</li>
+<li><strong>`timedelta`</strong>: “7일 뒤”, “30분 전”처럼 <strong>기간 계산</strong>이 필요한 경우</li>
+<li><strong>`timezone`</strong>: “서버는 UTC, 사용자는 KST”처럼 <strong>표준 시간대 처리</strong>가 필요한 경우</li>
+</ul>
+<h3>핀테크 매핑</h3>
+<ul>
+<li>`date` → 영업일/휴장일/거래일</li>
+<li>`datetime` → 체결/승인/이벤트 로그</li>
+<li>`timedelta` → 예치/연체/정산 주기</li>
+<li>`timezone` → 해외 거래/서버 로그 정합성</li>
+</ul><h3>🔍 실습 2: `date/time/datetime/timedelta/timezone` 기본 생성</h3><pre><code>
+from datetime import date, time, datetime, timedelta, timezone
+
+print(&quot;date.today():&quot;, date.today())
+print(&quot;time(14,30,15):&quot;, time(14, 30, 15))
+print(&quot;datetime.now():&quot;, datetime.now())
+print(&quot;timedelta(days=7):&quot;, timedelta(days=7))
+
+utc = timezone.utc
+print(&quot;datetime.now(timezone.utc):&quot;, datetime.now(utc))
+</code></pre><hr>
+  </div>
+</section>
+
+<section id="3-strftime" class="section">
+  <div class="container">
+    <h2>3. 날짜/시간 표기 옵션 (`strftime`)</h2>
+    <p>날짜 객체를 <strong>어떻게 문자열로 보여줄 것인가</strong>는 매우 중요합니다.  </p>
+<p>(리포트/영수증/CSV/로그/API 응답 포맷)</p>
+<table class='table'>
+<thead><tr><th>코드</th><th>의미</th></tr></thead>
+<tbody>
+<tr><td>----</td><td>----</td></tr>
+<tr><td>%Y</td><td>연도</td></tr>
+<tr><td>%m</td><td>월</td></tr>
+<tr><td>%d</td><td>일</td></tr>
+<tr><td>%H</td><td>24시간</td></tr>
+<tr><td>%I</td><td>12시간</td></tr>
+<tr><td>%p</td><td>AM/PM</td></tr>
+<tr><td>%A</td><td>요일</td></tr>
+<tr><td>%a</td><td>요일(축약)</td></tr>
+<tr><td>%j</td><td>올해 몇 일째</td></tr>
+<tr><td>%U</td><td>주차(일요일 시작)</td></tr>
+<tr><td>%W</td><td>주차(월요일 시작)</td></tr>
+</tbody>
+</table>
+<p>&gt; ⚠️ 실수 포인트(시험/실무에서 자주 틀림)</p>
+<p>&gt; - <code>%m</code>(월) vs <code>%M</code>(분) : <strong>대소문자 다름</strong></p>
+<p>&gt; - <code>%H</code>(24시간) vs <code>%I</code>(12시간)</p>
+<p>&gt; - <code>%y</code>(2자리 연도) vs <code>%Y</code>(4자리 연도)</p>
+<h3>핀테크에서 왜 중요한가?</h3>
+<ul>
+<li>거래내역 CSV/엑셀은 보통 `YYYY-MM-DD`</li>
+<li>로그 파일명/키는 `YYYYMMDD_HHMMSS`처럼 정렬이 쉬운 형태</li>
+<li>화면/영수증은 사람이 읽기 쉬운 형태(예: `YYYY.MM.DD HH:MM`)</li>
+</ul><h3>🔍 실습 3-1: 표기 옵션(포맷) 차이 한 번에 비교</h3><pre><code>
+from datetime import datetime
+dt = datetime(2026, 1, 19, 14, 5, 7)
+
+formats = {
+    &quot;ISO 기본&quot;: &quot;%Y-%m-%d&quot;,
+    &quot;슬래시&quot;: &quot;%Y/%m/%d&quot;,
+    &quot;점 표기&quot;: &quot;%Y.%m.%d&quot;,
+    &quot;전체(로그)&quot;: &quot;%Y-%m-%d %H:%M:%S&quot;,
+    &quot;12시간제+AM/PM&quot;: &quot;%I:%M:%S %p&quot;,
+    &quot;요일(전체)&quot;: &quot;%A&quot;,
+    &quot;요일(축약)&quot;: &quot;%a&quot;,
+    &quot;올해 몇 일째(%j)&quot;: &quot;%j&quot;,
+    &quot;주차(%U)&quot;: &quot;%U&quot;,
+    &quot;주차(%W)&quot;: &quot;%W&quot;,
+    &quot;파일명용&quot;: &quot;%Y%m%d_%H%M%S&quot;,
+}
+
+for name, fmt in formats.items():
+    print(f&quot;{name:&gt;16} -&gt; {dt.strftime(fmt)}&quot;)
+</code></pre><h3>🔍 실습 3-2: `%m`(월) vs `%M`(분) 실수 방지</h3><pre><code>
+from datetime import datetime
+dt = datetime(2026, 1, 19, 14, 5, 7)
+print(&quot;월(%m):&quot;, dt.strftime(&quot;%m&quot;))
+print(&quot;분(%M):&quot;, dt.strftime(&quot;%M&quot;))
+</code></pre><h3>💳 핀테크 예제: CSV/영수증/로그 포맷 표준화</h3><pre><code>
+from datetime import datetime
+dt = datetime.now()
+
+csv_date = dt.strftime(&quot;%Y-%m-%d&quot;)
+receipt  = dt.strftime(&quot;%Y.%m.%d %H:%M&quot;)
+log_key  = dt.strftime(&quot;%Y%m%d_%H%M%S&quot;)
+
+print(&quot;CSV용:&quot;, csv_date)
+print(&quot;영수증/화면용:&quot;, receipt)
+print(&quot;로그 키/파일명용:&quot;, log_key)
+</code></pre><hr>
+  </div>
+</section>
+
+<section id="4" class="section">
+  <div class="container">
+    <h2>4. 요일, 주차, 연차 개념 정리 (상세 설명)</h2>
+    <h3>이 섹션에서 진짜로 이해해야 할 것</h3>
+<p>날짜/시간을 다룰 때 가장 자주 하는 질문은 3가지입니다.</p>
+<p>1) <strong>요일(weekday)</strong>: 이 날짜가 무슨 요일인가?  </p>
+<p>2) <strong>주차(week number)</strong>: 이 날짜가 올해 몇 번째 주인가?  </p>
+<p>3) <strong>연차(day-of-year)</strong>: 이 날짜가 올해 몇 번째 날인가?</p>
+<p>이 질문들은 핀테크/데이터 서비스에서 <strong>정산, 이자 계산, 기간 집계, 리포트 산출</strong>의 기본입니다.</p>
+<hr>
+<h3>4-1. `weekday()` : “프로그래밍 친화적 요일 번호”</h3>
+<ul>
+<li>반환값: <strong>월=0, 화=1, …, 일=6</strong></li>
+<li>특징: <strong>0부터 시작</strong>하여 리스트 인덱싱에 바로 사용 가능</li>
+</ul>
+<p>왜 이렇게 설계되었나?</p>
+<ul>
+<li>파이썬 리스트 인덱스가 0부터 시작하기 때문에, 요일도 0부터 시작하면 매핑이 쉬움</li>
+</ul>
+<hr>
+<h3>4-2. `isoweekday()` : “ISO 표준 요일 번호”</h3>
+<ul>
+<li>반환값: <strong>월=1, 화=2, …, 일=7</strong></li>
+<li>특징: 사람이 보기에 “1~7”이 직관적이며, ISO 규칙과 연결됨</li>
+</ul>
+<p>ISO란?</p>
+<ul>
+<li>국제 표준(International Organization for Standardization) 기반 규칙  </li>
+<li>특히 주차/요일은 국가/시스템마다 달라서, <strong>표준 기준</strong>이 필요함</li>
+</ul>
+<hr>
+<h3>4-3. ISO 주차(`isocalendar`) : “실무 권장 표준 주차”</h3>
+<ul>
+<li>주의 시작: <strong>월요일</strong></li>
+<li>1주차 규칙: “그 해의 첫 목요일을 포함하는 주”(또는 “1월 4일을 포함하는 주”)</li>
+</ul>
+<p>장점</p>
+<ul>
+<li>연말/연초에도 주차가 덜 흔들려 리포트/집계에 안전</li>
+<li>시스템 간 데이터 통합에 유리</li>
+</ul>
+<hr>
+<h3>4-4. `%U` / `%W` : “strftime 레거시/시험용 주차”</h3>
+<ul>
+<li>`%U`: <strong>일요일 시작</strong>, 1주차는 <strong>첫 일요일을 포함하는 주</strong></li>
+<li>`%W`: <strong>월요일 시작</strong>, 1주차는 <strong>첫 월요일을 포함하는 주</strong></li>
+<li>공통: 연초에 조건을 만족하지 못하면 <strong>0주차(00)</strong>가 나올 수 있음</li>
+</ul>
+<p>즉, 같은 날짜여도 ISO 주차와 <code>%U/%W</code> 주차가 <strong>다를 수 있음</strong></p>
+<hr>
+<h3>4-5. 연차(day-of-year): “올해 몇 번째 날인가?”</h3>
+<ul>
+<li>`timetuple().tm_yday` 또는 `strftime(&#x27;%j&#x27;)` 사용</li>
+<li>001~366 (윤년 포함)</li>
+</ul><h3>🔍 실습 4-1: `weekday()` vs `isoweekday()` + 한글 요일 매핑</h3><pre><code>
+from datetime import date
+today = date.today()
+
+print(&quot;오늘:&quot;, today)
+print(&quot;weekday():&quot;, today.weekday())       # 월=0 ~ 일=6
+print(&quot;isoweekday():&quot;, today.isoweekday()) # 월=1 ~ 일=7
+
+kor = [&quot;월&quot;,&quot;화&quot;,&quot;수&quot;,&quot;목&quot;,&quot;금&quot;,&quot;토&quot;,&quot;일&quot;]
+print(&quot;한글 요일:&quot;, kor[today.weekday()])
+</code></pre><h3>💳 핀테크 예제: 주말 거래 제한(단순)</h3><pre><code>
+from datetime import date
+d = date.today()
+
+if d.weekday() &gt;= 5:
+    print(&quot;주말 → 거래/정산 일부 기능 제한 또는 다음 영업일 처리&quot;)
+else:
+    print(&quot;평일 → 정상 처리&quot;)
+</code></pre><h3>🔍 실습 4-2: 연차(day-of-year) 계산: `tm_yday` vs `%j`</h3><pre><code>
+from datetime import datetime
+now = datetime.now()
+
+print(&quot;tm_yday:&quot;, now.timetuple().tm_yday)
+print(&quot;%j:&quot;, now.strftime(&quot;%j&quot;))
+</code></pre><h3>💳 핀테크 예제: YTD 라벨 만들기(연 누적 지표 키)</h3><pre><code>
+from datetime import datetime
+now = datetime.now()
+ytd_label = f&quot;YTD-{now.timetuple().tm_yday:03d}&quot;
+print(&quot;YTD 라벨:&quot;, ytd_label)
+</code></pre><h3>🔍 실습 4-3: ISO 주차(`isocalendar`) - 권장 표준</h3><pre><code>
+from datetime import date
+d = date.today()
+iso = d.isocalendar()
+
+print(&quot;ISO year:&quot;, iso.year)
+print(&quot;ISO week:&quot;, iso.week)
+print(&quot;ISO weekday:&quot;, iso.weekday)
+</code></pre><h3>🔍 실습 4-4: `%U` / `%W` 주차 비교 + ISO와 비교</h3><pre><code>
+from datetime import date
+d = date.today()
+
+print(&quot;ISO week:&quot;, d.isocalendar().week)
+print(&quot;%U (Sun start):&quot;, d.strftime(&quot;%U&quot;))
+print(&quot;%W (Mon start):&quot;, d.strftime(&quot;%W&quot;))
+</code></pre><h3>🔍 실습 4-5: 연초/연말에서 ISO vs %U/%W 차이가 커지는 이유 확인(표로 보기)</h3><pre><code>
+from datetime import date, timedelta
+
+# 연초/연말 주변 날짜 샘플(같은 해의 12/29~1/05처럼 경계에서 차이가 잘 보임)
+samples = [
+    date(2025, 12, 29),
+    date(2025, 12, 31),
+    date(2026, 1, 1),
+    date(2026, 1, 4),
+    date(2026, 1, 5),
+]
+
+print(&quot;date        wd  ISO(year,week,wd)   %U   %W&quot;)
+for d in samples:
+    iso = d.isocalendar()
+    print(f&quot;{d}   {d.weekday()}   ({iso.year},{iso.week},{iso.weekday})      {d.strftime(&#x27;%U&#x27;)}   {d.strftime(&#x27;%W&#x27;)}&quot;)
+</code></pre><h3>💳 핀테크 예제: 주간 리포트 키(ISO 기준) 만들기</h3><pre><code>
+from datetime import date
+d = date.today()
+iso = d.isocalendar()
+weekly_key = f&quot;{iso.year}-W{iso.week:02d}&quot;
+print(&quot;주간 리포트 키:&quot;, weekly_key)
+</code></pre><hr>
+  </div>
+</section>
+
+<section id="5" class="section">
+  <div class="container">
+    <h2>5. 실무에서 중요한 질문들</h2>
+    <ul>
+<li>오늘은 무슨 요일인가?</li>
+<li>오늘은 올해 몇 번째 날인가?</li>
+<li>이번 주는 몇 주차인가?</li>
+<li>이번 달은 몇 주차인가?</li>
+</ul>
+<p>이 질문들에 답할 수 있으면,  </p>
+<p>대부분의 기간 기반 로직(정산/이자/리포트/로그 집계)을 구현할 수 있습니다.</p><h3>🔍 실습 5-1: &#x27;이번 달 몇 주차&#x27; (월 기준 주차) 계산 함수</h3><pre><code>
+from datetime import date
+
+def week_of_month(d: date, week_start: int = 0) -&gt; int:
+    &quot;&quot;&quot;week_start: 0=월요일, 6=일요일 (date.weekday 기준)&quot;&quot;&quot;
+    first = d.replace(day=1)
+    offset = (first.weekday() - week_start) % 7
+    return (d.day + offset - 1) // 7 + 1
+
+today = date.today()
+print(&quot;이번 달 몇 주차(월요일 시작):&quot;, week_of_month(today, 0))
+print(&quot;이번 달 몇 주차(일요일 시작):&quot;, week_of_month(today, 6))
+</code></pre><h3>💳 핀테크 예제: 월 기준 주차 버킷(캠페인/정산 구간) 만들기</h3><pre><code>
+from datetime import date
+today = date.today()
+w = week_of_month(today, 0)
+bucket = f&quot;{today.year}-{today.month:02d}-W{w}&quot;
+print(&quot;월 기준 주차 버킷:&quot;, bucket)
+</code></pre><hr>
+  </div>
+</section>
+
+<section id="6-timedelta" class="section">
+  <div class="container">
+    <h2>6. `timedelta`로 기간 계산 (이자/연체/정산의 핵심)</h2>
+    <p><code>timedelta</code>는 <strong>두 시점 사이의 차이</strong> 또는 <strong>특정 시점에서 일정 기간을 더/빼는 계산</strong>을 담당합니다.</p>
+<ul>
+<li>“7일 후”, “90분 전” 같은 상대 시간 계산</li>
+<li>“예치 시작일~종료일” 같은 기간 차이 계산</li>
+</ul>
+<p>핀테크에서는 특히:</p>
+<ul>
+<li>예치 이자 계산(일할)</li>
+<li>연체 일수 계산</li>
+<li>정산일(D+2, D+3 등) 계산</li>
+</ul><h3>🔍 실습 6-1: 날짜 차이(기간) 계산</h3><pre><code>
+from datetime import date
+start = date(2026, 1, 2)
+end   = date(2026, 1, 19)
+
+diff = end - start
+print(&quot;기간:&quot;, diff)
+print(&quot;일수:&quot;, diff.days)
+</code></pre><h3>🔍 실습 6-2: 특정 시점에서 기간 더하기/빼기</h3><pre><code>
+from datetime import datetime, timedelta
+now = datetime.now()
+
+print(&quot;현재:&quot;, now)
+print(&quot;7일 후:&quot;, now + timedelta(days=7))
+print(&quot;30일 전:&quot;, now - timedelta(days=30))
+print(&quot;2시간 15분 후:&quot;, now + timedelta(hours=2, minutes=15))
+print(&quot;90분 전:&quot;, now - timedelta(minutes=90))
+</code></pre><h3>💳 핀테크 예제: D+2 정산일 계산(주말/휴장일 제외는 심화 과제)</h3><pre><code>
+from datetime import date, timedelta
+trade_date = date.today()
+settlement = trade_date + timedelta(days=2)
+print(&quot;거래일:&quot;, trade_date)
+print(&quot;정산일(D+2):&quot;, settlement)
+</code></pre><hr>
+  </div>
+</section>
+
+<section id="7-strptime-strftime" class="section">
+  <div class="container">
+    <h2>7. 문자열 ↔ 날짜 변환 (`strptime` / `strftime`) - 입력/출력 표준화</h2>
+    <p>실무 데이터는 날짜가 문자열로 들어오는 경우가 많습니다.</p>
+<ul>
+<li>CSV 업로드</li>
+<li>외부 API 응답</li>
+<li>사용자 입력</li>
+</ul>
+<p>이때 반드시 “어떤 포맷으로 들어오는지”를 명확히 알고 <code>strptime</code>으로 파싱해야 합니다.</p>
+<p>주의:</p>
+<ul>
+<li>미국식 `mm/dd/yyyy` vs 유럽식 `dd/mm/yyyy`는 착각하면 큰 사고가 날 수 있음</li>
+</ul><h3>🔍 실습 7-1: 다양한 문자열 날짜 파싱(strptime)</h3><pre><code>
+from datetime import datetime
+
+samples = [
+    (&quot;2026-01-19&quot;, &quot;%Y-%m-%d&quot;),
+    (&quot;2026/01/19&quot;, &quot;%Y/%m/%d&quot;),
+    (&quot;2026.01.19 14:05&quot;, &quot;%Y.%m.%d %H:%M&quot;),
+    (&quot;19-01-2026&quot;, &quot;%d-%m-%Y&quot;),     # dd-mm-yyyy
+    (&quot;01/19/2026&quot;, &quot;%m/%d/%Y&quot;),     # mm/dd/yyyy
+]
+
+for s, fmt in samples:
+    parsed = datetime.strptime(s, fmt)
+    print(s, &quot;-&gt;&quot;, parsed)
+</code></pre><h3>🔍 실습 7-2: datetime → 문자열 표준화(strftime)</h3><pre><code>
+from datetime import datetime
+dt = datetime(2026, 1, 19, 9, 15, 0)
+print(&quot;표준 ISO:&quot;, dt.strftime(&quot;%Y-%m-%d %H:%M:%S&quot;))
+</code></pre><h3>💳 핀테크 예제: CSV 업로드 한 줄 파싱</h3><pre><code>
+from datetime import datetime
+
+csv_row = {&quot;trade_time&quot;: &quot;2026-01-19 09:15:00&quot;, &quot;amount&quot;: &quot;125000&quot;}
+
+trade_dt = datetime.strptime(csv_row[&quot;trade_time&quot;], &quot;%Y-%m-%d %H:%M:%S&quot;)
+amount = int(csv_row[&quot;amount&quot;])
+
+print(&quot;거래시각:&quot;, trade_dt)
+print(&quot;금액:&quot;, amount)
+</code></pre><hr>
+  </div>
+</section>
+
+<section id="8" class="section">
+  <div class="container">
+    <h2>8. 실무 필수 패턴 모음 (핀테크/데이터 관점)</h2>
+    <h3>8-1) 오늘 00:00:00 ~ 23:59:59.999999 범위</h3>
+<ul>
+<li>일별 집계(오늘 거래만), 오늘 알림/정산 대상 필터링</li>
+</ul>
+<h3>8-2) 이번 달 첫 날 / 마지막 날</h3>
+<ul>
+<li>월별 정산, 월간 리포트</li>
+</ul>
+<h3>8-3) 주간/월간 리포트 키(버킷) 만들기</h3>
+<ul>
+<li>ISO 주차 기반: `YYYY-Www`</li>
+<li>월 기준 주차 기반: `YYYY-MM-Wn`</li>
+</ul>
+<h3>8-4) 실행 시간(경과 시간) 측정</h3>
+<ul>
+<li>배치/ETL 성능 체크</li>
+</ul><h3>🔍 실습 8-1: 오늘 시작/끝 범위 만들기</h3><pre><code>
+from datetime import datetime, date, time
+
+today = date.today()
+start = datetime.combine(today, time.min)
+end   = datetime.combine(today, time.max)
+
+print(&quot;오늘 시작:&quot;, start)
+print(&quot;오늘 끝:&quot;, end)
+</code></pre><h3>🔍 실습 8-2: 이번 달 첫날/마지막날 계산</h3><pre><code>
+from datetime import date
+import calendar
+
+d = date.today()
+last_day = calendar.monthrange(d.year, d.month)[1]
+
+month_start = d.replace(day=1)
+month_end = date(d.year, d.month, last_day)
+
+print(&quot;이번 달 시작:&quot;, month_start)
+print(&quot;이번 달 끝:&quot;, month_end)
+</code></pre><h3>🔍 실습 8-3: 실행 시간(경과 시간) 측정</h3><pre><code>
+from datetime import datetime
+import time
+
+start = datetime.now()
+time.sleep(0.3)  # 작업 대신 잠깐 대기(예시)
+end = datetime.now()
+
+print(&quot;시작:&quot;, start)
+print(&quot;끝:&quot;, end)
+print(&quot;경과:&quot;, end - start)
+</code></pre><hr>
+  </div>
+</section>
+
+<section id="9-timezone" class="section">
+  <div class="container">
+    <h2>9. 타임존(`timezone`) - 서버/거래 로그 정합성</h2>
+    <p>서버/DB는 <strong>UTC 저장</strong>을 많이 하고,  </p>
+<p>사용자 화면은 <strong>로컬 시간(KST)</strong>으로 보여주는 패턴이 흔합니다.</p>
+<ul>
+<li>`datetime.now(timezone.utc)` : UTC aware datetime</li>
+<li>`timezone(timedelta(hours=9))` : KST 고정 오프셋</li>
+</ul>
+<p>&gt; 심화: 파이썬 3.9+의 <code>zoneinfo</code>는 지역/서머타임까지 반영하지만,  </p>
+<p>&gt; 본 강의는 <code>datetime</code> 기본 기능을 우선 완벽히 익히는 데 집중합니다.</p><h3>🔍 실습 9-1: UTC와 KST 시간 만들기</h3><pre><code>
+from datetime import datetime, timezone, timedelta
+
+utc_now = datetime.now(timezone.utc)
+kst = timezone(timedelta(hours=9))
+kst_now = datetime.now(kst)
+
+print(&quot;UTC now:&quot;, utc_now)
+print(&quot;KST now:&quot;, kst_now)
+</code></pre><h3>🔍 실습 9-2: UTC로 저장하고 KST로 표시하기</h3><pre><code>
+from datetime import datetime, timezone, timedelta
+
+created_at_utc = datetime.now(timezone.utc)
+
+kst = timezone(timedelta(hours=9))
+created_at_kst = created_at_utc.astimezone(kst)
+
+print(&quot;DB 저장(UTC):&quot;, created_at_utc.isoformat())
+print(&quot;화면 표시(KST):&quot;, created_at_kst.strftime(&quot;%Y-%m-%d %H:%M:%S&quot;))
+</code></pre><hr>
+  </div>
+</section>
+
+<section id="" class="section">
+  <div class="container">
+    <h2>✅ 마무리 체크리스트</h2>
+    <p>이 강의가 끝나면 다음을 할 수 있어야 합니다.</p>
+<ul>
+<li>`strftime`로 표기 포맷을 자유롭게 바꿀 수 있다.</li>
+<li>`weekday/isoweekday` 차이를 설명하고, 한글 요일로 매핑할 수 있다.</li>
+<li>ISO 주차(`isocalendar`)와 `%U/%W`의 차이를 예제로 설명할 수 있다.</li>
+<li>`tm_yday` 또는 `%j`로 올해 N일째(연차)를 계산할 수 있다.</li>
+<li>`week_of_month()`로 월 기준 주차를 계산할 수 있다.</li>
+<li>`timedelta`로 기간 차이/이자 일수/정산 D+N 로직을 만들 수 있다.</li>
+<li>`strptime`으로 다양한 문자열 날짜를 안전하게 파싱할 수 있다.</li>
+<li>UTC로 저장하고 KST로 표시하는 흐름을 구현할 수 있다.</li>
+</ul>
+  </div>
+</section>
+
+</main>
+</body>
+</html>

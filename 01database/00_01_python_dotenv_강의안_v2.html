@@ -1,0 +1,453 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>python-dotenv 강의안 — 설치부터 실전 사용까지</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="header">
+    <div class="container">
+      <span class="badge">Python · 환경변수 · python-dotenv</span>
+      <h1 class="title">python-dotenv 강의안</h1>
+      <p class="subtitle">
+        <code>python-dotenv</code>로 <strong>.env</strong> 파일을 읽어 환경변수로 주입하는 방법을
+        <strong>설치 → 기본 사용 → 프레임워크/배포 → 보안/운영 팁</strong>까지 한 번에 정리한 문서이다.
+      </p>
+
+      <nav class="toc" aria-label="목차">
+        <a href="#why">1. 왜 .env / dotenv를 쓰나</a>
+        <a href="#install">2. 설치</a>
+        <a href="#env-file">3. .env 파일 작성법</a>
+        <a href="#basic-usage">4. 기본 사용법</a>
+        <a href="#override">5. 덮어쓰기/우선순위</a>
+        <a href="#advanced">6. 고급 기능</a>
+        <a href="#apps">7. 프레임워크/도구 연동</a>
+        <a href="#docker">8. Docker/배포 팁</a>
+        <a href="#security">9. 보안/운영 베스트 프랙티스</a>
+        <a href="#troubleshoot">10. 자주 겪는 문제</a>
+        <a href="#mini-lab">11. 미니 실습</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+
+<section class="section" id="why-dotenv">
+  <div class="container">
+    <h2>1. 왜 <code>.env</code> / <code>dotenv</code>를 쓰나</h2>
+
+    <p><strong>한 문장 요약</strong><br>
+    <strong>.env / dotenv는 설정(비밀정보 포함)을 코드에서 분리하여,
+    보안·환경 분리·배포·협업을 안전하게 만들기 위한 필수 도구</strong>입니다.</p>
+
+    <hr>
+
+    <h3>1-1. 코딩에 설정을 직접 쓰면 생기는 문제</h3>
+    <pre><code>DB_HOST = "127.0.0.1"
+DB_USER = "root"
+DB_PASSWORD = "secret"
+API_KEY = "abcd-1234"</code></pre>
+
+    <ul>
+      <li><strong>보안 사고</strong>: GitHub 업로드 시 키 유출</li>
+      <li><strong>환경 분리 불가</strong>: 개발/운영 설정 충돌</li>
+      <li><strong>협업 문제</strong>: 팀원마다 코드 수정 발생</li>
+      <li><strong>배포 취약</strong>: 서버마다 코드 수정 필요</li>
+    </ul>
+
+    <p>👉 즉, <strong>설정 변경 = 코드 변경</strong>이 되는 구조는 매우 위험합니다.</p>
+
+    <hr>
+
+    <h3>1-2. 환경변수(Environment Variable)란?</h3>
+    <p>환경변수는 <strong>운영체제가 제공하는 외부 설정 공간</strong>으로,
+    프로그램 외부에서 값을 주입할 수 있습니다.</p>
+
+    <pre><code># Linux / macOS
+export DB_HOST=127.0.0.1
+
+# Windows
+set DB_HOST=127.0.0.1</code></pre>
+
+    <pre><code>import os
+print(os.getenv("DB_HOST"))</code></pre>
+
+    <ul>
+      <li>코드 수정 없이 설정 변경 가능</li>
+      <li>보안에 유리</li>
+      <li>Docker / 서버 / CI-CD와 궁합이 좋음</li>
+    </ul>
+
+    <hr>
+
+    <h3>1-3. 왜 <code>.env</code> 파일이 필요한가?</h3>
+    <p>환경변수를 매번 터미널에 설정하는 것은 비효율적입니다.
+    그래서 <strong>환경변수를 파일로 관리</strong>하기 위해 <code>.env</code>를 사용합니다.</p>
+
+    <pre><code>APP_ENV=dev
+DEBUG=true
+DB_HOST=127.0.0.1
+DB_USER=root
+DB_PASSWORD=secret
+API_KEY=abcd-1234</code></pre>
+
+    <p><strong>핵심 포인트</strong></p>
+    <ul>
+      <li>사람이 읽기 쉽다</li>
+      <li>Git에는 올리지 않는다</li>
+      <li>환경별 분리 가능 (.env.dev / .env.prod)</li>
+    </ul>
+
+    <hr>
+
+    <h3>1-4. <code>dotenv</code> 라이브러리는 무엇을 하나?</h3>
+    <p><code>python-dotenv</code>는
+    <strong>.env 파일을 읽어서 OS 환경변수로 등록</strong>해주는 도구입니다.</p>
+
+    <pre><code>from dotenv import load_dotenv
+import os
+
+load_dotenv()
+print(os.getenv("DB_HOST"))</code></pre>
+
+    <p>실제 내부 동작</p>
+    <ol>
+      <li>.env 파일 읽기</li>
+      <li>KEY=VALUE 파싱</li>
+      <li>os.environ에 등록</li>
+      <li>이후 일반 환경변수처럼 사용</li>
+    </ol>
+
+    <hr>
+
+    <h3>1-5. 실무/핀테크에서 왜 필수인가?</h3>
+    <ul>
+      <li>DB 접속 정보</li>
+      <li>외부 API 키(증권, 결제, 환율)</li>
+      <li>JWT Secret / 암호화 키</li>
+      <li>개발·운영 환경 구분</li>
+    </ul>
+
+    <p><strong>결론</strong>:<br>
+    <strong>설정은 환경변수, 코드는 로직</strong>이라는 원칙을 지키기 위한 도구입니다.</p>
+  </div>
+</section>
+
+    
+
+    <section class="section" id="install">
+      <h2>2. 설치</h2>
+
+      <article class="card">
+        <h3>pip 설치</h3>
+        <pre><code>pip install python-dotenv</code></pre>
+
+        <div class="mini" style="margin-top:12px;">
+          <div class="mini-title">requirements.txt에 추가</div>
+          <pre><code>python-dotenv>=1.0.0</code></pre>
+          <p class="p muted">버전은 팀 정책에 맞게 고정(pin)하거나 범위를 지정해도 된다.</p>
+        </div>
+
+        <div class="warn">
+          <strong>주의</strong><br/>
+          패키지 이름은 <code>python-dotenv</code>이고, import는 보통 <code>from dotenv import ...</code> 형태다.
+          (<code>import python_dotenv</code>가 아님)
+        </div>
+      </article>
+    </section>
+
+    <section class="section" id="env-file">
+      <h2>3. .env 파일 작성법</h2>
+
+      <article class="card">
+        <h3>기본 형식</h3>
+        <pre><code># 한 줄 = KEY=VALUE
+APP_ENV=dev
+DEBUG=true
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_USER=root
+DB_PASSWORD=secret
+API_BASE=https://api.example.com</code></pre>
+
+        <table class="table" style="margin-top:12px;">
+          <thead>
+            <tr><th>규칙/팁</th><th>설명</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>주석</strong></td><td><code>#</code>로 시작하는 줄은 주석</td></tr>
+            <tr><td><strong>공백</strong></td><td><code>KEY = VALUE</code>처럼 공백이 있으면 파싱이 꼬일 수 있어 보통 <code>KEY=VALUE</code> 권장</td></tr>
+            <tr><td><strong>따옴표</strong></td><td>공백/특수문자 포함 시 <code>VALUE="hello world"</code> 또는 <code>'hello world'</code></td></tr>
+            <tr><td><strong>멀티라인</strong></td><td>개행이 필요한 값은 따옴표 또는 이스케이프를 사용(아래 예시 참고)</td></tr>
+            <tr><td><strong>민감정보</strong></td><td><code>.env</code>는 기본적으로 Git에 올리지 않도록 <code>.gitignore</code>에 추가</td></tr>
+          </tbody>
+        </table>
+
+        <details class="details" style="margin-top:12px;">
+          <summary>예시: 공백/특수문자/멀티라인 값</summary>
+          <div class="details-body">
+            <pre><code>GREETING="Hello World"
+JSON_PAYLOAD='{"a": 1, "b": 2}'
+PRIVATE_KEY="-----BEGIN KEY-----
+line1
+line2
+-----END KEY-----"</code></pre>
+            <p class="p muted">
+              멀티라인은 환경에 따라 취급이 까다로울 수 있으니, 가능하면 파일로 분리하거나
+              Secret Manager(예: AWS SSM, Vault) 사용을 고려하자.
+            </p>
+          </div>
+        </details>
+      </article>
+    </section>
+
+    <section class="section" id="basic-usage">
+      <h2>4. 기본 사용법</h2>
+
+      <div class="grid-2">
+        <article class="card">
+          <h3>가장 흔한 패턴: load_dotenv()</h3>
+          <pre><code>from dotenv import load_dotenv
+import os
+
+load_dotenv()  # 기본: 현재 작업 디렉터리 기준으로 .env를 찾는다
+
+api_key = os.getenv("API_KEY")
+db_host = os.getenv("DB_HOST", "127.0.0.1")  # 기본값 지정 가능</code></pre>
+
+          <div class="note">
+            <strong>포인트</strong><br/>
+            <code>load_dotenv()</code>는 파일을 읽어서 <code>os.environ</code>에 값을 세팅한다.
+            이후부터는 <code>os.getenv</code>/<code>os.environ["KEY"]</code>로 접근한다.
+          </div>
+        </article>
+
+        <article class="card">
+          <h3>경로 지정: load_dotenv(dotenv_path=...)</h3>
+          <pre><code>from dotenv import load_dotenv
+from pathlib import Path
+
+env_path = Path(__file__).resolve().parent / ".env"
+load_dotenv(dotenv_path=env_path)</code></pre>
+          <ul class="list">
+            <li><strong>추천</strong>: 작업 디렉터리가 바뀌어도 안정적으로 로딩</li>
+            <li>예: 테스트/CLI/서버 실행 위치가 달라도 <code>__file__</code> 기준으로 고정</li>
+          </ul>
+        </article>
+      </div>
+
+      <article class="card">
+        <h3>환경변수 값은 문자열이다</h3>
+        <p class="p">
+          환경변수는 기본적으로 <strong>문자열(str)</strong>이다. 숫자/불리언 등은 직접 변환해야 한다.
+        </p>
+        <pre><code>import os
+
+port = int(os.getenv("DB_PORT", "3306"))
+debug = os.getenv("DEBUG", "false").lower() in ("1", "true", "yes", "y")</code></pre>
+      </article>
+    </section>
+
+    
+
+    
+
+    
+
+    
+
+    <section class="section" id="security">
+      <h2>9. 보안/운영 베스트 프랙티스</h2>
+
+      <div class="grid-2">
+        <article class="card">
+          <h3>.gitignore에 추가</h3>
+          <pre><code># .gitignore
+.env
+.env.*
+!.env.example</code></pre>
+          <p class="p muted">
+            보통 팀에는 <code>.env.example</code> (샘플)만 커밋하고,
+            실제 비밀값이 들어있는 <code>.env</code>/<code>.env.local</code>은 제외한다.
+          </p>
+        </article>
+
+        <article class="card">
+          <h3>샘플 파일(.env.example) 만들기</h3>
+          <pre><code># .env.example
+APP_ENV=dev
+DEBUG=false
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_USER=
+DB_PASSWORD=
+API_KEY=</code></pre>
+          <p class="p muted">빈 값으로 두고 “필수 키 목록”만 공유하면 온보딩이 빨라진다.</p>
+        </article>
+      </div>
+
+      <article class="card">
+        <h3>설정 검증(필수 환경변수 체크)</h3>
+        <p class="p">
+          앱이 실행은 됐는데 나중에 에러가 나는 것보다, 시작할 때 필수 값을 검증해서 빨리 실패(fail-fast)시키는 편이 좋다.
+        </p>
+        <pre><code>import os
+
+REQUIRED = ["DB_HOST", "DB_USER", "DB_PASSWORD"]
+
+missing = [k for k in REQUIRED if not os.getenv(k)]
+if missing:
+    raise RuntimeError(f"Missing env vars: {', '.join(missing)}")</code></pre>
+      </article>
+    </section>
+
+    
+
+    <section class="section" id="mini-lab">
+      <h2>11. 미니 실습(따라 하기)</h2>
+
+      <article class="card">
+        <h3>Step 1) 폴더/파일 준비</h3>
+        <pre><code># 프로젝트 폴더
+my-dotenv-app/
+  .env
+  main.py</code></pre>
+      </article>
+
+      <article class="card">
+        <h3>Step 2) .env 작성</h3>
+        <pre><code>APP_ENV=dev
+DEBUG=true
+GREETING="Hello dotenv"</code></pre>
+      </article>
+
+      <article class="card">
+        <h3>Step 3) main.py 작성</h3>
+        <pre><code>from dotenv import load_dotenv
+import os
+
+def main():
+    load_dotenv()
+    print("APP_ENV =", os.getenv("APP_ENV"))
+    print("DEBUG   =", os.getenv("DEBUG"))
+    print("GREETING=", os.getenv("GREETING"))
+
+main()</code></pre>
+      </article>
+
+      <article class="card">
+        <h3>Step 4) 실행</h3>
+        <pre><code>python main.py</code></pre>
+        <details class="details">
+          <summary>예상 출력(예시)</summary>
+          <div class="details-body">
+            <pre><code>APP_ENV = dev
+DEBUG   = true
+GREETING= Hello dotenv</code></pre>
+          </div>
+        </details>
+      </article>
+
+      <div class="note">
+        <strong>다음 단계</strong><br/>
+        연습문제 파일에서 “여러 env 파일 운영”, “override 우선순위”, “FastAPI 설정 로딩”까지 확장해보자.
+      </div>
+    </section>
+
+    <section class="section" id="custom-path">
+      <h2>추가. .env 파일 위치/이름이 다른 경우</h2>
+
+      <article class="card">
+        <h3>1) 파일 이름이 다른 경우 (.env.dev, .env.prod 등)</h3>
+        <p class="p">
+          <code>.env</code>라는 기본 이름 대신 환경별로 파일명을 나누는 경우가 많다.
+          이때는 <code>load_dotenv()</code>에 파일명을 직접 전달하면 된다.
+        </p>
+        <pre><code>from dotenv import load_dotenv
+import os
+
+env = os.getenv("APP_ENV", "dev")
+load_dotenv(f".env.{env}")</code></pre>
+        <p class="p muted">
+          예: <code>APP_ENV=prod</code> → <code>.env.prod</code> 로딩
+        </p>
+      </article>
+
+      <article class="card">
+        <h3>2) 프로젝트 외부/상위 폴더에 .env가 있는 경우</h3>
+        <p class="p">
+          보안 또는 공통 설정 때문에 <code>.env</code>를 프로젝트 루트 밖에 두는 경우도 있다.
+          이때는 절대경로 또는 <code>Path</code>를 사용한다.
+        </p>
+        <pre><code>from dotenv import load_dotenv
+from pathlib import Path
+
+env_path = Path("/etc/myapp/secrets.env")
+load_dotenv(env_path)</code></pre>
+      </article>
+
+      <article class="card">
+        <h3>3) 실행 위치(CWD)에 영향을 받지 않게 하는 방법</h3>
+        <p class="p">
+          스크립트를 어디서 실행하든 동일한 <code>.env</code>를 읽고 싶다면
+          <code>__file__</code> 기준 경로를 사용하는 것이 가장 안전하다.
+        </p>
+        <pre><code>from dotenv import load_dotenv
+from pathlib import Path
+
+BASE_DIR = Path(__file__).resolve().parent
+load_dotenv(BASE_DIR / ".env")</code></pre>
+      </article>
+
+      <article class="card">
+        <h3>4) 여러 위치를 순서대로 탐색하기</h3>
+        <p class="p">
+          공통 설정 → 개인 설정 → 실행 환경 설정 순으로 단계적으로 덮어쓰는 패턴도 자주 사용된다.
+        </p>
+        <pre><code>from dotenv import load_dotenv
+from pathlib import Path
+
+base = Path(__file__).resolve().parent
+
+load_dotenv(base / ".env")                 # 공통
+load_dotenv(base / ".env.local", override=True)  # 개인
+load_dotenv("/etc/myapp/secrets.env", override=True)  # 서버</code></pre>
+      </article>
+
+      <article class="card">
+        <h3>5) find_dotenv + 커스텀 이름 조합</h3>
+        <p class="p">
+          <code>find_dotenv()</code>는 기본적으로 <code>.env</code>만 찾는다.
+          커스텀 파일명을 쓰는 경우에는 직접 경로를 만들어야 한다.
+        </p>
+        <pre><code>from dotenv import load_dotenv, find_dotenv
+from pathlib import Path
+
+root_env = Path(find_dotenv()).parent
+load_dotenv(root_env / ".env.dev")</code></pre>
+      </article>
+
+      <div class="note">
+        <strong>정리</strong><br/>
+        <ul class="list">
+          <li>파일 이름이 다르면 → <code>load_dotenv("파일명")</code></li>
+          <li>위치가 다르면 → <code>Path</code>로 절대/상대 경로 지정</li>
+          <li>여러 개면 → <strong>순서 + override 정책</strong>을 명확히</li>
+        </ul>
+      </div>
+    </section>
+
+
+    <footer class="footer">
+      <div class="container">
+        <p class="footer-text">
+          이 문서는 <code>styles.css</code> 스타일을 사용한다.
+          로컬에서 열 때 <code>python-dotenv_강의안.html</code>과 같은 폴더에 <code>styles.css</code>를 두면 된다.
+        </p>
+      </div>
+    </footer>
+  </main>
+</body>
+</html>

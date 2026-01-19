@@ -4,3 +4,5 @@ data/
 *.xlsx
 *.pdf
 *.zip
+.env
+.env*
