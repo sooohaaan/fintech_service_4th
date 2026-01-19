@@ -1,0 +1,881 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Python datetime 연습문제 50 (전체 실습용)</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    details { margin-top: 12px; }
+    summary { cursor: pointer; font-weight: 700; }
+    pre { overflow-x: auto; }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="container">
+      <span class="badge">연습문제 · 50문항</span>
+      <h1 class="title">Python datetime 연습문제 50 (전체 실습용)</h1>
+      <p class="subtitle">
+        이 문서는 <code>datetime</code> 강의안의 모든 내용을 실습할 수 있도록 구성된 50문항입니다.
+        각 문항은 <strong>시작 코드</strong>와 <strong>접힌 정답</strong>(클릭하여 펼침)을 포함합니다.
+      </p>
+      <p class="subtitle">
+        사용 방법: 각 문제의 시작 코드를 복사해 Jupyter/IDE에서 실행 → 본인 풀이 작성 → 정답 확인.
+      </p>
+    </div>
+  </header>
+
+  <main class="section">
+    <div class="container">
+      <article class='card'>
+<h2>문제 01</h2>
+<p>`date`, `time`, `datetime`를 각각 생성해 출력하세요. (예: 2026-01-19 / 14:30:15 / 2026-01-19 14:30:15)</p>
+<h3>시작 코드</h3>
+<pre><code>from datetime import date, time, datetime
+
+# TODO</code></pre>
+<details>
+<summary>정답 보기</summary>
+<pre><code>from datetime import date, time, datetime
+
+print(date(2026, 1, 19))
+print(time(14, 30, 15))
+print(datetime(2026, 1, 19, 14, 30, 15))</code></pre>
+</details>
+</article><article class='card'>
+<h2>문제 02</h2>
+<p>`date.today()`와 `datetime.now()`의 타입을 출력해서 차이를 확인하세요.</p>
+<h3>시작 코드</h3>
+<pre><code>from datetime import date, datetime
+
+# TODO</code></pre>
+<details>
+<summary>정답 보기</summary>
+<pre><code>from datetime import date, datetime
+
+print(type(date.today()))
+print(type(datetime.now()))</code></pre>
+</details>
+</article><article class='card'>
+<h2>문제 03</h2>
+<p>특정 날짜 `d = date(2026, 1, 19)`에서 연/월/일을 각각 출력하세요.</p>
+<h3>시작 코드</h3>
+<pre><code>from datetime import date
+
+d = date(2026, 1, 19)
+# TODO</code></pre>
+<details>
+<summary>정답 보기</summary>
+<pre><code>from datetime import date
+
+d = date(2026, 1, 19)
+print(d.year, d.month, d.day)</code></pre>
+</details>
+</article><article class='card'>
+<h2>문제 04</h2>
+<p>오늘 날짜가 속한 달의 1일(`YYYY-MM-01`)을 만들어 출력하세요.</p>
+<h3>시작 코드</h3>
+<pre><code>from datetime import date
+
+today = date.today()
+# TODO</code></pre>
+<details>
+<summary>정답 보기</summary>
+<pre><code>from datetime import date
+
+today = date.today()
+first = today.replace(day=1)
+print(first)</code></pre>
+</details>
+</article><article class='card'>
+<h2>문제 05</h2>
+<p>두 날짜 `2026-01-01`과 `2026-01-19`의 차이를 일수로 출력하세요.</p>
+<h3>시작 코드</h3>
+<pre><code>from datetime import date
+
+# TODO</code></pre>
+<details>
+<summary>정답 보기</summary>
+<pre><code>from datetime import date
+
+d1 = date(2026, 1, 19)
+d2 = date(2026, 1, 1)
+print((d1 - d2).days)</code></pre>
+</details>
+</article><article class='card'>
+<h2>문제 06</h2>
+<p>오늘 날짜 기준으로 7일 후 날짜를 출력하세요.</p>
+<h3>시작 코드</h3>
+<pre><code>from datetime import date, timedelta
+
+today = date.today()
+# TODO</code></pre>
+<details>
+<summary>정답 보기</summary>
+<pre><code>from datetime import date, timedelta
+
+today = date.today()
+print(today + timedelta(days=7))</code></pre>
+</details>
+</article><article class='card'>
+<h2>문제 07</h2>
+<p>오늘이 주말인지 평일인지 출력하세요. (`weekday()` 사용)</p>
+<h3>시작 코드</h3>
+<pre><code>from datetime import date
+
+today = date.today()
+# TODO</code></pre>
+<details>
+<summary>정답 보기</summary>
+<pre><code>from datetime import date
+
+today = date.today()
+print(&#x27;주말&#x27; if today.weekday() &gt;= 5 else &#x27;평일&#x27;)</code></pre>
+</details>
+</article><article class='card'>
+<h2>문제 08</h2>
+<p>현재 시각에서 &#x27;분(minute)&#x27;만 출력하세요.</p>
+<h3>시작 코드</h3>
+<pre><code>from datetime import datetime
+
+now = datetime.now()
+# TODO</code></pre>
+<details>
+<summary>정답 보기</summary>
+<pre><code>from datetime import datetime
+
+now = datetime.now()
+print(now.minute)</code></pre>
+</details>
+</article><article class='card'>
+<h2>문제 09</h2>
+<p>오늘 날짜를 ISO 문자열(YYYY-MM-DD)로 출력하세요.</p>
+<h3>시작 코드</h3>
+<pre><code>from datetime import date
+
+today = date.today()
+# TODO</code></pre>
+<details>
+<summary>정답 보기</summary>
+<pre><code>from datetime import date
+
+today = date.today()
+print(today.isoformat())</code></pre>
+</details>
+</article><article class='card'>
+<h2>문제 10</h2>
+<p>현재 `datetime`을 ISO 8601 형식 문자열로 출력하세요. (`isoformat`)</p>
+<h3>시작 코드</h3>
+<pre><code>from datetime import datetime
+
+now = datetime.now()
+# TODO</code></pre>
+<details>
+<summary>정답 보기</summary>
+<pre><code>from datetime import datetime
+
+now = datetime.now()
+print(now.isoformat())</code></pre>
+</details>
+</article><article class='card'>
+<h2>문제 11</h2>
+<p>`datetime(2026,1,19,14,5,7)`을 `YYYY/MM/DD` 형식으로 출력하세요. (`strftime`)</p>
+<h3>시작 코드</h3>
+<pre><code>from datetime import datetime
+
+dt = datetime(2026, 1, 19, 14, 5, 7)
+# TODO</code></pre>
+<details>
+<summary>정답 보기</summary>
+<pre><code>from datetime import datetime
+
+dt = datetime(2026, 1, 19, 14, 5, 7)
+print(dt.strftime(&#x27;%Y/%m/%d&#x27;))</code></pre>
+</details>
+</article><article class='card'>
+<h2>문제 12</h2>
+<p>같은 dt를 `YYYY.MM.DD HH:MM` 형식으로 출력하세요.</p>
+<h3>시작 코드</h3>
+<pre><code>from datetime import datetime
+
+dt = datetime(2026, 1, 19, 14, 5, 7)
+# TODO</code></pre>
+<details>
+<summary>정답 보기</summary>
+<pre><code>from datetime import datetime
+
+dt = datetime(2026, 1, 19, 14, 5, 7)
+print(dt.strftime(&#x27;%Y.%m.%d %H:%M&#x27;))</code></pre>
+</details>
+</article><article class='card'>
+<h2>문제 13</h2>
+<p>같은 dt를 12시간제 + AM/PM 으로 출력하세요. (`%I`, `%p`)</p>
+<h3>시작 코드</h3>
+<pre><code>from datetime import datetime
+
+dt = datetime(2026, 1, 19, 14, 5, 7)
+# TODO</code></pre>
+<details>
+<summary>정답 보기</summary>
+<pre><code>from datetime import datetime
+
+dt = datetime(2026, 1, 19, 14, 5, 7)
+print(dt.strftime(&#x27;%I:%M:%S %p&#x27;))</code></pre>
+</details>
+</article><article class='card'>
+<h2>문제 14</h2>
+<p>같은 dt의 요일을 영문 전체 요일로 출력하세요. (`%A`)</p>
+<h3>시작 코드</h3>
+<pre><code>from datetime import datetime
+
+dt = datetime(2026, 1, 19, 14, 5, 7)
+# TODO</code></pre>
+<details>
+<summary>정답 보기</summary>
+<pre><code>from datetime import datetime
+
+dt = datetime(2026, 1, 19, 14, 5, 7)
+print(dt.strftime(&#x27;%A&#x27;))</code></pre>
+</details>
+</article><article class='card'>
+<h2>문제 15</h2>
+<p>월(%m)과 분(%M)을 각각 출력해 차이를 확인하세요.</p>
+<h3>시작 코드</h3>
+<pre><code>from datetime import datetime
+
+dt = datetime(2026, 1, 19, 14, 5, 7)
+# TODO</code></pre>
+<details>
+<summary>정답 보기</summary>
+<pre><code>from datetime import datetime
+
+dt = datetime(2026, 1, 19, 14, 5, 7)
+print(&#x27;월:&#x27;, dt.strftime(&#x27;%m&#x27;))
+print(&#x27;분:&#x27;, dt.strftime(&#x27;%M&#x27;))</code></pre>
+</details>
+</article><article class='card'>
+<h2>문제 16</h2>
+<p>파일명용 타임스탬프를 `YYYYMMDD_HHMMSS`로 출력하세요.</p>
+<h3>시작 코드</h3>
+<pre><code>from datetime import datetime
+
+dt = datetime.now()
+# TODO</code></pre>
+<details>
+<summary>정답 보기</summary>
+<pre><code>from datetime import datetime
+
+dt = datetime.now()
+print(dt.strftime(&#x27;%Y%m%d_%H%M%S&#x27;))</code></pre>
+</details>
+</article><article class='card'>
+<h2>문제 17</h2>
+<p>오늘 날짜를 &#x27;YYYY-MM-DD (한글요일)&#x27; 형태로 출력하세요. (한글 요일 리스트 활용)</p>
+<h3>시작 코드</h3>
+<pre><code>from datetime import date
+
+today = date.today()
+# TODO</code></pre>
+<details>
+<summary>정답 보기</summary>
+<pre><code>from datetime import date
+
+today = date.today()
+kor = [&#x27;월&#x27;,&#x27;화&#x27;,&#x27;수&#x27;,&#x27;목&#x27;,&#x27;금&#x27;,&#x27;토&#x27;,&#x27;일&#x27;]
+print(f&quot;{today.strftime(&#x27;%Y-%m-%d&#x27;)} ({kor[today.weekday()]})&quot;)</code></pre>
+</details>
+</article><article class='card'>
+<h2>문제 18</h2>
+<p>현재 시각을 &#x27;HH:MM:SS&#x27;로 출력하되, 24시간제를 사용하세요.</p>
+<h3>시작 코드</h3>
+<pre><code>from datetime import datetime
+
+now = datetime.now()
+# TODO</code></pre>
+<details>
+<summary>정답 보기</summary>
+<pre><code>from datetime import datetime
+
+now = datetime.now()
+print(now.strftime(&#x27;%H:%M:%S&#x27;))</code></pre>
+</details>
+</article><article class='card'>
+<h2>문제 19</h2>
+<p>현재 날짜를 &#x27;올해 N일째&#x27;로 출력하세요. (`%j`)</p>
+<h3>시작 코드</h3>
+<pre><code>from datetime import datetime
+
+now = datetime.now()
+# TODO</code></pre>
+<details>
+<summary>정답 보기</summary>
+<pre><code>from datetime import datetime
+
+now = datetime.now()
+print(&#x27;올해&#x27;, int(now.strftime(&#x27;%j&#x27;)), &#x27;일째&#x27;)</code></pre>
+</details>
+</article><article class='card'>
+<h2>문제 20</h2>
+<p>현재 날짜로 주차를 `%U`, `%W`로 각각 출력하세요.</p>
+<h3>시작 코드</h3>
+<pre><code>from datetime import date
+
+today = date.today()
+# TODO</code></pre>
+<details>
+<summary>정답 보기</summary>
+<pre><code>from datetime import date
+
+today = date.today()
+print(&#x27;%U:&#x27;, today.strftime(&#x27;%U&#x27;))
+print(&#x27;%W:&#x27;, today.strftime(&#x27;%W&#x27;))</code></pre>
+</details>
+</article><article class='card'>
+<h2>문제 21</h2>
+<p>오늘의 `weekday()`와 `isoweekday()`를 둘 다 출력하고 차이를 한 줄로 설명(주석)하세요.</p>
+<h3>시작 코드</h3>
+<pre><code>from datetime import date
+
+today = date.today()
+# TODO</code></pre>
+<details>
+<summary>정답 보기</summary>
+<pre><code>from datetime import date
+
+today = date.today()
+print(&#x27;weekday:&#x27;, today.weekday())
+print(&#x27;isoweekday:&#x27;, today.isoweekday())
+# weekday: 월=0~일=6, isoweekday: 월=1~일=7</code></pre>
+</details>
+</article><article class='card'>
+<h2>문제 22</h2>
+<p>오늘의 ISO 주차(연도/주차/요일)를 `isocalendar()`로 출력하세요.</p>
+<h3>시작 코드</h3>
+<pre><code>from datetime import date
+
+today = date.today()
+# TODO</code></pre>
+<details>
+<summary>정답 보기</summary>
+<pre><code>from datetime import date
+
+today = date.today()
+iso = today.isocalendar()
+print(iso.year, iso.week, iso.weekday)</code></pre>
+</details>
+</article><article class='card'>
+<h2>문제 23</h2>
+<p>연초/연말 샘플 날짜 5개를 만들어 ISO 주차와 `%U/%W` 주차를 표처럼 출력하세요.</p>
+<h3>시작 코드</h3>
+<pre><code>from datetime import date
+
+samples = [
+  # TODO
+]
+# TODO</code></pre>
+<details>
+<summary>정답 보기</summary>
+<pre><code>from datetime import date
+
+samples = [
+    date(2025, 12, 29),
+    date(2025, 12, 31),
+    date(2026, 1, 1),
+    date(2026, 1, 4),
+    date(2026, 1, 5),
+]
+
+print(&#x27;date        ISO(year,week,wd)   %U  %W&#x27;)
+for d in samples:
+    iso = d.isocalendar()
+    print(f&quot;{d}   ({iso.year},{iso.week},{iso.weekday})      {d.strftime(&#x27;%U&#x27;)}  {d.strftime(&#x27;%W&#x27;)}&quot;)</code></pre>
+</details>
+</article><article class='card'>
+<h2>문제 24</h2>
+<p>오늘이 올해 몇 일째인지 `tm_yday`로 출력하세요.</p>
+<h3>시작 코드</h3>
+<pre><code>from datetime import datetime
+
+now = datetime.now()
+# TODO</code></pre>
+<details>
+<summary>정답 보기</summary>
+<pre><code>from datetime import datetime
+
+now = datetime.now()
+print(now.timetuple().tm_yday)</code></pre>
+</details>
+</article><article class='card'>
+<h2>문제 25</h2>
+<p>오늘이 올해 몇 일째인지 `%j`로 출력하세요. (001~366 형태)</p>
+<h3>시작 코드</h3>
+<pre><code>from datetime import datetime
+
+now = datetime.now()
+# TODO</code></pre>
+<details>
+<summary>정답 보기</summary>
+<pre><code>from datetime import datetime
+
+now = datetime.now()
+print(now.strftime(&#x27;%j&#x27;))</code></pre>
+</details>
+</article><article class='card'>
+<h2>문제 26</h2>
+<p>주간 리포트 키를 ISO 기준으로 `YYYY-Www` 형태로 만들어 출력하세요.</p>
+<h3>시작 코드</h3>
+<pre><code>from datetime import date
+
+today = date.today()
+# TODO</code></pre>
+<details>
+<summary>정답 보기</summary>
+<pre><code>from datetime import date
+
+today = date.today()
+iso = today.isocalendar()
+print(f&quot;{iso.year}-W{iso.week:02d}&quot;)</code></pre>
+</details>
+</article><article class='card'>
+<h2>문제 27</h2>
+<p>한글 요일 매핑을 함수로 만들고, 임의 날짜를 넣어 한글 요일을 반환하도록 하세요.</p>
+<h3>시작 코드</h3>
+<pre><code>from datetime import date
+
+# TODO: 함수 작성
+
+print(get_kor_weekday(date(2026, 1, 19)))</code></pre>
+<details>
+<summary>정답 보기</summary>
+<pre><code>from datetime import date
+
+def get_kor_weekday(d: date) -&gt; str:
+    kor = [&#x27;월&#x27;,&#x27;화&#x27;,&#x27;수&#x27;,&#x27;목&#x27;,&#x27;금&#x27;,&#x27;토&#x27;,&#x27;일&#x27;]
+    return kor[d.weekday()]
+
+print(get_kor_weekday(date(2026, 1, 19)))</code></pre>
+</details>
+</article><article class='card'>
+<h2>문제 28</h2>
+<p>요일을 이용해 &#x27;평일이면 정산 실행, 주말이면 다음 영업일로 이월&#x27; 메시지를 출력하세요.</p>
+<h3>시작 코드</h3>
+<pre><code>from datetime import date
+
+today = date.today()
+# TODO</code></pre>
+<details>
+<summary>정답 보기</summary>
+<pre><code>from datetime import date
+
+today = date.today()
+if today.weekday() &lt; 5:
+    print(&#x27;정산 실행&#x27;)
+else:
+    print(&#x27;주말 → 다음 영업일로 이월&#x27;)</code></pre>
+</details>
+</article><article class='card'>
+<h2>문제 29</h2>
+<p>YTD 라벨을 `YTD-XXX`(3자리) 형태로 출력하세요. (tm_yday 사용)</p>
+<h3>시작 코드</h3>
+<pre><code>from datetime import datetime
+
+now = datetime.now()
+# TODO</code></pre>
+<details>
+<summary>정답 보기</summary>
+<pre><code>from datetime import datetime
+
+now = datetime.now()
+yday = now.timetuple().tm_yday
+print(f&quot;YTD-{yday:03d}&quot;)</code></pre>
+</details>
+</article><article class='card'>
+<h2>문제 30</h2>
+<p>오늘 날짜에서 &#x27;월 기준 주차&#x27;를 계산하는 `week_of_month` 함수를 작성하고 출력하세요.</p>
+<h3>시작 코드</h3>
+<pre><code>from datetime import date
+
+# TODO: week_of_month 구현
+
+today = date.today()
+print(week_of_month(today))</code></pre>
+<details>
+<summary>정답 보기</summary>
+<pre><code>from datetime import date
+
+def week_of_month(d: date, week_start: int = 0) -&gt; int:
+    first = d.replace(day=1)
+    offset = (first.weekday() - week_start) % 7
+    return (d.day + offset - 1) // 7 + 1
+
+today = date.today()
+print(week_of_month(today))</code></pre>
+</details>
+</article><article class='card'>
+<h2>문제 31</h2>
+<p>예치 시작/종료일을 받아 예치 일수를 반환하는 함수를 작성하세요.</p>
+<h3>시작 코드</h3>
+<pre><code>from datetime import date
+
+# TODO: days_between 함수
+
+print(days_between(date(2026,1,2), date(2026,1,19)))</code></pre>
+<details>
+<summary>정답 보기</summary>
+<pre><code>from datetime import date
+
+def days_between(start: date, end: date) -&gt; int:
+    return (end - start).days
+
+print(days_between(date(2026,1,2), date(2026,1,19)))</code></pre>
+</details>
+</article><article class='card'>
+<h2>문제 32</h2>
+<p>원금/연이율/일수를 받아 단순 일할 이자(교육용)를 계산하는 함수를 작성하세요.</p>
+<h3>시작 코드</h3>
+<pre><code># TODO: simple_daily_interest(principal, annual_rate, days)
+
+print(simple_daily_interest(10_000_000, 0.03, 17))</code></pre>
+<details>
+<summary>정답 보기</summary>
+<pre><code>def simple_daily_interest(principal: float, annual_rate: float, days: int, base_days: int = 365) -&gt; int:
+    interest = principal * annual_rate * (days / base_days)
+    return round(interest)
+
+print(simple_daily_interest(10_000_000, 0.03, 17))</code></pre>
+</details>
+</article><article class='card'>
+<h2>문제 33</h2>
+<p>현재 시각에서 2시간 15분 후를 계산해 출력하세요. (`timedelta`)</p>
+<h3>시작 코드</h3>
+<pre><code>from datetime import datetime, timedelta
+
+now = datetime.now()
+# TODO</code></pre>
+<details>
+<summary>정답 보기</summary>
+<pre><code>from datetime import datetime, timedelta
+
+now = datetime.now()
+print(now + timedelta(hours=2, minutes=15))</code></pre>
+</details>
+</article><article class='card'>
+<h2>문제 34</h2>
+<p>오늘 날짜의 시작(00:00:00)과 끝(23:59:59.999999)을 만들어 출력하세요.</p>
+<h3>시작 코드</h3>
+<pre><code>from datetime import datetime, date, time
+
+today = date.today()
+# TODO</code></pre>
+<details>
+<summary>정답 보기</summary>
+<pre><code>from datetime import datetime, date, time
+
+today = date.today()
+start = datetime.combine(today, time.min)
+end = datetime.combine(today, time.max)
+print(start)
+print(end)</code></pre>
+</details>
+</article><article class='card'>
+<h2>문제 35</h2>
+<p>이번 달의 마지막 날짜를 계산해 출력하세요. (`calendar.monthrange`)</p>
+<h3>시작 코드</h3>
+<pre><code>from datetime import date
+import calendar
+
+today = date.today()
+# TODO</code></pre>
+<details>
+<summary>정답 보기</summary>
+<pre><code>from datetime import date
+import calendar
+
+today = date.today()
+last_day = calendar.monthrange(today.year, today.month)[1]
+print(date(today.year, today.month, last_day))</code></pre>
+</details>
+</article><article class='card'>
+<h2>문제 36</h2>
+<p>문자열 `&#x27;2026-01-19 09:15:00&#x27;`을 datetime으로 파싱하세요.</p>
+<h3>시작 코드</h3>
+<pre><code>from datetime import datetime
+
+s = &#x27;2026-01-19 09:15:00&#x27;
+# TODO</code></pre>
+<details>
+<summary>정답 보기</summary>
+<pre><code>from datetime import datetime
+
+s = &#x27;2026-01-19 09:15:00&#x27;
+dt = datetime.strptime(s, &#x27;%Y-%m-%d %H:%M:%S&#x27;)
+print(dt)</code></pre>
+</details>
+</article><article class='card'>
+<h2>문제 37</h2>
+<p>미국식 날짜 `&#x27;01/19/2026&#x27;`을 datetime으로 파싱하세요. (`%m/%d/%Y`)</p>
+<h3>시작 코드</h3>
+<pre><code>from datetime import datetime
+
+s = &#x27;01/19/2026&#x27;
+# TODO</code></pre>
+<details>
+<summary>정답 보기</summary>
+<pre><code>from datetime import datetime
+
+s = &#x27;01/19/2026&#x27;
+dt = datetime.strptime(s, &#x27;%m/%d/%Y&#x27;)
+print(dt)</code></pre>
+</details>
+</article><article class='card'>
+<h2>문제 38</h2>
+<p>파싱한 datetime을 표준 ISO 문자열 `&#x27;YYYY-MM-DD HH:MM:SS&#x27;`로 다시 출력하세요.</p>
+<h3>시작 코드</h3>
+<pre><code>from datetime import datetime
+
+dt = datetime(2026, 1, 19, 9, 15, 0)
+# TODO</code></pre>
+<details>
+<summary>정답 보기</summary>
+<pre><code>from datetime import datetime
+
+dt = datetime(2026, 1, 19, 9, 15, 0)
+print(dt.strftime(&#x27;%Y-%m-%d %H:%M:%S&#x27;))</code></pre>
+</details>
+</article><article class='card'>
+<h2>문제 39</h2>
+<p>CSV 한 줄(dict)에서 trade_time을 파싱하고 amount를 int로 바꿔 출력하세요.</p>
+<h3>시작 코드</h3>
+<pre><code>from datetime import datetime
+
+csv_row = {&#x27;trade_time&#x27;: &#x27;2026-01-19 09:15:00&#x27;, &#x27;amount&#x27;: &#x27;125000&#x27;}
+# TODO</code></pre>
+<details>
+<summary>정답 보기</summary>
+<pre><code>from datetime import datetime
+
+csv_row = {&#x27;trade_time&#x27;: &#x27;2026-01-19 09:15:00&#x27;, &#x27;amount&#x27;: &#x27;125000&#x27;}
+trade_dt = datetime.strptime(csv_row[&#x27;trade_time&#x27;], &#x27;%Y-%m-%d %H:%M:%S&#x27;)
+amount = int(csv_row[&#x27;amount&#x27;])
+print(trade_dt, amount)</code></pre>
+</details>
+</article><article class='card'>
+<h2>문제 40</h2>
+<p>거래일을 입력하면 D+2 정산일을 반환하는 함수를 작성하세요. (주말/휴장일 제외는 심화)</p>
+<h3>시작 코드</h3>
+<pre><code>from datetime import date, timedelta
+
+# TODO: settlement_d2(trade_date)
+
+print(settlement_d2(date(2026,1,19)))</code></pre>
+<details>
+<summary>정답 보기</summary>
+<pre><code>from datetime import date, timedelta
+
+def settlement_d2(trade_date: date) -&gt; date:
+    return trade_date + timedelta(days=2)
+
+print(settlement_d2(date(2026,1,19)))</code></pre>
+</details>
+</article><article class='card'>
+<h2>문제 41</h2>
+<p>UTC 현재 시각(aware datetime)을 출력하세요.</p>
+<h3>시작 코드</h3>
+<pre><code>from datetime import datetime, timezone
+
+# TODO</code></pre>
+<details>
+<summary>정답 보기</summary>
+<pre><code>from datetime import datetime, timezone
+
+print(datetime.now(timezone.utc))</code></pre>
+</details>
+</article><article class='card'>
+<h2>문제 42</h2>
+<p>KST(UTC+9) timezone을 만들고, KST 현재 시각을 출력하세요.</p>
+<h3>시작 코드</h3>
+<pre><code>from datetime import datetime, timezone, timedelta
+
+# TODO</code></pre>
+<details>
+<summary>정답 보기</summary>
+<pre><code>from datetime import datetime, timezone, timedelta
+
+kst = timezone(timedelta(hours=9))
+print(datetime.now(kst))</code></pre>
+</details>
+</article><article class='card'>
+<h2>문제 43</h2>
+<p>UTC로 저장한 시간을 KST로 변환해 `&#x27;YYYY-MM-DD HH:MM:SS&#x27;`로 출력하세요.</p>
+<h3>시작 코드</h3>
+<pre><code>from datetime import datetime, timezone, timedelta
+
+# TODO</code></pre>
+<details>
+<summary>정답 보기</summary>
+<pre><code>from datetime import datetime, timezone, timedelta
+
+created_at_utc = datetime.now(timezone.utc)
+kst = timezone(timedelta(hours=9))
+created_at_kst = created_at_utc.astimezone(kst)
+print(created_at_kst.strftime(&#x27;%Y-%m-%d %H:%M:%S&#x27;))</code></pre>
+</details>
+</article><article class='card'>
+<h2>문제 44</h2>
+<p>주간 리포트 키(ISO)와 월 기준 주차 버킷을 동시에 출력하세요.</p>
+<h3>시작 코드</h3>
+<pre><code>from datetime import date
+
+# TODO</code></pre>
+<details>
+<summary>정답 보기</summary>
+<pre><code>from datetime import date
+
+def week_of_month(d: date, week_start: int = 0) -&gt; int:
+    first = d.replace(day=1)
+    offset = (first.weekday() - week_start) % 7
+    return (d.day + offset - 1) // 7 + 1
+
+today = date.today()
+iso = today.isocalendar()
+weekly_key = f&quot;{iso.year}-W{iso.week:02d}&quot;
+w = week_of_month(today, 0)
+monthly_bucket = f&quot;{today.year}-{today.month:02d}-W{w}&quot;
+print(weekly_key)
+print(monthly_bucket)</code></pre>
+</details>
+</article><article class='card'>
+<h2>문제 45</h2>
+<p>로그 파일명을 `trade_YYYYMMDD_HHMMSS.log` 형태로 생성해 출력하세요.</p>
+<h3>시작 코드</h3>
+<pre><code>from datetime import datetime
+
+# TODO</code></pre>
+<details>
+<summary>정답 보기</summary>
+<pre><code>from datetime import datetime
+
+ts = datetime.now().strftime(&#x27;%Y%m%d_%H%M%S&#x27;)
+print(f&quot;trade_{ts}.log&quot;)</code></pre>
+</details>
+</article><article class='card'>
+<h2>문제 46</h2>
+<p>거래 리스트(문자열 시간/금액)를 받아, &#x27;오늘 거래&#x27;만 필터링하는 코드를 작성하세요. (today 범위 사용)</p>
+<h3>시작 코드</h3>
+<pre><code>from datetime import datetime, date, time
+
+trades = [
+  {&#x27;trade_time&#x27;: &#x27;2026-01-19 09:15:00&#x27;, &#x27;amount&#x27;: 1000},
+  {&#x27;trade_time&#x27;: &#x27;2026-01-18 10:00:00&#x27;, &#x27;amount&#x27;: 2000},
+]
+# TODO</code></pre>
+<details>
+<summary>정답 보기</summary>
+<pre><code>from datetime import datetime, date, time
+
+trades = [
+  {&#x27;trade_time&#x27;: &#x27;2026-01-19 09:15:00&#x27;, &#x27;amount&#x27;: 1000},
+  {&#x27;trade_time&#x27;: &#x27;2026-01-18 10:00:00&#x27;, &#x27;amount&#x27;: 2000},
+]
+
+today = date(2026, 1, 19)  # 재현성을 위해 고정
+start = datetime.combine(today, time.min)
+end = datetime.combine(today, time.max)
+
+result = []
+for t in trades:
+    dt = datetime.strptime(t[&#x27;trade_time&#x27;], &#x27;%Y-%m-%d %H:%M:%S&#x27;)
+    if start &lt;= dt &lt;= end:
+        result.append(t)
+
+print(result)</code></pre>
+</details>
+</article><article class='card'>
+<h2>문제 47</h2>
+<p>거래 데이터가 주말이면 &#x27;보류&#x27;, 평일이면 &#x27;처리&#x27; 상태를 붙이는 코드를 작성하세요.</p>
+<h3>시작 코드</h3>
+<pre><code>from datetime import datetime
+
+trade_time = &#x27;2026-01-18 09:00:00&#x27;  # TODO: 바꿔가며 테스트
+# TODO</code></pre>
+<details>
+<summary>정답 보기</summary>
+<pre><code>from datetime import datetime
+
+trade_time = &#x27;2026-01-18 09:00:00&#x27;
+dt = datetime.strptime(trade_time, &#x27;%Y-%m-%d %H:%M:%S&#x27;)
+status = &#x27;보류&#x27; if dt.date().weekday() &gt;= 5 else &#x27;처리&#x27;
+print(status)</code></pre>
+</details>
+</article><article class='card'>
+<h2>문제 48</h2>
+<p>거래일과 연이율, 원금을 받아 &#x27;정산일(D+2)&#x27;과 &#x27;예상 이자(일할, 교육용)&#x27;를 출력하세요.</p>
+<h3>시작 코드</h3>
+<pre><code>from datetime import date
+
+trade_date = date(2026, 1, 19)
+principal = 10_000_000
+annual_rate = 0.03
+# TODO</code></pre>
+<details>
+<summary>정답 보기</summary>
+<pre><code>from datetime import date, timedelta
+
+trade_date = date(2026, 1, 19)
+principal = 10_000_000
+annual_rate = 0.03
+
+settlement = trade_date + timedelta(days=2)
+days = (settlement - trade_date).days
+interest = principal * annual_rate * (days / 365)
+print(&#x27;정산일:&#x27;, settlement)
+print(&#x27;예상 이자(교육용):&#x27;, round(interest))</code></pre>
+</details>
+</article><article class='card'>
+<h2>문제 49</h2>
+<p>연차(day-of-year)를 이용해 &#x27;연 누적 리포트&#x27; 파일명을 `ytd_XXX.csv` 형태로 생성하세요.</p>
+<h3>시작 코드</h3>
+<pre><code>from datetime import datetime
+
+# TODO</code></pre>
+<details>
+<summary>정답 보기</summary>
+<pre><code>from datetime import datetime
+
+now = datetime.now()
+yday = now.timetuple().tm_yday
+print(f&quot;ytd_{yday:03d}.csv&quot;)</code></pre>
+</details>
+</article><article class='card'>
+<h2>문제 50</h2>
+<p>같은 날짜에 대해 `%U`(일요일 시작)와 `%W`(월요일 시작)가 달라지는 날짜를 하나 골라, 두 값을 출력하고 왜 다른지 주석으로 설명하세요.</p>
+<h3>시작 코드</h3>
+<pre><code>from datetime import date
+
+# TODO: 연초/연말 경계 날짜를 선택
+# d = date(YYYY, M, D)
+# TODO</code></pre>
+<details>
+<summary>정답 보기</summary>
+<pre><code>from datetime import date
+
+# 예시: 2026-01-01은 연초 경계라 차이가 잘 보일 수 있음
+# (환경/로케일에 따라 동일할 수도 있으니, 여러 날짜를 시도해보세요)
+d = date(2026, 1, 1)
+print(&#x27;%U:&#x27;, d.strftime(&#x27;%U&#x27;))
+print(&#x27;%W:&#x27;, d.strftime(&#x27;%W&#x27;))
+# %U는 &#x27;첫 일요일&#x27; 기준, %W는 &#x27;첫 월요일&#x27; 기준으로 1주차를 시작하므로
+# 연초 며칠은 00주차가 되거나 주차가 달라질 수 있습니다.</code></pre>
+</details>
+</article>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <p class="footer-text">본 페이지는 같은 폴더의 <code>styles.css</code>를 링크하여 사용합니다.</p>
+    </div>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,1209 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>연습문제 16 — 모듈 사용하기 &amp; 만들기 (강의안 기반)</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="header">
+    <div class="container">
+      <span class="badge">Python · Jupyter Notebook</span>
+      <h1 class="title">연습문제 16 — 모듈 사용하기 &amp; 만들기 (강의안 기반)</h1>
+      <p class="subtitle">강의안(16모듈사용하기_만들기.ipynb) 범위에 맞춰 datetime 모듈, os 모듈(폴더/파일/환경변수), 그리고 사용자 정의 모듈(myfunc) 사용을 실습한다.</p>
+      <nav class="toc" aria-label="목차">
+        <a href="#sec1">1) datetime 모듈 (1~10)</a>
+        <a href="#sec2">2) os 모듈 (11~30)</a>
+        <a href="#sec3">3) 사용자 정의 모듈(myfunc) (31~40)</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+<section class="section" id="sec1">
+  <h2>1) datetime 모듈 (1~10)</h2>
+  <article class="card" id="q1">
+  <h3><span class="badge">1번</span> 문제</h3>
+
+  <div class="q-box">
+    <p class="q-desc"><strong>datetime import — datetime 객체 만들기</strong><br/> <code>from datetime import datetime</code>로 datetime을 임포트한 뒤, <code>datetime(2026, 1, 5, 9, 30, 0)</code> 객체를 만들고 그대로 출력하세요.</p>
+  </div>
+
+  <details class="qa hint" open>
+    <summary>힌트 / 출력</summary>
+    <div class="details-body">
+<div class="muted">출력 예시</div>
+      <pre><code>2026-01-05 09:30:00</code></pre>
+    </div>
+  </details>
+
+  <details class="qa answer">
+    <summary>정답 코드 보기</summary>
+    <div class="details-body">
+      <div class="badge code">정답</div>
+      <pre><code>from datetime import datetime
+fixed = datetime(2026, 1, 5, 9, 30, 0)
+print(fixed)</code></pre>
+    </div>
+  </details>
+</article>
+
+<article class="card" id="q2">
+  <h3><span class="badge">2번</span> 문제</h3>
+
+  <div class="q-box">
+    <p class="q-desc"><strong>datetime 속성 — year/month/day</strong><br/>위에서 만든 <code>fixed</code>에서 <code>year</code>, <code>month</code>, <code>day</code>를 각각 출력하세요.</p>
+  </div>
+
+  <details class="qa hint" open>
+    <summary>힌트 / 출력</summary>
+    <div class="details-body">
+<div class="muted">출력 예시</div>
+      <pre><code>2026
+1
+5</code></pre>
+    </div>
+  </details>
+
+  <details class="qa answer">
+    <summary>정답 코드 보기</summary>
+    <div class="details-body">
+      <div class="badge code">정답</div>
+      <pre><code>from datetime import datetime
+fixed = datetime(2026, 1, 5, 9, 30, 0)
+print(fixed.year)
+print(fixed.month)
+print(fixed.day)</code></pre>
+    </div>
+  </details>
+</article>
+
+<article class="card" id="q3">
+  <h3><span class="badge">3번</span> 문제</h3>
+
+  <div class="q-box">
+    <p class="q-desc"><strong>datetime 속성 — hour/minute/second</strong><br/><code>fixed</code>에서 <code>hour</code>, <code>minute</code>, <code>second</code>를 각각 출력하세요.</p>
+  </div>
+
+  <details class="qa hint" open>
+    <summary>힌트 / 출력</summary>
+    <div class="details-body">
+<div class="muted">출력 예시</div>
+      <pre><code>9
+30
+0</code></pre>
+    </div>
+  </details>
+
+  <details class="qa answer">
+    <summary>정답 코드 보기</summary>
+    <div class="details-body">
+      <div class="badge code">정답</div>
+      <pre><code>from datetime import datetime
+fixed = datetime(2026, 1, 5, 9, 30, 0)
+print(fixed.hour)
+print(fixed.minute)
+print(fixed.second)</code></pre>
+    </div>
+  </details>
+</article>
+
+<article class="card" id="q4">
+  <h3><span class="badge">4번</span> 문제</h3>
+
+  <div class="q-box">
+    <p class="q-desc"><strong>strftime — 날짜 포맷팅(YYYY.MM.DD)</strong><br/><code>strftime</code>로 <code>2026.01.05</code> 형태로 출력하세요. (형식: <code>%Y.%m.%d</code>)</p>
+  </div>
+
+  <details class="qa hint" open>
+    <summary>힌트 / 출력</summary>
+    <div class="details-body">
+<div class="muted">출력 예시</div>
+      <pre><code>2026.01.05</code></pre>
+    </div>
+  </details>
+
+  <details class="qa answer">
+    <summary>정답 코드 보기</summary>
+    <div class="details-body">
+      <div class="badge code">정답</div>
+      <pre><code>from datetime import datetime
+fixed = datetime(2026, 1, 5, 9, 30, 0)
+print(fixed.strftime(&#x27;%Y.%m.%d&#x27;))</code></pre>
+    </div>
+  </details>
+</article>
+
+<article class="card" id="q5">
+  <h3><span class="badge">5번</span> 문제</h3>
+
+  <div class="q-box">
+    <p class="q-desc"><strong>strftime — 날짜+시간 포맷팅</strong><br/><code>strftime</code>로 <code>2026.01.05 09:30:00</code> 형태로 출력하세요. (형식: <code>%Y.%m.%d %H:%M:%S</code>)</p>
+  </div>
+
+  <details class="qa hint" open>
+    <summary>힌트 / 출력</summary>
+    <div class="details-body">
+<div class="muted">출력 예시</div>
+      <pre><code>2026.01.05 09:30:00</code></pre>
+    </div>
+  </details>
+
+  <details class="qa answer">
+    <summary>정답 코드 보기</summary>
+    <div class="details-body">
+      <div class="badge code">정답</div>
+      <pre><code>from datetime import datetime
+fixed = datetime(2026, 1, 5, 9, 30, 0)
+print(fixed.strftime(&#x27;%Y.%m.%d %H:%M:%S&#x27;))</code></pre>
+    </div>
+  </details>
+</article>
+
+<article class="card" id="q6">
+  <h3><span class="badge">6번</span> 문제</h3>
+
+  <div class="q-box">
+    <p class="q-desc"><strong>datetime.now — 현재 시간 출력</strong><br/> <code>datetime.now()</code>를 사용해 현재 시간을 출력하세요. (출력은 실행 시점에 따라 달라집니다.)</p>
+  </div>
+
+  <details class="qa hint" open>
+    <summary>힌트 / 출력</summary>
+    <div class="details-body">
+<div class="muted">출력 예시</div>
+      <pre><code>(예시) 2026-01-05 08:00:00.123456</code></pre>
+    </div>
+  </details>
+
+  <details class="qa answer">
+    <summary>정답 코드 보기</summary>
+    <div class="details-body">
+      <div class="badge code">정답</div>
+      <pre><code>from datetime import datetime
+print(datetime.now())</code></pre>
+    </div>
+  </details>
+</article>
+
+<article class="card" id="q7">
+  <h3><span class="badge">7번</span> 문제</h3>
+
+  <div class="q-box">
+    <p class="q-desc"><strong>datetime.now — 오늘 날짜 포맷만 출력</strong><br/>현재 시간에서 오늘 날짜만 <code>YYYY-MM-DD</code> 형태로 출력하세요.</p>
+  </div>
+
+  <details class="qa hint" open>
+    <summary>힌트 / 출력</summary>
+    <div class="details-body">
+<div class="muted">출력 예시</div>
+      <pre><code>(예시) 2026-01-05</code></pre>
+    </div>
+  </details>
+
+  <details class="qa answer">
+    <summary>정답 코드 보기</summary>
+    <div class="details-body">
+      <div class="badge code">정답</div>
+      <pre><code>from datetime import datetime
+now = datetime.now()
+print(now.strftime(&#x27;%Y-%m-%d&#x27;))</code></pre>
+    </div>
+  </details>
+</article>
+
+<article class="card" id="q8">
+  <h3><span class="badge">8번</span> 문제</h3>
+
+  <div class="q-box">
+    <p class="q-desc"><strong>datetime — 문자열 만들기(속성 조합)</strong><br/><code>fixed</code>의 year, month, day를 이용해 <code>2026/1/5</code> 형태의 문자열을 만들어 출력하세요. (strftime 금지)</p>
+  </div>
+
+  <details class="qa hint" open>
+    <summary>힌트 / 출력</summary>
+    <div class="details-body">
+<div class="muted">출력 예시</div>
+      <pre><code>2026/1/5</code></pre>
+    </div>
+  </details>
+
+  <details class="qa answer">
+    <summary>정답 코드 보기</summary>
+    <div class="details-body">
+      <div class="badge code">정답</div>
+      <pre><code>from datetime import datetime
+fixed = datetime(2026, 1, 5, 9, 30, 0)
+print(f&#x27;{fixed.year}/{fixed.month}/{fixed.day}&#x27;)</code></pre>
+    </div>
+  </details>
+</article>
+
+<article class="card" id="q9">
+  <h3><span class="badge">9번</span> 문제</h3>
+
+  <div class="q-box">
+    <p class="q-desc"><strong>datetime — 오전/오후 판단</strong><br/><code>is_am(dt)</code> 함수를 작성하세요. dt.hour가 12보다 작으면 True, 아니면 False를 반환하세요.</p>
+  </div>
+
+  <details class="qa hint" open>
+    <summary>힌트 / 출력</summary>
+    <div class="details-body">
+<div class="muted">출력 예시</div>
+      <pre><code>True
+False</code></pre>
+    </div>
+  </details>
+
+  <details class="qa answer">
+    <summary>정답 코드 보기</summary>
+    <div class="details-body">
+      <div class="badge code">정답</div>
+      <pre><code>from datetime import datetime
+
+def is_am(dt):
+    return dt.hour &lt; 12
+
+print(is_am(datetime(2026,1,5,9,0,0)))
+print(is_am(datetime(2026,1,5,15,0,0)))</code></pre>
+    </div>
+  </details>
+</article>
+
+<article class="card" id="q10">
+  <h3><span class="badge">10번</span> 문제</h3>
+
+  <div class="q-box">
+    <p class="q-desc"><strong>datetime — 포맷 함수 만들기</strong><br/><code>format_dt(dt)</code> 함수를 작성하세요. dt를 <code>YYYY.MM.DD HH:MM:SS</code>로 포맷팅한 문자열을 반환하세요.</p>
+  </div>
+
+  <details class="qa hint" open>
+    <summary>힌트 / 출력</summary>
+    <div class="details-body">
+<div class="muted">출력 예시</div>
+      <pre><code>2026.01.05 09:30:00</code></pre>
+    </div>
+  </details>
+
+  <details class="qa answer">
+    <summary>정답 코드 보기</summary>
+    <div class="details-body">
+      <div class="badge code">정답</div>
+      <pre><code>from datetime import datetime
+
+def format_dt(dt):
+    return dt.strftime(&#x27;%Y.%m.%d %H:%M:%S&#x27;)
+
+fixed = datetime(2026,1,5,9,30,0)
+print(format_dt(fixed))</code></pre>
+    </div>
+  </details>
+</article>
+</section>
+<section class="section" id="sec2">
+  <h2>2) os 모듈 (11~30)</h2>
+  <article class="card" id="q11">
+  <h3><span class="badge">11번</span> 문제</h3>
+
+  <div class="q-box">
+    <p class="q-desc"><strong>os import — 기본 정보 출력</strong><br/><code>import os</code> 후, <code>os.name</code>과 <code>os.getcwd()</code>를 각각 출력하세요. (값은 환경에 따라 달라집니다.)</p>
+  </div>
+
+  <details class="qa hint" open>
+    <summary>힌트 / 출력</summary>
+    <div class="details-body">
+<div class="muted">출력 예시</div>
+      <pre><code>(예시) nt
+C:\\Users\\user</code></pre>
+    </div>
+  </details>
+
+  <details class="qa answer">
+    <summary>정답 코드 보기</summary>
+    <div class="details-body">
+      <div class="badge code">정답</div>
+      <pre><code>import os
+print(os.name)
+print(os.getcwd())</code></pre>
+    </div>
+  </details>
+</article>
+
+<article class="card" id="q12">
+  <h3><span class="badge">12번</span> 문제</h3>
+
+  <div class="q-box">
+    <p class="q-desc"><strong>os.listdir(path) — 테스트 폴더 만들고 리스트 확인</strong><br/>현재 폴더에 <code>testdir</code>를 만들고, 그 안에 <code>a.txt</code>, <code>b.txt</code> 파일을 만든 뒤 <code>os.listdir('testdir')</code> 결과를 출력하세요.</p>
+  </div>
+
+  <details class="qa hint" open>
+    <summary>힌트 / 출력</summary>
+    <div class="details-body">
+<div class="muted">출력 예시</div>
+      <pre><code>[&#x27;a.txt&#x27;, &#x27;b.txt&#x27;]</code></pre>
+    </div>
+  </details>
+
+  <details class="qa answer">
+    <summary>정답 코드 보기</summary>
+    <div class="details-body">
+      <div class="badge code">정답</div>
+      <pre><code>import os
+
+# 폴더 생성(이미 있으면 넘어가기)
+if not os.path.exists(&#x27;testdir&#x27;):
+    os.mkdir(&#x27;testdir&#x27;)
+
+open(&#x27;testdir/a.txt&#x27;,&#x27;w&#x27;,encoding=&#x27;utf-8&#x27;).close()
+open(&#x27;testdir/b.txt&#x27;,&#x27;w&#x27;,encoding=&#x27;utf-8&#x27;).close()
+
+print(sorted(os.listdir(&#x27;testdir&#x27;)))</code></pre>
+    </div>
+  </details>
+</article>
+
+<article class="card" id="q13">
+  <h3><span class="badge">13번</span> 문제</h3>
+
+  <div class="q-box">
+    <p class="q-desc"><strong>텍스트 파일 읽기 — .txt만 모아서 내용 리스트 만들기</strong><br/>현재 폴더에 <code>t1.txt</code>, <code>t2.txt</code>, <code>note.md</code>를 만들고, 현재 폴더에서 확장자가 txt인 파일만 읽어서 내용을 리스트로 모으세요.</p>
+  </div>
+
+  <details class="qa hint" open>
+    <summary>힌트 / 출력</summary>
+    <div class="details-body">
+<div class="muted">출력 예시</div>
+      <pre><code>[&#x27;A&#x27;, &#x27;B&#x27;]</code></pre>
+    </div>
+  </details>
+
+  <details class="qa answer">
+    <summary>정답 코드 보기</summary>
+    <div class="details-body">
+      <div class="badge code">정답</div>
+      <pre><code>import os
+
+with open(&#x27;t1.txt&#x27;,&#x27;w&#x27;,encoding=&#x27;utf-8&#x27;) as f:
+    f.write(&#x27;A&#x27;)
+with open(&#x27;t2.txt&#x27;,&#x27;w&#x27;,encoding=&#x27;utf-8&#x27;) as f:
+    f.write(&#x27;B&#x27;)
+with open(&#x27;note.md&#x27;,&#x27;w&#x27;,encoding=&#x27;utf-8&#x27;) as f:
+    f.write(&#x27;X&#x27;)
+
+files = []
+for file_name in os.listdir():
+    if file_name[-3:] == &#x27;txt&#x27;:
+        with open(file_name, encoding=&#x27;utf-8&#x27;) as file:
+            data = file.read()
+            files.append(data)
+
+print(sorted(files))</code></pre>
+    </div>
+  </details>
+</article>
+
+<article class="card" id="q14">
+  <h3><span class="badge">14번</span> 문제</h3>
+
+  <div class="q-box">
+    <p class="q-desc"><strong>os.mkdir / os.rmdir — 폴더 만들고 삭제</strong><br/><code>os.mkdir</code>로 <code>tempdir</code> 폴더를 만들고, 존재 여부를 출력한 뒤 <code>os.rmdir</code>로 삭제하고 다시 존재 여부를 출력하세요.</p>
+  </div>
+
+  <details class="qa hint" open>
+    <summary>힌트 / 출력</summary>
+    <div class="details-body">
+<div class="muted">출력 예시</div>
+      <pre><code>True
+False</code></pre>
+    </div>
+  </details>
+
+  <details class="qa answer">
+    <summary>정답 코드 보기</summary>
+    <div class="details-body">
+      <div class="badge code">정답</div>
+      <pre><code>import os
+
+os.mkdir(&#x27;tempdir&#x27;)
+print(os.path.exists(&#x27;tempdir&#x27;))
+
+os.rmdir(&#x27;tempdir&#x27;)
+print(os.path.exists(&#x27;tempdir&#x27;))</code></pre>
+    </div>
+  </details>
+</article>
+
+<article class="card" id="q15">
+  <h3><span class="badge">15번</span> 문제</h3>
+
+  <div class="q-box">
+    <p class="q-desc"><strong>os.path.exists — 없으면 만들기</strong><br/><code>if not os.path.exists('./testdir2')</code> 조건으로 폴더가 없을 때만 생성하도록 작성하세요. 생성 후 <code>True</code>가 출력되게 하세요.</p>
+  </div>
+
+  <details class="qa hint" open>
+    <summary>힌트 / 출력</summary>
+    <div class="details-body">
+<div class="muted">출력 예시</div>
+      <pre><code>True</code></pre>
+    </div>
+  </details>
+
+  <details class="qa answer">
+    <summary>정답 코드 보기</summary>
+    <div class="details-body">
+      <div class="badge code">정답</div>
+      <pre><code>import os
+
+if not os.path.exists(&#x27;./testdir2&#x27;):
+    os.mkdir(&#x27;testdir2&#x27;)
+
+print(os.path.exists(&#x27;testdir2&#x27;))</code></pre>
+    </div>
+  </details>
+</article>
+
+<article class="card" id="q16">
+  <h3><span class="badge">16번</span> 문제</h3>
+
+  <div class="q-box">
+    <p class="q-desc"><strong>파일 생성 — open/write</strong><br/><code>with open('original.txt','w')</code>로 파일을 만들고 <code>안녕하세요</code>를 저장한 뒤, 다시 읽어서 출력하세요.</p>
+  </div>
+
+  <details class="qa hint" open>
+    <summary>힌트 / 출력</summary>
+    <div class="details-body">
+<div class="muted">출력 예시</div>
+      <pre><code>안녕하세요</code></pre>
+    </div>
+  </details>
+
+  <details class="qa answer">
+    <summary>정답 코드 보기</summary>
+    <div class="details-body">
+      <div class="badge code">정답</div>
+      <pre><code>with open(&#x27;original.txt&#x27;,&#x27;w&#x27;,encoding=&#x27;utf-8&#x27;) as f:
+    f.write(&#x27;안녕하세요&#x27;)
+
+with open(&#x27;original.txt&#x27;,&#x27;r&#x27;,encoding=&#x27;utf-8&#x27;) as f:
+    print(f.read())</code></pre>
+    </div>
+  </details>
+</article>
+
+<article class="card" id="q17">
+  <h3><span class="badge">17번</span> 문제</h3>
+
+  <div class="q-box">
+    <p class="q-desc"><strong>os.rename — 파일 이름 바꾸기</strong><br/><code>original.txt</code>를 <code>new.txt</code>로 이름 변경하고, <code>new.txt</code>가 존재하는지 True/False로 출력하세요.</p>
+  </div>
+
+  <details class="qa hint" open>
+    <summary>힌트 / 출력</summary>
+    <div class="details-body">
+<div class="muted">출력 예시</div>
+      <pre><code>True</code></pre>
+    </div>
+  </details>
+
+  <details class="qa answer">
+    <summary>정답 코드 보기</summary>
+    <div class="details-body">
+      <div class="badge code">정답</div>
+      <pre><code>import os
+
+with open(&#x27;original.txt&#x27;,&#x27;w&#x27;,encoding=&#x27;utf-8&#x27;) as f:
+    f.write(&#x27;hi&#x27;)
+
+os.rename(&#x27;original.txt&#x27;, &#x27;new.txt&#x27;)
+print(os.path.exists(&#x27;new.txt&#x27;))</code></pre>
+    </div>
+  </details>
+</article>
+
+<article class="card" id="q18">
+  <h3><span class="badge">18번</span> 문제</h3>
+
+  <div class="q-box">
+    <p class="q-desc"><strong>os.environ — 환경변수 추가/조회</strong><br/><code>os.environ['key']</code>에 <code>'value'</code>를 저장하고, <code>os.environ.get('key')</code>로 출력하세요.</p>
+  </div>
+
+  <details class="qa hint" open>
+    <summary>힌트 / 출력</summary>
+    <div class="details-body">
+<div class="muted">출력 예시</div>
+      <pre><code>value</code></pre>
+    </div>
+  </details>
+
+  <details class="qa answer">
+    <summary>정답 코드 보기</summary>
+    <div class="details-body">
+      <div class="badge code">정답</div>
+      <pre><code>import os
+os.environ[&#x27;key&#x27;] = &#x27;value&#x27;
+print(os.environ.get(&#x27;key&#x27;))</code></pre>
+    </div>
+  </details>
+</article>
+
+<article class="card" id="q19">
+  <h3><span class="badge">19번</span> 문제</h3>
+
+  <div class="q-box">
+    <p class="q-desc"><strong>os.environ.get — 없는 키 기본값</strong><br/><code>os.environ.get('NO_SUCH_KEY')</code>는 None이 나옵니다. 두 번째 인자로 기본값을 넣어 <code>'missing'</code>이 출력되게 하세요.</p>
+  </div>
+
+  <details class="qa hint" open>
+    <summary>힌트 / 출력</summary>
+    <div class="details-body">
+<div class="muted">출력 예시</div>
+      <pre><code>missing</code></pre>
+    </div>
+  </details>
+
+  <details class="qa answer">
+    <summary>정답 코드 보기</summary>
+    <div class="details-body">
+      <div class="badge code">정답</div>
+      <pre><code>import os
+print(os.environ.get(&#x27;NO_SUCH_KEY&#x27;, &#x27;missing&#x27;))</code></pre>
+    </div>
+  </details>
+</article>
+
+<article class="card" id="q20">
+  <h3><span class="badge">20번</span> 문제</h3>
+
+  <div class="q-box">
+    <p class="q-desc"><strong>os.path.exists — 파일 존재 확인</strong><br/><code>check_file(path)</code> 함수를 작성하세요. 파일이 있으면 True, 없으면 False를 반환해야 합니다.</p>
+  </div>
+
+  <details class="qa hint" open>
+    <summary>힌트 / 출력</summary>
+    <div class="details-body">
+<div class="muted">출력 예시</div>
+      <pre><code>True
+False</code></pre>
+    </div>
+  </details>
+
+  <details class="qa answer">
+    <summary>정답 코드 보기</summary>
+    <div class="details-body">
+      <div class="badge code">정답</div>
+      <pre><code>import os
+
+def check_file(path):
+    return os.path.exists(path)
+
+with open(&#x27;a.txt&#x27;,&#x27;w&#x27;,encoding=&#x27;utf-8&#x27;) as f:
+    f.write(&#x27;x&#x27;)
+print(check_file(&#x27;a.txt&#x27;))
+print(check_file(&#x27;no.txt&#x27;))</code></pre>
+    </div>
+  </details>
+</article>
+
+<article class="card" id="q21">
+  <h3><span class="badge">21번</span> 문제</h3>
+
+  <div class="q-box">
+    <p class="q-desc"><strong>폴더 정리 — 생성한 testdir 삭제</strong><br/><code>testdir</code> 폴더 안의 파일을 모두 삭제한 뒤 <code>os.rmdir</code>로 폴더를 삭제하세요. (힌트: os.remove, os.listdir 사용)</p>
+  </div>
+
+  <details class="qa hint" open>
+    <summary>힌트 / 출력</summary>
+    <div class="details-body">
+<div class="muted">출력 예시</div>
+      <pre><code>(환경에 따라 다름)
+[&#x27;a.txt&#x27;, &#x27;b.txt&#x27;]
+(삭제 완료)</code></pre>
+    </div>
+  </details>
+
+  <details class="qa answer">
+    <summary>정답 코드 보기</summary>
+    <div class="details-body">
+      <div class="badge code">정답</div>
+      <pre><code>import os
+
+# 예시: testdir이 없으면 만들어 두기
+if not os.path.exists(&#x27;testdir&#x27;):
+    os.mkdir(&#x27;testdir&#x27;)
+open(&#x27;testdir/a.txt&#x27;,&#x27;w&#x27;,encoding=&#x27;utf-8&#x27;).close()
+open(&#x27;testdir/b.txt&#x27;,&#x27;w&#x27;,encoding=&#x27;utf-8&#x27;).close()
+
+print(sorted(os.listdir(&#x27;testdir&#x27;)))
+
+# 파일 삭제
+for fn in os.listdir(&#x27;testdir&#x27;):
+    os.remove(os.path.join(&#x27;testdir&#x27;, fn))
+
+# 폴더 삭제
+os.rmdir(&#x27;testdir&#x27;)
+print(&#x27;삭제 완료&#x27;)</code></pre>
+    </div>
+  </details>
+</article>
+
+<article class="card" id="q22">
+  <h3><span class="badge">22번</span> 문제</h3>
+
+  <div class="q-box">
+    <p class="q-desc"><strong>os.path.join — 경로 합치기</strong><br/><code>os.path.join('testdir3', 'a.txt')</code> 결과를 출력하세요. (운영체제에 따라 구분자가 달라질 수 있습니다.)</p>
+  </div>
+
+  <details class="qa hint" open>
+    <summary>힌트 / 출력</summary>
+    <div class="details-body">
+<div class="muted">출력 예시</div>
+      <pre><code>(예시) testdir3\a.txt 또는 testdir3/a.txt</code></pre>
+    </div>
+  </details>
+
+  <details class="qa answer">
+    <summary>정답 코드 보기</summary>
+    <div class="details-body">
+      <div class="badge code">정답</div>
+      <pre><code>import os
+print(os.path.join(&#x27;testdir3&#x27;, &#x27;a.txt&#x27;))</code></pre>
+    </div>
+  </details>
+</article>
+
+<article class="card" id="q23">
+  <h3><span class="badge">23번</span> 문제</h3>
+
+  <div class="q-box">
+    <p class="q-desc"><strong>os.listdir + 조건 — 특정 확장자 개수 세기</strong><br/>현재 폴더에 <code>x.txt</code>, <code>y.txt</code>, <code>z.md</code>를 만들고, <code>.txt</code> 파일 개수를 세어 출력하세요.</p>
+  </div>
+
+  <details class="qa hint" open>
+    <summary>힌트 / 출력</summary>
+    <div class="details-body">
+<div class="muted">출력 예시</div>
+      <pre><code>2</code></pre>
+    </div>
+  </details>
+
+  <details class="qa answer">
+    <summary>정답 코드 보기</summary>
+    <div class="details-body">
+      <div class="badge code">정답</div>
+      <pre><code>import os
+open(&#x27;x.txt&#x27;,&#x27;w&#x27;).close()
+open(&#x27;y.txt&#x27;,&#x27;w&#x27;).close()
+open(&#x27;z.md&#x27;,&#x27;w&#x27;).close()
+
+count = 0
+for fn in os.listdir():
+    if fn.endswith(&#x27;.txt&#x27;):
+        count += 1
+
+print(count)</code></pre>
+    </div>
+  </details>
+</article>
+
+<article class="card" id="q24">
+  <h3><span class="badge">24번</span> 문제</h3>
+
+  <div class="q-box">
+    <p class="q-desc"><strong>os.getcwd — 현재 폴더 이름만 출력</strong><br/><code>os.getcwd()</code>로 얻은 경로에서 마지막 폴더 이름(베이스네임)만 출력하세요. (힌트: os.path.basename)</p>
+  </div>
+
+  <details class="qa hint" open>
+    <summary>힌트 / 출력</summary>
+    <div class="details-body">
+<div class="muted">출력 예시</div>
+      <pre><code>(예시) data</code></pre>
+    </div>
+  </details>
+
+  <details class="qa answer">
+    <summary>정답 코드 보기</summary>
+    <div class="details-body">
+      <div class="badge code">정답</div>
+      <pre><code>import os
+print(os.path.basename(os.getcwd()))</code></pre>
+    </div>
+  </details>
+</article>
+
+<article class="card" id="q25">
+  <h3><span class="badge">25번</span> 문제</h3>
+
+  <div class="q-box">
+    <p class="q-desc"><strong>os.system — cmd 명령 실행(Windows dir)</strong><br/><code>os.system('dir')</code>를 실행해 현재 폴더 목록을 출력하세요. (결과는 환경에 따라 다릅니다.)</p>
+  </div>
+
+  <details class="qa hint" open>
+    <summary>힌트 / 출력</summary>
+    <div class="details-body">
+<div class="muted">출력 예시</div>
+      <pre><code>(폴더 목록이 출력됨)</code></pre>
+    </div>
+  </details>
+
+  <details class="qa answer">
+    <summary>정답 코드 보기</summary>
+    <div class="details-body">
+      <div class="badge code">정답</div>
+      <pre><code>import os
+os.system(&#x27;dir&#x27;)</code></pre>
+    </div>
+  </details>
+</article>
+
+<article class="card" id="q26">
+  <h3><span class="badge">26번</span> 문제</h3>
+
+  <div class="q-box">
+    <p class="q-desc"><strong>종합 — 폴더 있으면 메시지 출력</strong><br/>폴더 <code>testdir</code>가 이미 있으면 <code>testdir이 이미 있습니다.</code>를 출력하고, 없으면 생성하세요.</p>
+  </div>
+
+  <details class="qa hint" open>
+    <summary>힌트 / 출력</summary>
+    <div class="details-body">
+<div class="muted">출력 예시</div>
+      <pre><code>(상황에 따라 다름)
+(없으면 생성, 있으면 메시지)</code></pre>
+    </div>
+  </details>
+
+  <details class="qa answer">
+    <summary>정답 코드 보기</summary>
+    <div class="details-body">
+      <div class="badge code">정답</div>
+      <pre><code>import os
+if not os.path.exists(&#x27;./testdir&#x27;):
+    os.mkdir(&#x27;testdir&#x27;)
+else:
+    print(&#x27;testdir이 이미 있습니다.&#x27;)</code></pre>
+    </div>
+  </details>
+</article>
+
+<article class="card" id="q27">
+  <h3><span class="badge">27번</span> 문제</h3>
+
+  <div class="q-box">
+    <p class="q-desc"><strong>모듈 만들기 — myfunc.py 생성</strong><br/>현재 폴더에 <code>myfunc.py</code> 파일을 만들고, 함수 <code>add(a,b)</code>가 <code>a+b</code>를 반환하도록 작성하세요.</p>
+  </div>
+
+  <details class="qa hint" open>
+    <summary>힌트 / 출력</summary>
+    <div class="details-body">
+<div class="muted">출력 예시</div>
+      <pre><code>(파일 생성 완료)</code></pre>
+    </div>
+  </details>
+
+  <details class="qa answer">
+    <summary>정답 코드 보기</summary>
+    <div class="details-body">
+      <div class="badge code">정답</div>
+      <pre><code># myfunc.py
+
+def add(a, b):
+    return a + b
+</code></pre>
+    </div>
+  </details>
+</article>
+
+<article class="card" id="q28">
+  <h3><span class="badge">28번</span> 문제</h3>
+
+  <div class="q-box">
+    <p class="q-desc"><strong>모듈 사용 — from myfunc import add</strong><br/><code>myfunc.py</code>에 add가 있다고 가정하고, <code>from myfunc import add</code> 후 <code>add(3,4)</code> 결과를 출력하세요.</p>
+  </div>
+
+  <details class="qa hint" open>
+    <summary>힌트 / 출력</summary>
+    <div class="details-body">
+<div class="muted">출력 예시</div>
+      <pre><code>7</code></pre>
+    </div>
+  </details>
+
+  <details class="qa answer">
+    <summary>정답 코드 보기</summary>
+    <div class="details-body">
+      <div class="badge code">정답</div>
+      <pre><code>from myfunc import add
+print(add(3,4))</code></pre>
+    </div>
+  </details>
+</article>
+
+<article class="card" id="q29">
+  <h3><span class="badge">29번</span> 문제</h3>
+
+  <div class="q-box">
+    <p class="q-desc"><strong>모듈 만들기 — Cal 클래스 작성</strong><br/><code>myfunc.py</code>에 <code>Cal</code> 클래스를 작성하세요. 생성자에서 num1, num2를 저장하고, <code>add()</code>는 합, <code>sub()</code>는 차(num1-num2)를 반환해야 합니다.</p>
+  </div>
+
+  <details class="qa hint" open>
+    <summary>힌트 / 출력</summary>
+    <div class="details-body">
+<div class="muted">출력 예시</div>
+      <pre><code>7
+-1</code></pre>
+    </div>
+  </details>
+
+  <details class="qa answer">
+    <summary>정답 코드 보기</summary>
+    <div class="details-body">
+      <div class="badge code">정답</div>
+      <pre><code>class Cal:
+    def __init__(self, num1, num2):
+        self.num1 = num1
+        self.num2 = num2
+
+    def add(self):
+        return self.num1 + self.num2
+
+    def sub(self):
+        return self.num1 - self.num2
+</code></pre>
+    </div>
+  </details>
+</article>
+
+<article class="card" id="q30">
+  <h3><span class="badge">30번</span> 문제</h3>
+
+  <div class="q-box">
+    <p class="q-desc"><strong>모듈 사용 — Cal import 후 메서드 호출</strong><br/><code>from myfunc import Cal</code>로 가져와서 <code>Cal(3,4)</code>의 add/sub 결과를 출력하세요.</p>
+  </div>
+
+  <details class="qa hint" open>
+    <summary>힌트 / 출력</summary>
+    <div class="details-body">
+<div class="muted">출력 예시</div>
+      <pre><code>7
+-1</code></pre>
+    </div>
+  </details>
+
+  <details class="qa answer">
+    <summary>정답 코드 보기</summary>
+    <div class="details-body">
+      <div class="badge code">정답</div>
+      <pre><code>from myfunc import Cal
+sam = Cal(3,4)
+print(sam.add())
+print(sam.sub())</code></pre>
+    </div>
+  </details>
+</article>
+</section>
+<section class="section" id="sec3">
+  <h2>3) 사용자 정의 모듈(myfunc) (31~40)</h2>
+  <article class="card" id="q31">
+  <h3><span class="badge">31번</span> 문제</h3>
+
+  <div class="q-box">
+    <p class="q-desc"><strong>상속 — MoreCal(Cal) mul 추가</strong><br/><code>MoreCal</code> 클래스를 만들어 <code>Cal</code>을 상속받고, <code>mul()</code> 메서드로 곱을 반환하세요.</p>
+  </div>
+
+  <details class="qa hint" open>
+    <summary>힌트 / 출력</summary>
+    <div class="details-body">
+<div class="muted">출력 예시</div>
+      <pre><code>9
+20</code></pre>
+    </div>
+  </details>
+
+  <details class="qa answer">
+    <summary>정답 코드 보기</summary>
+    <div class="details-body">
+      <div class="badge code">정답</div>
+      <pre><code>from myfunc import Cal
+
+class MoreCal(Cal):
+    def mul(self):
+        return self.num1 * self.num2
+
+dul = MoreCal(4, 5)
+print(dul.add())
+print(dul.mul())</code></pre>
+    </div>
+  </details>
+</article>
+
+<article class="card" id="q32">
+  <h3><span class="badge">32번</span> 문제</h3>
+
+  <div class="q-box">
+    <p class="q-desc"><strong>import as — 모듈 별칭 사용</strong><br/><code>import myfunc as mf</code>로 별칭을 붙인 뒤 <code>mf.add(10, 20)</code>을 출력하세요.</p>
+  </div>
+
+  <details class="qa hint" open>
+    <summary>힌트 / 출력</summary>
+    <div class="details-body">
+<div class="muted">출력 예시</div>
+      <pre><code>30</code></pre>
+    </div>
+  </details>
+
+  <details class="qa answer">
+    <summary>정답 코드 보기</summary>
+    <div class="details-body">
+      <div class="badge code">정답</div>
+      <pre><code>import myfunc as mf
+print(mf.add(10, 20))</code></pre>
+    </div>
+  </details>
+</article>
+
+<article class="card" id="q33">
+  <h3><span class="badge">33번</span> 문제</h3>
+
+  <div class="q-box">
+    <p class="q-desc"><strong>from ... import ... as — 함수 별칭</strong><br/><code>from myfunc import add as plus</code>로 별칭을 붙이고 <code>plus(1,2)</code>를 출력하세요.</p>
+  </div>
+
+  <details class="qa hint" open>
+    <summary>힌트 / 출력</summary>
+    <div class="details-body">
+<div class="muted">출력 예시</div>
+      <pre><code>3</code></pre>
+    </div>
+  </details>
+
+  <details class="qa answer">
+    <summary>정답 코드 보기</summary>
+    <div class="details-body">
+      <div class="badge code">정답</div>
+      <pre><code>from myfunc import add as plus
+print(plus(1,2))</code></pre>
+    </div>
+  </details>
+</article>
+
+<article class="card" id="q34">
+  <h3><span class="badge">34번</span> 문제</h3>
+
+  <div class="q-box">
+    <p class="q-desc"><strong>모듈 테스트 코드 — __name__ == &#x27;__main__&#x27; (개념)</strong><br/><code>myfunc.py</code>에 테스트 코드를 넣고 싶습니다. 모듈로 import될 때는 실행되지 않고, 직접 실행할 때만 실행되도록 <code>if __name__ == '__main__':</code> 블록을 작성하세요.</p>
+  </div>
+
+  <details class="qa hint" open>
+    <summary>힌트 / 출력</summary>
+    <div class="details-body">
+<div class="muted">출력 예시</div>
+      <pre><code>(직접 실행 시만 3 출력)</code></pre>
+    </div>
+  </details>
+
+  <details class="qa answer">
+    <summary>정답 코드 보기</summary>
+    <div class="details-body">
+      <div class="badge code">정답</div>
+      <pre><code>def add(a, b):
+    return a + b
+
+if __name__ == &#x27;__main__&#x27;:
+    print(add(1, 2))</code></pre>
+    </div>
+  </details>
+</article>
+
+<article class="card" id="q35">
+  <h3><span class="badge">35번</span> 문제</h3>
+
+  <div class="q-box">
+    <p class="q-desc"><strong>종합 — myfunc 한 번에 완성</strong><br/>아래 기능을 모두 포함하는 <code>myfunc.py</code>를 작성하세요.<br/>1) add(a,b) 반환<br/>2) Cal 클래스(add/sub)<br/>3) 직접 실행 시만 간단 테스트 출력</p>
+  </div>
+
+  <details class="qa hint" open>
+    <summary>힌트 / 출력</summary>
+    <div class="details-body">
+<div class="muted">출력 예시</div>
+      <pre><code>7
+7</code></pre>
+    </div>
+  </details>
+
+  <details class="qa answer">
+    <summary>정답 코드 보기</summary>
+    <div class="details-body">
+      <div class="badge code">정답</div>
+      <pre><code>def add(a, b):
+    return a + b
+
+class Cal:
+    def __init__(self, num1, num2):
+        self.num1 = num1
+        self.num2 = num2
+
+    def add(self):
+        return self.num1 + self.num2
+
+    def sub(self):
+        return self.num1 - self.num2
+
+if __name__ == &#x27;__main__&#x27;:
+    print(add(1, 2))
+    c = Cal(3, 4)
+    print(c.add())</code></pre>
+    </div>
+  </details>
+</article>
+
+<article class="card" id="q36">
+  <h3><span class="badge">36번</span> 문제</h3>
+
+  <div class="q-box">
+    <p class="q-desc"><strong>모듈 임포트 — Cal, add를 한 줄로 가져오기</strong><br/> <code>from myfunc import Cal, add</code> 형태로 한 줄에 두 개를 임포트하고, <code>add(3,4)</code>와 <code>Cal(3,4).sub()</code> 결과를 출력하세요.</p>
+  </div>
+
+  <details class="qa hint" open>
+    <summary>힌트 / 출력</summary>
+    <div class="details-body">
+<div class="muted">출력 예시</div>
+      <pre><code>7
+-1</code></pre>
+    </div>
+  </details>
+
+  <details class="qa answer">
+    <summary>정답 코드 보기</summary>
+    <div class="details-body">
+      <div class="badge code">정답</div>
+      <pre><code>from myfunc import Cal, add
+print(add(3, 4))
+print(Cal(3, 4).sub())</code></pre>
+    </div>
+  </details>
+</article>
+
+<article class="card" id="q37">
+  <h3><span class="badge">37번</span> 문제</h3>
+
+  <div class="q-box">
+    <p class="q-desc"><strong>모듈 사용 — main.py에서 myfunc 사용(코드 작성)</strong><br/> <code>main.py</code> 파일을 만든다고 가정하고, 그 안에서 <code>myfunc</code>를 임포트해 <code>add(10,20)</code>을 출력하는 코드를 작성하세요.</p>
+  </div>
+
+  <details class="qa hint" open>
+    <summary>힌트 / 출력</summary>
+    <div class="details-body">
+<div class="muted">출력 예시</div>
+      <pre><code>30</code></pre>
+    </div>
+  </details>
+
+  <details class="qa answer">
+    <summary>정답 코드 보기</summary>
+    <div class="details-body">
+      <div class="badge code">정답</div>
+      <pre><code>import myfunc
+print(myfunc.add(10, 20))</code></pre>
+    </div>
+  </details>
+</article>
+
+<article class="card" id="q38">
+  <h3><span class="badge">38번</span> 문제</h3>
+
+  <div class="q-box">
+    <p class="q-desc"><strong>os.path.exists — myfunc.py가 없으면 생성하기</strong><br/>현재 폴더에 <code>myfunc.py</code>가 없으면, 최소한 <code>add(a,b)</code>가 있는 파일을 생성하세요. 그 다음 <code>add(1,2)</code>를 출력하세요. (힌트: exists + open/write)</p>
+  </div>
+
+  <details class="qa hint" open>
+    <summary>힌트 / 출력</summary>
+    <div class="details-body">
+<div class="muted">출력 예시</div>
+      <pre><code>3</code></pre>
+    </div>
+  </details>
+
+  <details class="qa answer">
+    <summary>정답 코드 보기</summary>
+    <div class="details-body">
+      <div class="badge code">정답</div>
+      <pre><code>import os
+
+if not os.path.exists(&#x27;myfunc.py&#x27;):
+    with open(&#x27;myfunc.py&#x27;, &#x27;w&#x27;, encoding=&#x27;utf-8&#x27;) as f:
+        f.write(&#x27;def add(a, b):\n    return a + b\n&#x27;)
+
+from myfunc import add
+print(add(1, 2))</code></pre>
+    </div>
+  </details>
+</article>
+
+<article class="card" id="q39">
+  <h3><span class="badge">39번</span> 문제</h3>
+
+  <div class="q-box">
+    <p class="q-desc"><strong>datetime + myfunc — 시간 문자열과 합 출력</strong><br/><code>datetime</code>으로 <code>2026-01-05</code>를 만들고, <code>myfunc.add(3,4)</code> 결과와 함께 한 줄로 출력하세요. 형식: <code>2026-01-05: 7</code></p>
+  </div>
+
+  <details class="qa hint" open>
+    <summary>힌트 / 출력</summary>
+    <div class="details-body">
+<div class="muted">출력 예시</div>
+      <pre><code>2026-01-05: 7</code></pre>
+    </div>
+  </details>
+
+  <details class="qa answer">
+    <summary>정답 코드 보기</summary>
+    <div class="details-body">
+      <div class="badge code">정답</div>
+      <pre><code>from datetime import datetime
+import myfunc
+
+fixed = datetime(2026, 1, 5)
+print(f&quot;{fixed.strftime(&#x27;%Y-%m-%d&#x27;)}: {myfunc.add(3, 4)}&quot;)</code></pre>
+    </div>
+  </details>
+</article>
+
+<article class="card" id="q40">
+  <h3><span class="badge">40번</span> 문제</h3>
+
+  <div class="q-box">
+    <p class="q-desc"><strong>종합 — Cal 상속 + 날짜 포맷 함께 출력</strong><br/><code>MoreCal(Cal)</code>에 <code>mul()</code>을 만들고, <code>2026.01.05</code>와 곱셈 결과를 같이 출력하세요. 형식: <code>2026.01.05 20</code></p>
+  </div>
+
+  <details class="qa hint" open>
+    <summary>힌트 / 출력</summary>
+    <div class="details-body">
+<div class="muted">출력 예시</div>
+      <pre><code>2026.01.05 20</code></pre>
+    </div>
+  </details>
+
+  <details class="qa answer">
+    <summary>정답 코드 보기</summary>
+    <div class="details-body">
+      <div class="badge code">정답</div>
+      <pre><code>from datetime import datetime
+from myfunc import Cal
+
+class MoreCal(Cal):
+    def mul(self):
+        return self.num1 * self.num2
+
+fixed = datetime(2026, 1, 5)
+dul = MoreCal(4, 5)
+print(fixed.strftime(&#x27;%Y.%m.%d&#x27;), dul.mul())</code></pre>
+    </div>
+  </details>
+</article>
+</section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <p class="footer-text">HTML 파일과 styles.css를 같은 폴더에 두고 열면 스타일이 적용된다.</p>
+    </div>
+  </footer>
+</body>
+</html>

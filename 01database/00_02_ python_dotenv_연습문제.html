@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>python-dotenv 연습문제 (강의안 연계)</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="header">
+    <div class="container">
+      <span class="badge">Python · Exercise</span>
+      <h1 class="title">python-dotenv 연습문제</h1>
+      <p class="subtitle">
+        본 연습문제는 정리된 강의안(설치 · .env 작성 · 기본 사용 · 경로/이름 변경 · 미니 실습 · .gitignore)을
+        기준으로 구성되었다. <br/>
+        <strong>힌트</strong>는 방향만 제시하며, <strong>정답</strong>은 별도로 구분되어 있다.
+      </p>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <section class="section">
+      <h2>세트 A. 설치 & 기본 개념</h2>
+
+      <article class="card">
+        <h3><span class="badge">1번</span> python-dotenv 설치</h3>
+        <p><strong>python-dotenv 패키지를 설치하고, 정상적으로 import 되는지 확인하시오.</strong></p>
+
+        <details class="hint">
+          <summary>힌트</summary>
+          <div class="details-body">
+            <p>pip를 이용해 설치한다.</p>
+          </div>
+        </details>
+
+        <details class="answer">
+          <summary>정답</summary>
+          <div class="details-body">
+            <pre><code>pip install python-dotenv
+
+from dotenv import load_dotenv</code></pre>
+          </div>
+        </details>
+      </article>
+
+      <article class="card">
+        <h3><span class="badge">2번</span> .env 파일 작성</h3>
+        <p><strong>.env 파일을 만들고 아래 설정을 작성하시오.</strong></p>
+        <ul class="list">
+          <li>APP_ENV=dev</li>
+          <li>DEBUG=true</li>
+          <li>GREETING="Hello dotenv"</li>
+        </ul>
+
+        <details class="hint">
+          <summary>힌트</summary>
+          <div class="details-body">
+            <p>KEY=VALUE 형식이며, 문자열에 공백이 있으면 따옴표를 사용한다.</p>
+          </div>
+        </details>
+
+        <details class="answer">
+          <summary>정답</summary>
+          <div class="details-body">
+            <pre><code>APP_ENV=dev
+DEBUG=true
+GREETING="Hello dotenv"</code></pre>
+          </div>
+        </details>
+      </article>
+    </section>
+
+    <section class="section">
+      <h2>세트 B. 기본 사용법</h2>
+
+      <article class="card">
+        <h3><span class="badge">3번</span> load_dotenv 기본 사용</h3>
+        <p><strong>.env 파일을 로딩하고 GREETING 값을 출력하시오.</strong></p>
+
+        <details class="hint">
+          <summary>힌트</summary>
+          <div class="details-body">
+            <p>load_dotenv() 호출 후 os.getenv()를 사용한다.</p>
+          </div>
+        </details>
+
+        <details class="answer">
+          <summary>정답</summary>
+          <div class="details-body">
+            <pre><code>from dotenv import load_dotenv
+import os
+
+load_dotenv()
+print(os.getenv("GREETING"))</code></pre>
+          </div>
+        </details>
+      </article>
+
+      <article class="card">
+        <h3><span class="badge">4번</span> 기본값 처리</h3>
+        <p><strong>TIMEOUT 환경변수가 없을 때 기본값 30을 사용하도록 작성하시오.</strong></p>
+
+        <details class="hint">
+          <summary>힌트</summary>
+          <div class="details-body">
+            <p>os.getenv의 두 번째 인자를 사용한다.</p>
+          </div>
+        </details>
+
+        <details class="answer">
+          <summary>정답</summary>
+          <div class="details-body">
+            <pre><code>timeout = int(os.getenv("TIMEOUT", "30"))</code></pre>
+          </div>
+        </details>
+      </article>
+    </section>
+
+    <section class="section">
+      <h2>세트 C. 경로 · 이름이 다른 .env</h2>
+
+      <article class="card">
+        <h3><span class="badge">5번</span> 파일 이름이 다른 경우</h3>
+        <p><strong>.env.dev 파일을 로딩하도록 코드를 작성하시오.</strong></p>
+
+        <details class="hint">
+          <summary>힌트</summary>
+          <div class="details-body">
+            <p>load_dotenv 함수에 파일명을 직접 전달한다.</p>
+          </div>
+        </details>
+
+        <details class="answer">
+          <summary>정답</summary>
+          <div class="details-body">
+            <pre><code>from dotenv import load_dotenv
+
+load_dotenv(".env.dev")</code></pre>
+          </div>
+        </details>
+      </article>
+
+      <article class="card">
+        <h3><span class="badge">6번</span> 다른 경로에 있는 .env</h3>
+        <p><strong>프로젝트 외부 경로(/etc/myapp/secrets.env)에 있는 env 파일을 로딩하시오.</strong></p>
+
+        <details class="hint">
+          <summary>힌트</summary>
+          <div class="details-body">
+            <p>Path를 이용해 절대경로를 지정한다.</p>
+          </div>
+        </details>
+
+        <details class="answer">
+          <summary>정답</summary>
+          <div class="details-body">
+            <pre><code>from dotenv import load_dotenv
+from pathlib import Path
+
+load_dotenv(Path("/etc/myapp/secrets.env"))</code></pre>
+          </div>
+        </details>
+      </article>
+
+      <article class="card">
+        <h3><span class="badge">7번</span> 실행 위치와 무관하게 로딩</h3>
+        <p><strong>실행 위치에 상관없이 항상 같은 .env를 읽도록 작성하시오.</strong></p>
+
+        <details class="hint">
+          <summary>힌트</summary>
+          <div class="details-body">
+            <p>__file__ 기준 경로를 사용한다.</p>
+          </div>
+        </details>
+
+        <details class="answer">
+          <summary>정답</summary>
+          <div class="details-body">
+            <pre><code>from pathlib import Path
+from dotenv import load_dotenv
+
+BASE_DIR = Path(__file__).resolve().parent
+load_dotenv(BASE_DIR / ".env")</code></pre>
+          </div>
+        </details>
+      </article>
+    </section>
+
+    <section class="section">
+      <h2>세트 D. 미니 실습 (Jupyter Notebook)</h2>
+
+      <article class="card">
+        <h3><span class="badge">8번</span> ipynb 실습</h3>
+        <p><strong>Jupyter Notebook 셀에서 .env를 로딩하고 설정 값을 출력하시오.</strong></p>
+        <ul class="list">
+          <li>APP_ENV</li>
+          <li>DEBUG</li>
+          <li>GREETING</li>
+        </ul>
+
+        <details class="hint">
+          <summary>힌트</summary>
+          <div class="details-body">
+            <p>함수 정의 없이 셀에서 바로 실행한다.</p>
+          </div>
+        </details>
+
+        <details class="answer">
+          <summary>정답</summary>
+          <div class="details-body">
+            <pre><code>from dotenv import load_dotenv
+import os
+
+load_dotenv()
+
+print(os.getenv("APP_ENV"))
+print(os.getenv("DEBUG"))
+print(os.getenv("GREETING"))</code></pre>
+          </div>
+        </details>
+      </article>
+    </section>
+
+    <section class="section">
+      <h2>세트 E. Git 관리</h2>
+
+      <article class="card">
+        <h3><span class="badge">9번</span> .gitignore 설정</h3>
+        <p><strong>.env 파일이 Git에 올라가지 않도록 .gitignore를 작성하시오.</strong></p>
+
+        <details class="hint">
+          <summary>힌트</summary>
+          <div class="details-body">
+            <p>모든 .env 계열은 제외하고, 예제 파일만 허용한다.</p>
+          </div>
+        </details>
+
+        <details class="answer">
+          <summary>정답</summary>
+          <div class="details-body">
+            <pre><code>.env
+.env.*
+!.env.example</code></pre>
+          </div>
+        </details>
+      </article>
+    </section>
+
+    <footer class="footer">
+      <div class="container">
+        <p class="footer-text">
+          힌트 → 직접 구현 → 정답 확인 순서로 학습하는 것을 권장한다.
+        </p>
+      </div>
+    </footer>
+  </main>
+</body>
+</html>

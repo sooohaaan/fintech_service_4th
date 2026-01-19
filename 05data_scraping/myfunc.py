@@ -30,10 +30,12 @@ class Cal():
       else:
          return self.num1 / self.num2
    
-   
-    def text_clean(text):
-      temp = re.sub(r"</?[^>]+>", "", text)
-      temp = re.sub("[^가-힣a-zA-Z09]", " ", temp)
-      temp = temp.replace("\n", " ").replace("\t", " ").replace("  ", " ").replace("  ", " ")
-      temp = temp.replace("  ", " ").strip()
-      return temp
+
+import re
+
+def text_clean(text):
+  temp = re.sub(r"</?[^>]+>", "", text)
+  temp = re.sub("[^가-힣a-zA-Z09]", " ", temp)
+  temp = temp.replace("\n", " ").replace("\t", " ").replace("  ", " ").replace("  ", " ")
+  temp = temp.replace("  ", " ").strip()
+  return temp
