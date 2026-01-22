@@ -1,0 +1,8 @@
+data/
+*.csv
+*.json
+*.xlsx
+*.pdf
+*.zip
+.env
+.env*
