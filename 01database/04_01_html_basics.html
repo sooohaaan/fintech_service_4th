@@ -1,0 +1,446 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>01. HTML 기초 — 정적 수집의 출발점</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+<header class="header">
+  <div class="container">
+    <span class="badge">Web Scraping · Beginner</span>
+    <h1 class="title">01. HTML 기초 — 정적 수집의 출발점</h1>
+    <p class="subtitle">
+      크롤링은 결국 “HTML(또는 렌더링된 결과)에서 원하는 요소를 찾아 텍스트/속성 값을 추출”하는 작업이다.
+      이 문서는 poiemaweb의 HTML5 문법/요소/속성/시맨틱/폼 핵심을 수집 관점으로 압축했다.
+    </p>
+
+    <nav class="toc" aria-label="목차">
+      <a href="#goal">학습 목표</a>
+      <a href="#syntax">HTML5 문서 구조/문법</a>
+      <a href="#elements">요소(Element)와 중첩</a>
+      <a href="#empty">빈 요소(Empty element)</a>
+      <a href="#attributes">속성(Attribute) & 글로벌 속성</a>
+      <a href="#semantic">시맨틱 요소(SEO/크롤링)</a>
+      <a href="#data-attrs">data-* (수집에 특히 유용)</a>
+      <a href="#forms">폼(Form)과 input (데이터 전송)</a>
+      <a href="#static-dynamic">정적 vs 동적</a>
+      <a href="#lab">미니 실습</a>
+      <a href="#links-images">링크/이미지(속성 추출)</a>
+      <a href="#lists">목록/반복 구조(카드/리스트)</a>
+      <a href="#tables">표(table) 구조(행/열)</a>
+      <a href="#media">오디오/비디오(미디어 태그)</a>
+      <a href="#practice-plus">추가 실습(수집용 HTML 만들기)</a>
+    
+    </nav>
+
+    <nav class="toc" aria-label="이웃 문서">
+      <a href="04_02_css_selector.html">02. CSS Selector</a>
+      <a href="04_03_dom_tree.html">03. DOM Tree</a>
+      <a href="04_04_javascript_browser.html">04. JS & window</a>
+      <a href="04_05_network_devtools.html">05. Network & DevTools</a>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+  <section class="section" id="goal">
+    <h2>학습 목표</h2>
+    <div class="card">
+      <ul class="list">
+        <li>HTML5 문서가 어떤 구조로 구성되는지(doctype/head/body) 이해한다.</li>
+        <li>요소/중첩/빈 요소/속성(id, class 등)을 “수집 관점”에서 해석할 수 있다.</li>
+        <li>시맨틱 요소가 SEO/크롤링에 왜 도움이 되는지 안다.</li>
+        <li>폼과 input이 어떤 방식으로 데이터를 서버로 보내는지 감을 잡는다.</li>
+      </ul>
+      <div class="note">
+        <strong>poiemaweb 기반 핵심</strong><br/>
+        HTML5 문서는 <code>&lt;!DOCTYPE html&gt;</code>로 시작하고,
+        실제 화면 요소는 <code>&lt;body&gt;</code>에 위치하며, 요소는 중첩되고 속성으로 특징을 가진다.
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="syntax">
+    <h2>HTML5 문서 구조/문법</h2>
+    <div class="card">
+      <p class="p">
+        HTML5 문서의 기본 틀은 아래처럼 반복된다. (head는 “설정/메타”, body는 “화면 콘텐츠”)
+      </p>
+      <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;meta charset="utf-8"&gt;
+    &lt;title&gt;Hello World&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;h1&gt;Hello World&lt;/h1&gt;
+    &lt;p&gt;안녕하세요! HTML5&lt;/p&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</code></pre>
+      <div class="mini">
+        <div class="mini-title">크롤링 관점</div>
+        <ul class="list">
+          <li>정적 수집은 보통 “서버가 준 HTML 문자열”을 파싱한다.</li>
+          <li>동적 사이트는 <code>&lt;body&gt;</code>가 비어있다가 JS로 채워질 수 있다.</li>
+        </ul>
+      </div>
+      <div class="note">
+        이 구조/설명은 poiemaweb의 HTML5 Syntax(doctype/head/body, 요소/속성/중첩) 내용을 기반으로 한다.       </div>
+    </div>
+  </section>
+
+  <section class="section" id="elements">
+    <h2>요소(Element)와 중첩(Nested)</h2>
+    <div class="card">
+      <p class="p">
+        HTML은 “요소들의 집합”이다. 요소는 보통 시작 태그 + 종료 태그 + content로 이루어지고, 다른 요소를 포함(중첩)할 수 있다.
+      </p>
+      <pre><code>&lt;div class="card"&gt;
+  &lt;h2&gt;제목&lt;/h2&gt;
+  &lt;p&gt;설명&lt;/p&gt;
+&lt;/div&gt;</code></pre>
+      <div class="note">
+        <strong>수집 팁</strong><br/>
+        중첩 구조 덕분에 “상위 컨테이너(카드/행/리스트)”를 잡고 그 안에서 필요한 값(제목/가격)을 찾는 방식이 안정적이다.
+      </div>
+      <div class="note">
+        요소/중첩 개념은 poiemaweb HTML5 Syntax의 “요소/중첩” 파트를 따른다.       </div>
+    </div>
+  </section>
+
+  <section class="section" id="empty">
+    <h2>빈 요소(Empty element)</h2>
+    <div class="card">
+      <p class="p">
+        content를 가질 수 없는 요소를 “빈 요소”라고 한다. 대표적으로 <code>img</code>, <code>input</code>, <code>meta</code>, <code>link</code> 등이 있다.
+      </p>
+      <pre><code>&lt;meta charset="utf-8"&gt;
+&lt;img src="/img/a.png" alt="썸네일"&gt;
+&lt;input type="text" name="q"&gt;</code></pre>
+      <div class="mini">
+        <div class="mini-title">크롤링 관점</div>
+        <ul class="list">
+          <li>빈 요소는 텍스트가 아니라 “속성 값(src, alt, name 등)”을 주로 뽑는다.</li>
+        </ul>
+      </div>
+      <div class="note">
+        빈 요소/예시는 poiemaweb HTML5 Syntax의 “Empty element” 설명과 일치한다.       </div>
+    </div>
+  </section>
+
+<section class="section" id="links-images">
+    <h2>링크/이미지(속성 추출)</h2>
+    <div class="card">
+      <p class="p">
+        크롤링에서 링크와 이미지는 “텍스트”보다 <strong>속성 값</strong>을 추출하는 경우가 많다.
+        특히 <code>href</code>, <code>src</code>, <code>alt</code>는 자주 쓰인다.
+      </p>
+
+      <pre><code>&lt;a href="/product/123" class="item-link"&gt;상품 보기&lt;/a&gt;
+&lt;img src="/img/123.png" alt="상품 썸네일"&gt;</code></pre>
+
+      <div class="mini">
+        <div class="mini-title">크롤링 포인트</div>
+        <ul class="list">
+          <li><strong>상대 경로</strong>(<code>/product/123</code>)면 base URL과 합쳐 절대 경로로 만든다.</li>
+          <li><code>img</code>는 빈 요소라서 <strong>텍스트가 아니라 src/alt</strong>를 뽑는다.</li>
+          <li>썸네일이 <code>data-src</code>에 있거나 lazy-loading이면 <code>data-*</code>도 확인한다.</li>
+        </ul>
+      </div>
+
+      <div class="note">
+        링크/이미지/속성(alt, src, href) 개념은 기본 HTML 요소/속성 설명 흐름과 동일하다.
+      </div>
+    </div>
+  </section>
+
+<section class="section" id="lists">
+    <h2>목록/반복 구조(카드/리스트)</h2>
+    <div class="card">
+      <p class="p">
+        쇼핑몰/게시판/랭킹 같은 페이지는 보통 “반복되는 목록” 구조다.
+        HTML에서는 <code>ul &gt; li</code>, <code>ol &gt; li</code> 형태가 자주 나오고,
+        실무 페이지는 <code>div</code> 기반 “카드(card)” 반복도 많다.
+      </p>
+
+      <div class="grid-2">
+        <div class="card">
+          <h3>1) ul/ol 목록</h3>
+          <pre><code>&lt;ul class="list"&gt;
+  &lt;li class="item"&gt;...&lt;/li&gt;
+  &lt;li class="item"&gt;...&lt;/li&gt;
+&lt;/ul&gt;</code></pre>
+        </div>
+        <div class="card">
+          <h3>2) 카드 반복</h3>
+          <pre><code>&lt;div class="cards"&gt;
+  &lt;div class="card item"&gt;...&lt;/div&gt;
+  &lt;div class="card item"&gt;...&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+        </div>
+      </div>
+
+      <div class="mini">
+        <div class="mini-title">수집 전략</div>
+        <ul class="list">
+          <li>먼저 “반복 컨테이너(목록)”를 잡고 → 그 안에서 제목/가격/링크를 찾는다.</li>
+          <li>반복 구조를 잡는 선택자는 보통 <code>.item</code>, <code>.card</code>, <code>li</code> 같은 단위가 된다.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+<section class="section" id="tables">
+    <h2>표(table) 구조(행/열)</h2>
+    <div class="card">
+      <p class="p">
+        데이터가 “행/열”로 정리된 페이지는 <code>table</code>을 사용한다.
+        특히 공공데이터, 통계, 요금표, 일정표에서 자주 보인다.
+      </p>
+
+      <pre><code>&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;&lt;th&gt;이름&lt;/th&gt;&lt;th&gt;가격&lt;/th&gt;&lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;&lt;td&gt;A&lt;/td&gt;&lt;td&gt;1000&lt;/td&gt;&lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;</code></pre>
+
+      <div class="mini">
+        <div class="mini-title">크롤링 포인트</div>
+        <ul class="list">
+          <li><code>tr</code> 하나가 “한 행(row)”이다. 보통 <code>tbody tr</code>을 반복 수집한다.</li>
+          <li>제목 행이 <code>thead</code>에 있거나 첫 <code>tr</code>에 섞여 있을 수 있다.</li>
+          <li>셀은 <code>th</code>(헤더), <code>td</code>(데이터)로 구분된다.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+<section class="section" id="media">
+    <h2>오디오/비디오(미디어 태그)</h2>
+    <div class="card">
+      <p class="p">
+        <code>audio</code>, <code>video</code>는 미디어를 재생하는 태그다.
+        수집 관점에서는 “미디어 파일 URL”(<code>src</code>)을 찾는 케이스가 많다.
+      </p>
+
+      <pre><code>&lt;audio src="/media/a.mp3" controls&gt;&lt;/audio&gt;
+&lt;video src="/media/v.mp4" controls poster="/img/thumb.jpg"&gt;&lt;/video&gt;</code></pre>
+
+      <div class="mini">
+        <div class="mini-title">크롤링 포인트</div>
+        <ul class="list">
+          <li><code>src</code>가 비어 있고 <code>&lt;source&gt;</code> 태그로 제공되는 경우도 있다.</li>
+          <li>플레이어가 커스텀이면(태그가 아니라 div) 실제 URL은 Network에서 찾는 편이 빠르다.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="attributes">
+    <h2>속성(Attribute) & 글로벌 속성</h2>
+    <div class="card">
+      <p class="p">
+        속성은 요소의 성질/특징을 정의하며, 보통 <code>name="value"</code> 형태다.
+      </p>
+      <pre><code>&lt;img src="html.jpg" width="104" height="142"&gt;</code></pre>
+
+      <table class="table" aria-label="글로벌 속성 요약">
+        <thead>
+          <tr>
+            <th>글로벌 속성</th>
+            <th>의미</th>
+            <th>크롤링에서의 활용</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>id</strong></td>
+            <td>유일한 식별자(중복 불가)</td>
+            <td>안정적이면 최우선 선택자 후보</td>
+          </tr>
+          <tr>
+            <td><strong>class</strong></td>
+            <td>그룹 라벨(중복 가능)</td>
+            <td>리스트/카드 반복 요소를 잡는 데 자주 사용</td>
+          </tr>
+          <tr>
+            <td><strong>title</strong></td>
+            <td>툴팁/설명</td>
+            <td>가끔 실제 데이터(전체 제목)가 들어있다</td>
+          </tr>
+          <tr>
+            <td><strong>lang</strong></td>
+            <td>요소 언어</td>
+            <td>검색엔진/크롤러가 언어를 인지하는 데 도움</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="note">
+        글로벌 속성(id/class/lang/title 등) 설명은 poiemaweb HTML5 Syntax의 글로벌 어트리뷰트 내용을 반영했다.       </div>
+    </div>
+  </section>
+
+  <section class="section" id="semantic">
+    <h2>시맨틱 요소(SEO/크롤링)</h2>
+    <div class="card">
+      <p class="p">
+        시맨틱 요소는 “콘텐츠의 의미”를 태그 이름 자체로 전달한다.
+        예: <code>header</code>, <code>nav</code>, <code>main</code>, <code>section</code>, <code>article</code>, <code>footer</code>.
+        이런 구조는 검색엔진이 문서를 더 의미 있게 해석(크롤링/인덱싱)하는 데 도움이 될 수 있다.
+      </p>
+      <pre><code>&lt;header&gt;...&lt;/header&gt;
+&lt;main&gt;
+  &lt;article&gt;게시글&lt;/article&gt;
+&lt;/main&gt;
+&lt;footer&gt;...&lt;/footer&gt;</code></pre>
+      <div class="note">
+        시맨틱 웹/시맨틱 태그가 크롤링과 SEO에 유리할 수 있다는 관점은 poiemaweb 시맨틱 웹 문서의 취지(검색엔진이 문서 의미를 더 잘 파악)와 맞닿아 있다.       </div>
+    </div>
+  </section>
+
+  <section class="section" id="data-attrs">
+    <h2>data-* (수집에 특히 유용)</h2>
+    <div class="card">
+      <p class="p">
+        실무에서 개발자는 화면 표시용 텍스트(“12,900원”)와 별개로,
+        정제된 값을 <code>data-*</code> 속성에 넣어두는 경우가 많다.
+      </p>
+      <pre><code>&lt;button class="buy"
+  data-sku="VAC-001"
+  data-price="129000"&gt;
+  구매
+&lt;/button&gt;</code></pre>
+      <div class="mini">
+        <div class="mini-title">크롤링 포인트</div>
+        <ul class="list">
+          <li>화면 텍스트 파싱(쉼표/원 제거) 대신, <code>data-price</code> 같은 “원본 숫자”를 쓰면 오류가 줄어든다.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="forms">
+    <h2>폼(Form)과 input — 데이터 전송 방식 이해</h2>
+    <div class="card">
+      <p class="p">
+        폼은 사용자가 입력한 데이터를 서버로 전송하는 표준 방식이다.
+        <code>method</code>와 <code>action</code>, 그리고 input의 <code>name=value</code> 형태가 핵심이다.
+      </p>
+      <pre><code>&lt;form action="/search" method="get"&gt;
+  &lt;input type="text" name="q" value="vacuum"&gt;
+  &lt;input type="submit" value="Search"&gt;
+&lt;/form&gt;</code></pre>
+
+      <div class="mini">
+        <div class="mini-title">수집 관점</div>
+        <ul class="list">
+          <li>검색 기능이 “폼 GET”이면 URL 쿼리(<code>?q=...</code>)가 만들어진다 → 크롤링에서 재현하기 쉽다.</li>
+          <li>form의 <code>name</code>이 서버가 받는 키가 되므로, 입력 파라미터를 이해하는 데 중요하다.</li>
+        </ul>
+      </div>
+
+      <div class="note">
+        form/action/method, input의 name=value 전송 개념은 poiemaweb의 HTML5 Forms 문서 핵심 흐름을 반영했다.       </div>
+    </div>
+  </section>
+
+  <section class="section" id="static-dynamic">
+    <h2>정적 vs 동적 (개념만)</h2>
+    <div class="card">
+      <table class="table" aria-label="정적 동적 비교">
+        <thead>
+          <tr>
+            <th>구분</th>
+            <th>정적(Static)</th>
+            <th>동적(Dynamic)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>데이터 위치</strong></td>
+            <td>처음 받은 HTML에 있음</td>
+            <td>JS 실행 후 DOM에 채워짐 / Network에서 JSON으로 옴</td>
+          </tr>
+          <tr>
+            <td><strong>첫 전략</strong></td>
+            <td>HTML 파싱 + Selector</td>
+            <td>Network에서 API 찾기 또는 브라우저 자동화</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="note">
+        동적 페이지는 DOM을 JS로 변경할 수 있고, 변경된 DOM이 렌더링에 반영된다는 관점은 poiemaweb DOM 문서의 설명과 일치한다.       </div>
+    </div>
+  </section>
+
+  <section class="section" id="lab">
+    <h2>미니 실습</h2>
+    <div class="card">
+      <ol class="ol">
+        <li>아무 웹페이지에서 F12 → Elements 열기</li>
+        <li>제목/가격/작성일 같은 텍스트를 클릭해서 HTML 위치 확인</li>
+        <li>해당 요소의 <strong>id/class/data-*</strong>가 있는지 체크</li>
+        <li>검색창이 있다면 input의 <strong>name</strong>을 확인(폼 파라미터 추정)</li>
+      </ol>
+
+      <details class="qa hint" open>
+        <summary>힌트</summary>
+        <div class="details-body">
+          <ul class="list">
+            <li>“반복되는 카드/행”을 먼저 찾으면 selector 설계가 쉬워진다.</li>
+            <li>폼의 method가 GET이면 주소창 URL에 파라미터가 보이는 경우가 많다.</li>
+          </ul>
+        </div>
+      </details>
+    </div>
+  </section>
+
+<section class="section" id="practice-plus">
+    <h2>추가 실습(수집용 HTML 만들기)</h2>
+    <div class="card">
+      <p class="p">
+        크롤링 연습을 위해 “내가 만든 HTML”을 준비해두면 selector 연습이 빨라진다.
+        아래 요구사항대로 <code>practice.html</code>을 직접 만들어보자.
+      </p>
+
+      <div class="mini">
+        <div class="mini-title">요구사항</div>
+        <ol class="ol">
+          <li>상품 카드 5개를 만든다. (제목, 가격, 링크, 썸네일)</li>
+          <li>각 카드는 <code>div class="item"</code>로 통일한다.</li>
+          <li>가격은 화면 텍스트(“12,900원”)와 <code>data-price="12900"</code>를 함께 넣는다.</li>
+          <li>랭킹 목록(<code>ol</code>)을 만들고 상위 3개만 선택할 수 있게 구조를 만든다.</li>
+          <li>표(table)로 “배송비 안내”를 작성한다.</li>
+        </ol>
+      </div>
+
+      <details class="qa hint">
+        <summary>힌트(예시 뼈대)</summary>
+        <div class="details-body">
+<pre><code>&lt;div class="item" data-price="12900"&gt;
+  &lt;a class="item-link" href="/p/1"&gt;무선 청소기&lt;/a&gt;
+  &lt;span class="price"&gt;12,900원&lt;/span&gt;
+&lt;/div&gt;</code></pre>
+        </div>
+      </details>
+
+      <div class="note">
+        다음 문서(Selector)에서 이 실습 HTML을 그대로 대상으로 선택자 연습을 하게 된다.
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <p class="footer-text">다음: <a href="04_02_css_selector.html"><strong>02. CSS Selector</strong></a></p>
+  </div>
+</footer>
+</body>
+</html>

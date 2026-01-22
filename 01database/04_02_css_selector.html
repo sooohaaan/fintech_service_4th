@@ -1,0 +1,371 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>02. CSS Selector — 크롤링의 핵심(특이도 포함)</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+<header class="header">
+  <div class="container">
+    <span class="badge">Web Scraping · Beginner</span>
+    <h1 class="title">02. CSS Selector — 크롤링의 핵심</h1>
+    <p class="subtitle">
+      poiemaweb의 Selector 문서 수준(기본/조합/속성/가상 클래스·요소/특이도)을
+      “요소를 정확히 선택해서 데이터 추출” 관점으로 정리했다.
+    </p>
+
+    <nav class="toc" aria-label="목차">
+      <a href="#goal">학습 목표</a>
+      <a href="#why">왜 selector가 핵심인가</a>
+      <a href="#basic">기본 선택자</a>
+      <a href="#combinators">조합자(자손/자식/형제)</a>
+      <a href="#attribute">속성 선택자</a>
+      <a href="#pseudo-class">가상 클래스(:hover, :nth-child 등)</a>
+      <a href="#nth">:nth-child / :nth-of-type</a>
+      <a href="#pseudo-element">가상 요소(::before 등)</a>
+      <a href="#specificity">특이도(Specificity)</a>
+      <a href="#scraping-pattern">실전 패턴</a>
+      <a href="#lab">미니 실습</a>
+      <a href="#not">:not()와 필터링</a>
+      <a href="#state">폼 상태 선택자(:checked 등)</a>
+      <a href="#nth_more">:nth-last-child 등 추가 패턴</a>
+      <a href="#console">Console에서 selector 테스트</a>
+    
+    </nav>
+
+    <nav class="toc" aria-label="이웃 문서">
+      <a href="04_01_html_basics.html">01. HTML</a>
+      <a href="04_03_dom_tree.html">03. DOM Tree</a>
+      <a href="04_04_javascript_browser.html">04. JS & window</a>
+      <a href="04_05_network_devtools.html">05. Network & DevTools</a>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+  <section class="section" id="goal">
+    <h2>학습 목표</h2>
+    <div class="card">
+      <ul class="list">
+        <li>Selector가 “HTML 요소를 특정하는 문법”임을 이해한다.</li>
+        <li>크롤링에 많이 쓰는 선택자 조합을 외울 수준으로 익힌다.</li>
+        <li><strong>:nth-child</strong> / <strong>:nth-of-type</strong>의 차이를 설명할 수 있다.</li>
+        <li>특이도 개념으로 “왜 어떤 선택자가 우선되는지” 감을 잡는다(DevTools 읽기에도 도움).</li>
+      </ul>
+      <div class="note">
+        Selector의 목적(요소를 특정해 스타일을 적용)은 poiemaweb CSS3 Selector 문서의 설명과 동일하다.       </div>
+    </div>
+  </section>
+
+  <section class="section" id="why">
+    <h2>왜 selector가 크롤링의 핵심인가</h2>
+    <div class="card">
+      <p class="p">
+        크롤링은 “문서(또는 DOM)에서 원하는 요소를 선택 → 텍스트/속성 값을 추출”로 정리된다.
+        요소를 선택하는 언어가 곧 selector이고, 브라우저(DevTools/JS)와 파서(정적 크롤러), 자동화(Playwright/Selenium)에서 공통으로 쓰인다.
+      </p>
+    </div>
+  </section>
+
+  <section class="section" id="basic">
+    <h2>기본 선택자</h2>
+    <div class="card">
+      <table class="table" aria-label="기본 선택자">
+        <thead>
+          <tr><th>선택자</th><th>의미</th><th>예</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>*</code></td><td>전체</td><td><code>*</code></td></tr>
+          <tr><td><code>tag</code></td><td>태그</td><td><code>a</code>, <code>img</code></td></tr>
+          <tr><td><code>#id</code></td><td>id</td><td><code>#product</code></td></tr>
+          <tr><td><code>.class</code></td><td>class</td><td><code>.item</code></td></tr>
+          <tr><td><code>tag.class</code></td><td>태그+class</td><td><code>div.item</code></td></tr>
+          <tr><td><code>.a.b</code></td><td>class 두 개 이상</td><td><code>.btn.buy</code></td></tr>
+        </tbody>
+      </table>
+      <div class="note">
+        기본 선택자 분류는 poiemaweb Selector 문서의 흐름(요소/ID/class 등)과 맞춘 구성이다.       </div>
+    </div>
+  </section>
+
+  <section class="section" id="combinators">
+    <h2>조합자(자손/자식/형제)</h2>
+    <div class="card">
+      <table class="table" aria-label="조합자">
+        <thead>
+          <tr><th>문법</th><th>의미</th><th>예</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>A B</code></td><td>A 안의 모든 B(자손)</td><td><code>.list a</code></td></tr>
+          <tr><td><code>A &gt; B</code></td><td>A의 바로 아래 B(자식)</td><td><code>ul &gt; li</code></td></tr>
+          <tr><td><code>A + B</code></td><td>A 바로 다음 형제 B</td><td><code>h2 + p</code></td></tr>
+          <tr><td><code>A ~ B</code></td><td>A 뒤의 형제들 중 B</td><td><code>h2 ~ p</code></td></tr>
+        </tbody>
+      </table>
+
+      <div class="mini">
+        <div class="mini-title">크롤링 팁</div>
+        <ul class="list">
+          <li><strong>범위 좁히기</strong>: <code>.container .item .price</code>처럼 상위에서 하위로 내려오면 오탐이 줄어든다.</li>
+          <li><strong>자식(&gt;)</strong>은 구조가 바뀌면 깨질 수 있다 → 필요할 때만 사용.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="attribute">
+    <h2>속성 선택자(특히 data-*)</h2>
+    <div class="card">
+      <pre><code>&lt;a class="post" href="/board/123"&gt;공지&lt;/a&gt;
+&lt;button data-sku="VAC-001" data-price="129000"&gt;구매&lt;/button&gt;</code></pre>
+
+      <table class="table" aria-label="속성 선택자">
+        <thead>
+          <tr><th>문법</th><th>의미</th><th>예</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>[attr]</code></td><td>속성 존재</td><td><code>[data-sku]</code></td></tr>
+          <tr><td><code>[attr="v"]</code></td><td>정확히 일치</td><td><code>[data-sku="VAC-001"]</code></td></tr>
+          <tr><td><code>[attr^="v"]</code></td><td>v로 시작</td><td><code>a[href^="/board"]</code></td></tr>
+          <tr><td><code>[attr$="v"]</code></td><td>v로 끝</td><td><code>img[src$=".png"]</code></td></tr>
+          <tr><td><code>[attr*="v"]</code></td><td>v 포함</td><td><code>a[href*="notice"]</code></td></tr>
+        </tbody>
+      </table>
+
+      <div class="note">
+        속성 선택자 범주는 poiemaweb Selector 문서에서 다루는 핵심 축 중 하나다.       </div>
+    </div>
+  </section>
+
+  <section class="section" id="pseudo-class">
+    <h2>가상 클래스(Pseudo-class)</h2>
+    <div class="card">
+      <p class="p">
+        가상 클래스는 “상태/위치/조건”에 따라 요소를 고른다. 크롤링에서는 특히 <code>:nth-child</code>가 자주 쓰인다.
+      </p>
+      <table class="table" aria-label="가상 클래스 예">
+        <thead>
+          <tr><th>예</th><th>설명</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>a:visited</code></td><td>방문한 링크(수집에서는 보통 덜 쓰지만 개념은 알아두기)</td></tr>
+          <tr><td><code>li:first-child</code></td><td>첫 번째 자식</td></tr>
+          <tr><td><code>li:last-child</code></td><td>마지막 자식</td></tr>
+          <tr><td><code>li:nth-child(n)</code></td><td>n번째 자식</td></tr>
+        </tbody>
+      </table>
+      <div class="note">
+        <code>:nth-child</code>는 인덱스가 1부터 시작하며, odd/even, An+B 패턴을 지원한다는 설명은 MDN 문서로 확인 가능하다.       </div>
+    </div>
+  </section>
+
+<section class="section" id="not">
+    <h2>:not()와 필터링</h2>
+    <div class="card">
+      <p class="p">
+        <code>:not()</code>은 “~가 아닌 것”을 고르는 필터다. 크롤링에서는 “광고/공지/고정글 제외” 같은 상황에서 유용하다.
+      </p>
+      <pre><code>/* .item 중에서 .ad(광고)가 아닌 것만 */
+.item:not(.ad)
+
+/* li 중에서 .pinned(고정) 아닌 것만 */
+li:not(.pinned)</code></pre>
+      <div class="mini">
+        <div class="mini-title">크롤링 팁</div>
+        <ul class="list">
+          <li>먼저 넓게 잡고 → <code>:not()</code>로 불필요한 타입을 제외하면 안정적이다.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+<section class="section" id="state">
+    <h2>폼 상태 선택자(:checked, :disabled, :required)</h2>
+    <div class="card">
+      <p class="p">
+        폼 입력은 상태(체크됨/비활성/필수 등)에 따라 선택할 수 있다.
+        “사용자 상호작용” 기반이라 정적 크롤링보다 브라우저 자동화에서 체감이 크다.
+      </p>
+
+      <pre><code>input:checked        /* 체크된 체크박스/라디오 */
+input:disabled       /* 비활성 */
+input:required       /* required 속성 */</code></pre>
+
+      <div class="mini">
+        <div class="mini-title">예시</div>
+        <pre><code>/* 체크된 항목의 라벨 강조 */
+input:checked + label { font-weight: 700; }</code></pre>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="nth">
+    <h2>:nth-child / :nth-of-type (실전에서 반드시 구분)</h2>
+    <div class="card">
+      <pre><code>&lt;div class="box"&gt;
+  &lt;h1&gt;Heading&lt;/h1&gt;
+  &lt;p&gt;A&lt;/p&gt;
+  &lt;p&gt;B&lt;/p&gt;
+  &lt;p&gt;C&lt;/p&gt;
+&lt;/div&gt;</code></pre>
+
+      <div class="grid-2">
+        <div class="card">
+          <h3>1) :nth-child</h3>
+          <p class="p">
+            “부모의 모든 자식 중에서 n번째가 조건을 만족하면 선택”이다.
+          </p>
+          <pre><code>p:nth-child(2)  /* 부모의 2번째 자식이 p면 선택 */</code></pre>
+        </div>
+        <div class="card">
+          <h3>2) :nth-of-type</h3>
+          <p class="p">
+            “같은 태그(type)끼리 세어서 n번째”를 선택한다.
+          </p>
+          <pre><code>p:nth-of-type(2) /* p들 중 2번째 */</code></pre>
+        </div>
+      </div>
+
+      <div class="warn">
+        <strong>초보 함정</strong><br/>
+        중간에 <code>h1</code> 같은 다른 태그가 끼면 <code>:nth-child</code> 결과가 달라진다.
+        “p만 세고 싶다”면 <code>:nth-of-type</code>을 고려하자.
+      </div>
+
+      <div class="note">
+        nth-child vs nth-of-type 차이는(모든 자식 기준 vs type 기준) 실무에서 많이 헷갈리는 지점이고, 관련 설명은 참고 문서들에서도 동일하게 정리된다.       </div>
+    </div>
+  </section>
+
+<section class="section" id="nth_more">
+    <h2>:nth-last-child 등 추가 패턴</h2>
+    <div class="card">
+      <p class="p">
+        <code>:nth-child</code>가 “앞에서부터”라면, <code>:nth-last-child</code>는 “뒤에서부터” 센다.
+        페이지 하단의 “마지막 항목/마지막 2개” 같은 선택에 유용하다.
+      </p>
+
+      <pre><code>li:nth-last-child(1)   /* 마지막(= :last-child) */
+li:nth-last-child(2)   /* 뒤에서 두 번째 */
+li:nth-last-child(-n+3) /* 뒤에서 3개 */</code></pre>
+
+      <div class="note">
+        <strong>실전</strong><br/>
+        “페이지가 길어지고 중간에 광고가 끼는 구조”에서는 nth 패턴이 깨질 수 있으니,
+        가능한 한 <code>class</code>나 <code>data-*</code> 같은 안정적인 속성을 우선 고려한다.
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="pseudo-element">
+    <h2>가상 요소(Pseudo-element) — 크롤링에서의 주의점</h2>
+    <div class="card">
+      <p class="p">
+        <code>::before</code>, <code>::after</code>로 “화면에 보이는 텍스트”가 추가되는 경우가 있다.
+        이런 내용은 HTML 소스에는 없어서 정적 크롤러로는 안 잡힐 수 있다.
+      </p>
+      <pre><code>.price::before { content: "₩"; }</code></pre>
+      <div class="note">
+        <strong>수집 관점 결론</strong><br/>
+        “화면엔 있는데 HTML에 없다”면 (1) 가상 요소인지, (2) JS로 DOM을 만든 것인지, (3) Network JSON인지 확인해야 한다.
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="specificity">
+    <h2>특이도(Specificity) — DevTools에서 CSS 해석할 때 필요</h2>
+    <div class="card">
+      <p class="p">
+        특이도는 “어떤 CSS 규칙이 우선 적용되는지” 결정한다.
+        크롤링 자체에는 직접 영향이 적지만, DevTools(Elements의 Styles 패널)에서
+        어떤 class/id가 ‘중요하게’ 쓰이는지 감 잡는 데 도움이 된다.
+      </p>
+
+      <table class="table" aria-label="특이도 기본">
+        <thead>
+          <tr><th>선택자 종류</th><th>대략적 우선순위</th><th>예</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>인라인 스타일</td><td>매우 높음</td><td><code>style="..."</code></td></tr>
+          <tr><td>ID 선택자</td><td>높음</td><td><code>#app</code></td></tr>
+          <tr><td>class/속성/가상클래스</td><td>중간</td><td><code>.item</code>, <code>[data-x]</code>, <code>:nth-child</code></td></tr>
+          <tr><td>태그/가상요소</td><td>낮음</td><td><code>div</code>, <code>::before</code></td></tr>
+        </tbody>
+      </table>
+
+      <div class="note">
+        Selector 체계(가상 클래스/가상 요소 포함)를 정리하는 방식은 poiemaweb Selector 문서의 범주와 맞춘다.       </div>
+    </div>
+  </section>
+
+  <section class="section" id="scraping-pattern">
+    <h2>실전 패턴(수집용)</h2>
+    <div class="card">
+      <div class="mini">
+        <div class="mini-title">패턴 1) 목록 수집</div>
+        <pre><code>.list .item           /* 반복 카드 */
+.item .title          /* 제목 */
+.item .price          /* 가격 */
+.item a[href]         /* 링크 */</code></pre>
+      </div>
+
+      <div class="mini">
+        <div class="mini-title">패턴 2) 상위 N개</div>
+        <pre><code>.rank li:nth-child(-n+3)</code></pre>
+      </div>
+
+      <div class="mini">
+        <div class="mini-title">패턴 3) “진짜 값”이 data-*에 있을 때</div>
+        <pre><code>.item [data-price]</code></pre>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="lab">
+    <h2>미니 실습 (Elements + Console)</h2>
+    <div class="card">
+      <ol class="ol">
+        <li>Elements에서 요소 클릭 → class/id/data-* 확인</li>
+        <li>Console에서 <code>document.querySelector("여기")</code>로 실제 잡히는지 확인</li>
+        <li>리스트는 <code>document.querySelectorAll("여기")</code></li>
+        <li><code>:nth-child</code>로 상위 3개만 잡히는지 테스트</li>
+      </ol>
+    </div>
+  </section>
+
+<section class="section" id="console">
+    <h2>Console에서 selector 테스트</h2>
+    <div class="card">
+      <p class="p">
+        DevTools의 Console에서 selector를 바로 테스트하면 “진짜로 잡히는지” 즉시 확인할 수 있다.
+      </p>
+
+      <pre><code>// 1개만(첫 매칭)
+document.querySelector(".item .price")
+
+// 여러 개(NodeList)
+document.querySelectorAll(".item")
+
+// 상위 3개만
+document.querySelectorAll(".rank li:nth-child(-n+3)")</code></pre>
+
+      <div class="mini">
+        <div class="mini-title">크롤링 연결</div>
+        <ul class="list">
+          <li>정적 크롤러(BeautifulSoup)도 거의 같은 selector 문법을 쓸 수 있다.</li>
+          <li>Playwright/Selenium에서도 selector를 그대로 쓰는 경우가 많다.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <p class="footer-text">다음: <a href="03_dom_tree.html"><strong>03. DOM Tree</strong></a></p>
+  </div>
+</footer>
+</body>
+</html>
