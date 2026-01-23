@@ -69,8 +69,13 @@
             <P>ol과 ul은 목록 안에 세부 목록을 만들 수 있다.</P>
             <ul>
                <li>coffee</li>
+               <li>tea</li>
                 <ol>
                     <li>Black Tea</li>
+                        <ul>
+                            <li>tea1</li>
+                            <li>tea2</li>
+                        </ul>
                     <li>Green Tea</li>
                 </ol>
                 <li>Milk</li>
@@ -104,5 +109,108 @@
             </table>
         </div>
     </div>
+
+<hr>
+
+    <div>
+        <h2>이미지 태그</h2>
+        <img src="https://ichef.bbci.co.uk/news/1024/branded_korean/c8f1/live/3d3a9dc0-53d0-11f0-a2ff-17a82c2e8bc4.jpg" alt="고양이 width="300" height="150">
+        <img src="" alt="이미지 없음" width="300" height="150">
+    </div>
+
+    <hr>
+
+    <div>
+        <h2>폼태그</h2>
+        <p>속성 type은 입력 폼의 종류 변경</p>
+        <p>속성 name은 변수명</p>
+        <p>속성 value는 변수(name)에 입력하는 값</p>
+
+        <h3>button</h3>
+        <input type="button" value="버튼" onclick="alert('Hello World!')">
+
+    <hr>
+
+        <h3>checkbox</h3>
+        <p>체크 박스는 중복 선택 가능</p>
+        <input type="checkbox" name="fruit1" value="apple" checked>사과<br>
+        <input type="checkbox" name="fruit2" value="grape" >포도<br>
+        <input type="checkbox" name="fruit3" value="peach" >복숭아<br>
+
+    <hr>
+
+        <h3>color</h3>
+        <input type="color" name="mycolor"><br>
+
+    <hr>
+
+        <h3>date</h3>
+        <input type="date" name="birthday">
+    
+    <hr>
+
+        <h3>email</h3>
+        <input type="email" name="useremail">
+
+    <hr>    
+
+        <h3>file</h3>
+        <input type="file" name="myfile">
+
+    <hr>
+
+        <h3>image</h3>
+        <input type="image" src="https://ichef.bbci.co.uk/news/1024/branded_korean/c8f1/live/3d3a9dc0-53d0-11f0-a2ff-17a82c2e8bc4.jpg" alt="submit" width="100" height="50">
+
+    <hr
+
+        <h3>password</h3>
+        <input type="password" name="pwd">
+
+    <hr>
+    
+        <h3>text</h3>
+        <input type="text" name="myname">
+
+    <hr>
+
+        <h3>select</h3>
+        <select name="cars1">
+            <option value="volvo" selected>Volvo</option>
+            <option value="saab" disabled>Saab</option>
+            <option value="fiat">Fiat</option>
+            <option value="audi">Audi</option>
+        </select>
+
+        <select name="cars2" size="4" multiple>
+            <option value="volvo">Volvo</option>
+            <option value="saab">Saab</option>
+            <option value="fiat">Fiat</option>
+            <option value="audi" selected>Audi</option>
+        </select>
+
+        <select name="cars3">
+        <optgroup label="Swedish Cars">
+            <option value="volvo">Volvo</option>
+            <option value="saab">Saab</option>
+        </optgroup>
+        <optgroup label="German Cars" disabled>
+            <option value="mercedes">Mercedes</option>
+            <option value="audi">Audi</option>
+        </optgroup>
+        </select>
+
+    <hr>
+
+        <h3>textarea</h3>
+        <textarea name="messages"></textarea>
+
+    <hr>
+
+        <h3>button</h3>
+        <button type="button" value="click me!" onclick="alert('Hello World!')">Click Me</button>
+
+    </div>
+
 </body>
 </html>
