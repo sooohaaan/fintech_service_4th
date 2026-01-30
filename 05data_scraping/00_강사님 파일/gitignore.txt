@@ -1,0 +1,10 @@
+data/
+*.csv
+*.json
+*.xlsx
+.env
+.env*
+build/
+dist/
+*.spec
+*.exe

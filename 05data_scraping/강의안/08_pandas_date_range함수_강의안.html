@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>pandas date_range() 함수 강의안</title>
+  <style>
+    :root { color-scheme: light; }
+    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, "Noto Sans KR", Arial, sans-serif; line-height: 1.6; margin: 0; padding: 24px; background: #fafafa; color: #111; }
+    main { max-width: 980px; margin: 0 auto; }
+    h1 { font-size: 28px; margin: 0 0 12px; }
+    h2 { font-size: 20px; margin: 22px 0 10px; }
+    p { margin: 8px 0; }
+    hr { border: 0; border-top: 1px solid #ddd; margin: 18px 0; }
+    code, pre { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace; }
+    pre { background: #0b1020; color: #e8ecff; padding: 14px; border-radius: 10px; overflow-x: auto; }
+    .note { background: #fff; border: 1px solid #e6e6e6; border-radius: 12px; padding: 12px 14px; }
+    table { width: 100%; border-collapse: collapse; background: #fff; border: 1px solid #e6e6e6; border-radius: 12px; overflow: hidden; }
+    th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid #eee; vertical-align: top; }
+    th { background: #f4f6ff; font-weight: 700; }
+    tr:last-child td { border-bottom: 0; }
+    .tag { display: inline-block; padding: 2px 8px; border-radius: 999px; background: #eef2ff; font-size: 12px; margin-left: 6px; }
+    .ok { color: #0a7a2f; font-weight: 700; }
+    .bad { color: #b20000; font-weight: 700; }
+  </style>
+</head>
+<body>
+<main>
+  <h1>pandas <code>date_range()</code> 함수 강의안</h1>
+
+  <h2>1. <code>date_range</code>란?</h2>
+  <p><code>pandas.date_range()</code>는 <strong>연속적인 날짜/시간 인덱스(DatetimeIndex)</strong>를 생성하는 함수다.</p>
+  <div class="note">
+    <p>시계열 데이터 분석의 시작점이며, 주가/매출/로그/센서 데이터처럼 <strong>시간축이 있는 데이터</strong>에서 거의 필수로 사용한다.</p>
+  </div>
+
+  <hr />
+
+  <h2>2. 기본 문법</h2>
+  <pre><code>import pandas as pd
+
+pd.date_range(start=None, end=None, periods=None, freq="D")</code></pre>
+
+  <h3>주요 파라미터</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>파라미터</th>
+        <th>설명</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>start</code></td>
+        <td>시작 날짜</td>
+      </tr>
+      <tr>
+        <td><code>end</code></td>
+        <td>종료 날짜</td>
+      </tr>
+      <tr>
+        <td><code>periods</code></td>
+        <td>생성할 개수</td>
+      </tr>
+      <tr>
+        <td><code>freq</code></td>
+        <td>날짜 간격(빈도)</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p class="note"><strong>중요:</strong> <code>start</code>/<code>end</code>/<code>periods</code> 중 <strong>2개는 반드시 필요</strong>하다.</p>
+
+  <hr />
+
+  <h2>3. 가장 기본 예제</h2>
+  <p><strong>하루씩 증가</strong></p>
+  <pre><code>pd.date_range(start="2026-01-01", end="2026-01-05")</code></pre>
+  <p>결과 예시:</p>
+  <pre><code>DatetimeIndex(['2026-01-01', '2026-01-02', '2026-01-03', '2026-01-04', '2026-01-05'],
+              dtype='datetime64[ns]', freq='D')</code></pre>
+
+  <hr />
+
+  <h2>4. <code>periods</code> 사용하기</h2>
+  <pre><code>pd.date_range(start="2026-01-01", periods=5)</code></pre>
+  <p class="note">👉 <strong>“여기서부터 N개”</strong> 만들 때 가장 편하다.</p>
+
+  <hr />
+
+  <h2>5. <code>freq</code>(간격) 이해하기</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>freq</th>
+        <th>의미</th>
+        <th>예시</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>D</code></td>
+        <td>하루</td>
+        <td><code>freq="D"</code></td>
+      </tr>
+      <tr>
+        <td><code>B</code></td>
+        <td>영업일(주말 제외)</td>
+        <td><code>freq="B"</code></td>
+      </tr>
+      <tr>
+        <td><code>W</code></td>
+        <td>주 단위</td>
+        <td><code>freq="W"</code></td>
+      </tr>
+      <tr>
+        <td><code>M</code></td>
+        <td>월말</td>
+        <td><code>freq="M"</code></td>
+      </tr>
+      <tr>
+        <td><code>MS</code></td>
+        <td>월초</td>
+        <td><code>freq="MS"</code></td>
+      </tr>
+      <tr>
+        <td><code>Q</code></td>
+        <td>분기말</td>
+        <td><code>freq="Q"</code></td>
+      </tr>
+      <tr>
+        <td><code>H</code></td>
+        <td>시간</td>
+        <td><code>freq="H"</code></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p>예:</p>
+  <pre><code>pd.date_range("2026-01-01", periods=5, freq="B")</code></pre>
+
+  <hr />
+
+  <h2>6. 역순 날짜 만들기 <span class="tag">핵심</span></h2>
+  <p><strong>핵심:</strong> <code>freq</code>를 <strong>음수</strong>로 주면 된다.</p>
+
+  <p><strong>1) 일 단위 역순</strong></p>
+  <pre><code>pd.date_range(end="2026-01-28", periods=5, freq="-1D")</code></pre>
+
+  <p><strong>2) 역순 + 영업일(주말 제외)</strong></p>
+  <pre><code>pd.date_range(end="2026-01-28", periods=5, freq="-1B")</code></pre>
+
+  <hr />
+
+  <h2>7. 문자열로 출력하기</h2>
+  <p>DatetimeIndex/Timestamp를 <strong>API 파라미터, 파일명</strong> 등에 쓰려면 문자열로 바꿔야 한다.</p>
+  <pre><code>pd.date_range(end="2026-01-28", periods=1).strftime("%Y-%m-%d")[0]</code></pre>
+  <p>결과:</p>
+  <pre><code>"2026-01-28"</code></pre>
+
+  <hr />
+
+  <h2>8. 실무에서 가장 많이 쓰는 패턴</h2>
+
+  <p><strong>1) 최근 N일 (영업일 기준)</strong></p>
+  <pre><code>import pandas as pd
+
+pd.date_range(end=pd.Timestamp.today(), periods=10, freq="-1B")</code></pre>
+
+  <p><strong>2) 파일명 / API 파라미터용 (YYYYMMDD)</strong></p>
+  <pre><code>(pd.date_range(end="2026-01-28", periods=5, freq="-1D")
+   .strftime("%Y%m%d")
+   .tolist())</code></pre>
+
+  <hr />
+
+  <h2>9. 자주 하는 실수</h2>
+
+  <p class="bad">❌ 실수: start &gt; end인데 <code>freq</code>를 기본값(+D)로 둠</p>
+  <pre><code>pd.date_range("2026-01-31", "2026-01-01")</code></pre>
+
+  <p class="ok">✅ 해결: 역순이므로 <code>freq="-1D"</code>로 지정</p>
+  <pre><code>pd.date_range("2026-01-31", "2026-01-01", freq="-1D")</code></pre>
+
+  <hr />
+
+  <h2>10. 요약</h2>
+  <ul>
+    <li><code>date_range</code> = 시계열 인덱스 생성기</li>
+    <li><strong>역순은 freq 음수</strong> (예: <code>-1D</code>, <code>-1B</code>)</li>
+    <li>주말 제외는 <code>B</code> (영업일)</li>
+    <li>문자열 필요하면 <code>strftime()</code></li>
+  </ul>
+
+  <p class="note"><strong>한 줄 결론:</strong> 금융/데이터 분석에서 <code>date_range</code>는 시간축의 표준이다.</p>
+</main>
+</body>
+</html>
