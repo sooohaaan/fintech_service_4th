@@ -3,6 +3,7 @@ Client_Secret="k8ZQHGny8o"
 service_key="fd78ac8b59cae62fc79745463448f2d61111c8645aeb07b889f5c527fb94a504"
 
 
-mypw='1234'
-myip='127.0.0.1'
-myport='3306'
+dbid=root
+dbpw=1234
+host=127.0.0.1
+port=3306
