@@ -1,0 +1,2330 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NumPy 연습문제 100</title>
+<style>
+/* 첨부해주신 styles.css 내용을 기반으로 작성되었습니다.
+  정답 접기 기능을 위한 details.qa 스타일이 포함되어 있습니다.
+*/
+:root{
+  --bg: #f6f7fb;
+  --card: #ffffff;
+  --text: #1f2937;
+  --muted: #6b7280;
+  --border: #e5e7eb;
+  --accent: #2563eb;
+  --accent-soft: #eff6ff;
+  --warn: #b45309;
+  --warn-soft: #fffbeb;
+  --code-bg: #0b1220;
+  --code-text: #e5e7eb;
+  --shadow: 0 10px 30px rgba(17,24,39,.06);
+}
+
+*{ box-sizing: border-box; }
+html, body { height: 100%; }
+
+body{
+  margin: 0;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans KR", Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.7;
+}
+
+.container{
+  width: min(1050px, calc(100% - 32px));
+  margin: 0 auto;
+}
+
+a{ color: inherit; text-decoration: none; }
+
+.header{
+  background: linear-gradient(180deg, var(--accent-soft), var(--bg));
+  border-bottom: 1px solid var(--border);
+  padding: 40px 0 30px;
+}
+
+.title{
+  margin: 10px 0 6px;
+  font-size: 32px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: #111827;
+}
+
+.subtitle{
+  margin: 0 0 14px;
+  color: var(--muted);
+  max-width: 78ch;
+  font-size: 16px;
+}
+
+.section{
+  padding: 30px 0 60px;
+}
+
+.card{
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 24px;
+  box-shadow: var(--shadow);
+  margin-bottom: 24px;
+}
+
+/* Q&A 스타일 */
+.q-box{
+  border-left: 4px solid var(--accent);
+  background: #f8fafc;
+  border-radius: 0 12px 12px 0;
+  padding: 16px 20px;
+  margin-bottom: 16px;
+}
+
+.q-box .q-title{
+  font-size: 18px;
+  font-weight: 700;
+  color: #1e293b;
+  margin-bottom: 8px;
+  display: block;
+}
+
+.q-box .q-desc{
+  margin: 0;
+  color: #334155;
+  white-space: pre-wrap;
+}
+
+/* Details (접기/펼치기) */
+details.qa{
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: #fff;
+  overflow: hidden;
+}
+
+details.qa summary{
+  cursor: pointer;
+  list-style: none;
+  padding: 12px 16px;
+  font-weight: 600;
+  background: #fff7ed; /* 정답 배경색 */
+  color: #9a3412;
+  border-bottom: 1px solid transparent;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+}
+
+details.qa[open] summary{
+  border-bottom-color: var(--border);
+  background: #ffedd5;
+}
+
+details.qa summary::before {
+  content: "▶";
+  font-size: 0.8em;
+  margin-right: 8px;
+  transition: transform 0.2s;
+}
+
+details.qa[open] summary::before {
+  transform: rotate(90deg);
+}
+
+details.qa .details-body{
+  padding: 20px;
+  background: #fff;
+}
+
+/* 코드 블록 스타일 */
+pre{
+  margin: 0 0 16px 0;
+  background: var(--code-bg);
+  color: var(--code-text);
+  padding: 16px;
+  border-radius: 12px;
+  overflow-x: auto;
+  border: 1px solid rgba(255,255,255,.06);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+.badge{
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  padding: 4px 8px;
+  border-radius: 6px;
+  margin-bottom: 8px;
+  letter-spacing: 0.05em;
+}
+
+.badge.code{ background: #e0e7ff; color: #3730a3; border: 1px solid #c7d2fe; }
+.badge.out{ background: #ecfeff; color: #155e75; border: 1px solid #a5f3fc; }
+
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="container">
+    <h1 class="title">NumPy 연습문제 100</h1>
+    <p class="subtitle">
+      각 문제는 직접 코드를 작성해서 실행 결과를 확인하는 형태입니다.<br>
+      아래에는 정답 예시 코드가 접혀 있습니다. 클릭하여 확인하세요.<br>
+      <span style="font-size: 0.9em; opacity: 0.8;">(강의안: 기본적인 ndarray 생성, 차원/shape, 슬라이싱, 브로드캐스팅, where, sort, concatenate, transpose 등 내용을 모두 복습하도록 구성)</span>
+    </p>
+  </div>
+</header>
+
+<main class="container section">
+
+<div class="card">
+  <div class="q-box">
+    <div class="q-title">문제 1</div>
+    <div class="q-desc">1. numpy를 np 라는 별칭으로 임포트하고, 정수 10 하나만 담긴 0차원 배열 a를 만들어서 a, a.ndim, a.shape 를 출력하세요.</div>
+  </div>
+  <details class="qa answer">
+    <summary>정답 예시 코드 확인</summary>
+    <div class="details-body">
+      <span class="badge code">Input Code</span>
+<pre><code>import numpy as np
+a = np.array(10)
+print(a)
+print(a.ndim)
+print(a.shape)</code></pre>
+      <span class="badge out">Output</span>
+<pre><code>10
+0
+()
+</code></pre>
+    </div>
+  </details>
+</div>
+
+<div class="card">
+  <div class="q-box">
+    <div class="q-title">문제 2</div>
+    <div class="q-desc">2. [1,2,3,4,5] 리스트로부터 1차원 ndarray arr 를 만들고, arr의 dtype 과 size를 출력하세요.</div>
+  </div>
+  <details class="qa answer">
+    <summary>정답 예시 코드 확인</summary>
+    <div class="details-body">
+      <span class="badge code">Input Code</span>
+<pre><code>import numpy as np
+arr = np.array([1,2,3,4,5])
+print(arr.dtype)
+print(arr.size)</code></pre>
+      <span class="badge out">Output</span>
+<pre><code>int64
+5
+</code></pre>
+    </div>
+  </details>
+</div>
+
+<div class="card">
+  <div class="q-box">
+    <div class="q-title">문제 3</div>
+    <div class="q-desc">3. 파이썬 리스트 [[1,2,3],[4,5,6]] 로부터 2행 3열 배열 m 을 만들고 m.ndim 과 m.shape 를 출력하세요.</div>
+  </div>
+  <details class="qa answer">
+    <summary>정답 예시 코드 확인</summary>
+    <div class="details-body">
+      <span class="badge code">Input Code</span>
+<pre><code>import numpy as np
+m = np.array([[1,2,3],[4,5,6]])
+print(m.ndim)
+print(m.shape)</code></pre>
+      <span class="badge out">Output</span>
+<pre><code>2
+(2, 3)
+</code></pre>
+    </div>
+  </details>
+</div>
+
+<div class="card">
+  <div class="q-box">
+    <div class="q-title">문제 4</div>
+    <div class="q-desc">4. np.array() 로 문자열과 정수를 섞어 넣으면 모두 문자열로 변환됩니다. ['1',2,'3'] 로 배열 x 를 만들고 x, x.dtype 를 출력하세요.</div>
+  </div>
+  <details class="qa answer">
+    <summary>정답 예시 코드 확인</summary>
+    <div class="details-body">
+      <span class="badge code">Input Code</span>
+<pre><code>import numpy as np
+x = np.array(['1',2,'3'])
+print(x)
+print(x.dtype)</code></pre>
+      <span class="badge out">Output</span>
+<pre><code>['1' '2' '3']
+&lt;U21
+</code></pre>
+    </div>
+  </details>
+</div>
+
+<div class="card">
+  <div class="q-box">
+    <div class="q-title">문제 5</div>
+    <div class="q-desc">5. np.arange 를 이용해 0부터 9까지 담긴 배열 r 을 만들고 r 과 r.shape 를 출력하세요.</div>
+  </div>
+  <details class="qa answer">
+    <summary>정답 예시 코드 확인</summary>
+    <div class="details-body">
+      <span class="badge code">Input Code</span>
+<pre><code>import numpy as np
+r = np.arange(10)
+print(r)
+print(r.shape)</code></pre>
+      <span class="badge out">Output</span>
+<pre><code>[0 1 2 3 4 5 6 7 8 9]
+(10,)
+</code></pre>
+    </div>
+  </details>
+</div>
+
+<div class="card">
+  <div class="q-box">
+    <div class="q-title">문제 6</div>
+    <div class="q-desc">6. np.arange 를 이용해 1부터 10까지 2씩 증가하는 배열 r2 를 만들고 r2 를 출력하세요.</div>
+  </div>
+  <details class="qa answer">
+    <summary>정답 예시 코드 확인</summary>
+    <div class="details-body">
+      <span class="badge code">Input Code</span>
+<pre><code>import numpy as np
+r2 = np.arange(1,11,2)
+print(r2)</code></pre>
+      <span class="badge out">Output</span>
+<pre><code>[1 3 5 7 9]
+</code></pre>
+    </div>
+  </details>
+</div>
+
+<div class="card">
+  <div class="q-box">
+    <div class="q-title">문제 7</div>
+    <div class="q-desc">7. 12개의 원소(0~11)를 가진 배열을 만든 뒤, reshape 로 3행 4열 matrix m 을 만들고 m 과 m.shape 를 출력하세요.</div>
+  </div>
+  <details class="qa answer">
+    <summary>정답 예시 코드 확인</summary>
+    <div class="details-body">
+      <span class="badge code">Input Code</span>
+<pre><code>import numpy as np
+m = np.arange(12).reshape(3,4)
+print(m)
+print(m.shape)</code></pre>
+      <span class="badge out">Output</span>
+<pre><code>[[ 0  1  2  3]
+ [ 4  5  6  7]
+ [ 8  9 10 11]]
+(3, 4)
+</code></pre>
+    </div>
+  </details>
+</div>
+
+<div class="card">
+  <div class="q-box">
+    <div class="q-title">문제 8</div>
+    <div class="q-desc">8. 문제7에서 만든 m 을 다시 4행 3열로 바꾼 m2 를 만들어서 m2.shape 를 출력하세요.</div>
+  </div>
+  <details class="qa answer">
+    <summary>정답 예시 코드 확인</summary>
+    <div class="details-body">
+      <span class="badge code">Input Code</span>
+<pre><code>import numpy as np
+m = np.arange(12).reshape(3,4)
+m2 = m.reshape(4,3)
+print(m2.shape)</code></pre>
+      <span class="badge out">Output</span>
+<pre><code>(4, 3)
+</code></pre>
+    </div>
+  </details>
+</div>
+
+<div class="card">
+  <div class="q-box">
+    <div class="q-title">문제 9</div>
+    <div class="q-desc">9. 2행 2열 배열 [[1,2],[3,4]] 를 만들고, flatten() 으로 1차원으로 펴서 결과를 출력하세요.</div>
+  </div>
+  <details class="qa answer">
+    <summary>정답 예시 코드 확인</summary>
+    <div class="details-body">
+      <span class="badge code">Input Code</span>
+<pre><code>import numpy as np
+arr2 = np.array([[1,2],[3,4]])
+flat = arr2.flatten()
+print(flat)</code></pre>
+      <span class="badge out">Output</span>
+<pre><code>[1 2 3 4]
+</code></pre>
+    </div>
+  </details>
+</div>
+
+<div class="card">
+  <div class="q-box">
+    <div class="q-title">문제 10</div>
+    <div class="q-desc">10. np.linspace 를 사용해 0부터 1까지를 '5개의 구간'으로 균등하게 나눈 배열 lin 을 만들고 lin 을 출력하세요.</div>
+  </div>
+  <details class="qa answer">
+    <summary>정답 예시 코드 확인</summary>
+    <div class="details-body">
+      <span class="badge code">Input Code</span>
+<pre><code>import numpy as np
+lin = np.linspace(0,1,5)
+print(lin)</code></pre>
+      <span class="badge out">Output</span>
+<pre><code>[0.   0.25 0.5  0.75 1.  ]
+</code></pre>
+    </div>
+  </details>
+</div>
+
+<div class="card">
+  <div class="q-box">
+    <div class="q-title">문제 11</div>
+    <div class="q-desc">11. 0~9 배열 a 에서 첫 번째 원소, 마지막 원소, 앞에서 3개만 슬라이싱해서 각각 출력하세요.</div>
+  </div>
+  <details class="qa answer">
+    <summary>정답 예시 코드 확인</summary>
+    <div class="details-body">
+      <span class="badge code">Input Code</span>
+<pre><code>import numpy as np
+a = np.arange(10)
+print(a[0])
+print(a[-1])
+print(a[:3])</code></pre>
+      <span class="badge out">Output</span>
+<pre><code>0
+9
+[0 1 2]
+</code></pre>
+    </div>
+  </details>
+</div>
+
+<div class="card">
+  <div class="q-box">
+    <div class="q-title">문제 12</div>
+    <div class="q-desc">12. 3행4열 배열 b = np.arange(12).reshape(3,4) 에서 첫 행만 출력하고, 마지막 열만 출력하세요.</div>
+  </div>
+  <details class="qa answer">
+    <summary>정답 예시 코드 확인</summary>
+    <div class="details-body">
+      <span class="badge code">Input Code</span>
+<pre><code>import numpy as np
+b = np.arange(12).reshape(3,4)
+print(b[0])            # 첫 행
+print(b[:, -1])        # 마지막 열</code></pre>
+      <span class="badge out">Output</span>
+<pre><code>[0 1 2 3]
+[ 3  7 11]
+</code></pre>
+    </div>
+  </details>
+</div>
+
+<div class="card">
+  <div class="q-box">
+    <div class="q-title">문제 13</div>
+    <div class="q-desc">13. 문제12의 b 에서 가운데 행(인덱스1)과 열0~1만 남긴 작은 배열 sub 를 만들고 sub 를 출력하세요.</div>
+  </div>
+  <details class="qa answer">
+    <summary>정답 예시 코드 확인</summary>
+    <div class="details-body">
+      <span class="badge code">Input Code</span>
+<pre><code>import numpy as np
+b = np.arange(12).reshape(3,4)
+sub = b[1,0:2]
+print(sub)</code></pre>
+      <span class="badge out">Output</span>
+<pre><code>[4 5]
+</code></pre>
+    </div>
+  </details>
+</div>
+
+<div class="card">
+  <div class="q-box">
+    <div class="q-title">문제 14</div>
+    <div class="q-desc">14. 5행5열 배열 c = np.arange(25).reshape(5,5) 에서 대각선 원소들(0,0),(1,1),... 만 골라서 diag 라는 1차원 배열로 만들고 출력하세요.</div>
+  </div>
+  <details class="qa answer">
+    <summary>정답 예시 코드 확인</summary>
+    <div class="details-body">
+      <span class="badge code">Input Code</span>
+<pre><code>import numpy as np
+c = np.arange(25).reshape(5,5)
+diag = c[range(5), range(5)]
+print(diag)</code></pre>
+      <span class="badge out">Output</span>
+<pre><code>[ 0  6 12 18 24]
+</code></pre>
+    </div>
+  </details>
+</div>
+
+<div class="card">
+  <div class="q-box">
+    <div class="q-title">문제 15</div>
+    <div class="q-desc">15. 4행3열 배열 d 를 0~11 로 채운 뒤, 마지막 두 행만 잘라서 d_tail 로 저장하고 출력하세요.</div>
+  </div>
+  <details class="qa answer">
+    <summary>정답 예시 코드 확인</summary>
+    <div class="details-body">
+      <span class="badge code">Input Code</span>
+<pre><code>import numpy as np
+d = np.arange(12).reshape(4,3)
+d_tail = d[2:]
+print(d_tail)</code></pre>
+      <span class="badge out">Output</span>
+<pre><code>[[ 6  7  8]
+ [ 9 10 11]]
+</code></pre>
+    </div>
+  </details>
+</div>
+
+<div class="card">
+  <div class="q-box">
+    <div class="q-title">문제 16</div>
+    <div class="q-desc">16. 1차원 배열 arr = np.array([10,20,30,40,50]) 에서 [10,30,50]만 골라서 new_arr 에 담아 출력하세요. (인덱스 사용)</div>
+  </div>
+  <details class="qa answer">
+    <summary>정답 예시 코드 확인</summary>
+    <div class="details-body">
+      <span class="badge code">Input Code</span>
+<pre><code>import numpy as np
+arr = np.array([10,20,30,40,50])
+idx = [0,2,4]
+new_arr = arr[idx]
+print(new_arr)</code></pre>
+      <span class="badge out">Output</span>
+<pre><code>[10 30 50]
+</code></pre>
+    </div>
+  </details>
+</div>
+
+<div class="card">
+  <div class="q-box">
+    <div class="q-title">문제 17</div>
+    <div class="q-desc">17. 2차원 배열 e = np.arange(16).reshape(4,4) 에서 (0,1),(1,2),(2,3) 위치의 값만 골라서 picked 로 저장하고 출력하세요.</div>
+  </div>
+  <details class="qa answer">
+    <summary>정답 예시 코드 확인</summary>
+    <div class="details-body">
+      <span class="badge code">Input Code</span>
+<pre><code>import numpy as np
+e = np.arange(16).reshape(4,4)
+rows = [0,1,2]
+cols = [1,2,3]
+picked = e[rows, cols]
+print(picked)</code></pre>
+      <span class="badge out">Output</span>
+<pre><code>[ 1  6 11]
+</code></pre>
+    </div>
+  </details>
+</div>
+
+<div class="card">
+  <div class="q-box">
+    <div class="q-title">문제 18</div>
+    <div class="q-desc">18. 문제17의 e 에서 짝수 인덱스 행(0,2행)과 홀수 인덱스 열(1,3열)만 남긴 sub2 를 만들고 출력하세요.</div>
+  </div>
+  <details class="qa answer">
+    <summary>정답 예시 코드 확인</summary>
+    <div class="details-body">
+      <span class="badge code">Input Code</span>
+<pre><code>import numpy as np
+e = np.arange(16).reshape(4,4)
+sub2 = e[0:4:2,1:4:2]
+print(sub2)</code></pre>
+      <span class="badge out">Output</span>
+<pre><code>[[ 1  3]
+ [ 9 11]]
+</code></pre>
+    </div>
+  </details>
+</div>
+
+<div class="card">
+  <div class="q-box">
+    <div class="q-title">문제 19</div>
+    <div class="q-desc">19. 1차원 배열 x = np.array([3,6,9,12,15,18]) 에서 값이 10보다 큰 값들만 골라서 출력하세요. (불리언 인덱싱)</div>
+  </div>
+  <details class="qa answer">
+    <summary>정답 예시 코드 확인</summary>
+    <div class="details-body">
+      <span class="badge code">Input Code</span>
+<pre><code>import numpy as np
+x = np.array([3,6,9,12,15,18])
+mask = x>10
+print(x[mask])</code></pre>
+      <span class="badge out">Output</span>
+<pre><code>[12 15 18]
+</code></pre>
+    </div>
+  </details>
+</div>
+
+<div class="card">
+  <div class="q-box">
+    <div class="q-title">문제 20</div>
+    <div class="q-desc">20. 0~11 배열을 3x4로 만든 arr2D 에서 값이 짝수인 원소만 골라서 even_only 에 담아 출력하세요.</div>
+  </div>
+  <details class="qa answer">
+    <summary>정답 예시 코드 확인</summary>
+    <div class="details-body">
+      <span class="badge code">Input Code</span>
+<pre><code>import numpy as np
+arr2D = np.arange(12).reshape(3,4)
+mask = (arr2D%2==0)
+even_only = arr2D[mask]
+print(even_only)</code></pre>
+      <span class="badge out">Output</span>
+<pre><code>[ 0  2  4  6  8 10]
+</code></pre>
+    </div>
+  </details>
+</div>
+
+<div class="card">
+  <div class="q-box">
+    <div class="q-title">문제 21</div>
+    <div class="q-desc">21. np.arange(5) 로 만든 v 에 10을 더한 결과를 출력하세요. (브로드캐스팅)</div>
+  </div>
+  <details class="qa answer">
+    <summary>정답 예시 코드 확인</summary>
+    <div class="details-body">
+      <span class="badge code">Input Code</span>
+<pre><code>import numpy as np
+v = np.arange(5)
+print(v+10)</code></pre>
+      <span class="badge out">Output</span>
+<pre><code>[10 11 12 13 14]
+</code></pre>
+    </div>
+  </details>
+</div>
+
+<div class="card">
+  <div class="q-box">
+    <div class="q-title">문제 22</div>
+    <div class="q-desc">22. 2x3 배열 A 와 1x3 배열 B 를 만들어 A+B 를 출력하세요. 예: A는 0~5 reshape(2,3), B는 [10,10,10]</div>
+  </div>
+  <details class="qa answer">
+    <summary>정답 예시 코드 확인</summary>
+    <div class="details-body">
+      <span class="badge code">Input Code</span>
+<pre><code>import numpy as np
+A = np.arange(6).reshape(2,3)
+B = np.array([10,10,10])
+print(A+B)</code></pre>
+      <span class="badge out">Output</span>
+<pre><code>[[10 11 12]
+ [13 14 15]]
+</code></pre>
+    </div>
+  </details>
+</div>
+
+<div class="card">
+  <div class="q-box">
+    <div class="q-title">문제 23</div>
+    <div class="q-desc">23. 2x3 배열 A 에서 각 행의 합( axis=1 )과 각 열의 합( axis=0 )을 각각 출력하세요.</div>
+  </div>
+  <details class="qa answer">
+    <summary>정답 예시 코드 확인</summary>
+    <div class="details-body">
+      <span class="badge code">Input Code</span>
+<pre><code>import numpy as np
+A = np.arange(6).reshape(2,3)
+print(A.sum(axis=1))
+print(A.sum(axis=0))</code></pre>
+      <span class="badge out">Output</span>
+<pre><code>[ 3 12]
+[3 5 7]
+</code></pre>
+    </div>
+  </details>
+</div>
+
+<div class="card">
+  <div class="q-box">
+    <div class="q-title">문제 24</div>
+    <div class="q-desc">24. 3x3 배열 M = np.arange(9).reshape(3,3) 에서 전체 평균값과, axis=0 평균값을 출력하세요.</div>
+  </div>
+  <details class="qa answer">
+    <summary>정답 예시 코드 확인</summary>
+    <div class="details-body">
+      <span class="badge code">Input Code</span>
+<pre><code>import numpy as np
+M = np.arange(9).reshape(3,3)
+print(M.mean())
+print(M.mean(axis=0))</code></pre>
+      <span class="badge out">Output</span>
+<pre><code>4.0
+[3. 4. 5.]
+</code></pre>
+    </div>
+  </details>
+</div>
+
+<div class="card">
+  <div class="q-box">
+    <div class="q-title">문제 25</div>
+    <div class="q-desc">25. np.where 를 사용해 1차원 배열 data = np.array([5,-2,7,-9,0]) 에서 음수는 0, 양수는 그대로 유지한 cleaned 를 만들어 출력하세요.</div>
+  </div>
+  <details class="qa answer">
+    <summary>정답 예시 코드 확인</summary>
+    <div class="details-body">
+      <span class="badge code">Input Code</span>
+<pre><code>import numpy as np
+data = np.array([5,-2,7,-9,0])
+cleaned = np.where(data&lt;0,0,data)
+print(cleaned)</code></pre>
+      <span class="badge out">Output</span>
+<pre><code>[5 0 7 0 0]
+</code></pre>
+    </div>
+  </details>
+</div>
+
+<div class="card">
+  <div class="q-box">
+    <div class="q-title">문제 26</div>
+    <div class="q-desc">26. np.where 를 사용해 arr = np.arange(10) 에서 짝수면 'even', 홀수면 'odd' 라는 문자열 배열 label 을 만들어 출력하세요.</div>
+  </div>
+  <details class="qa answer">
+    <summary>정답 예시 코드 확인</summary>
+    <div class="details-body">
+      <span class="badge code">Input Code</span>
+<pre><code>import numpy as np
+arr = np.arange(10)
+label = np.where(arr%2==0,'even','odd')
+print(label)</code></pre>
+      <span class="badge out">Output</span>
+<pre><code>['even' 'odd' 'even' 'odd' 'even' 'odd' 'even' 'odd' 'even' 'odd']
+</code></pre>
+    </div>
+  </details>
+</div>
+
+<div class="card">
+  <div class="q-box">
+    <div class="q-title">문제 27</div>
+    <div class="q-desc">27. 2x2 배열 X = [[1,2],[3,4]] 와 Y = [[10,20],[30,40]] 를 만들어 X+Y, X*Y (원소별 곱) 을 각각 출력하세요.</div>
+  </div>
+  <details class="qa answer">
+    <summary>정답 예시 코드 확인</summary>
+    <div class="details-body">
+      <span class="badge code">Input Code</span>
+<pre><code>import numpy as np
+X = np.array([[1,2],[3,4]])
+Y = np.array([[10,20],[30,40]])
+print(X+Y)
+print(X*Y)</code></pre>
+      <span class="badge out">Output</span>
+<pre><code>[[11 22]
+ [33 44]]
+[[ 10  40]
+ [ 90 160]]
+</code></pre>
+    </div>
+  </details>
+</div>
+
+<div class="card">
+  <div class="q-box">
+    <div class="q-title">문제 28</div>
+    <div class="q-desc">28. 문제27의 X 와 Y 에서 행렬 곱( @ 연산자 ) 결과도 출력하세요.</div>
+  </div>
+  <details class="qa answer">
+    <summary>정답 예시 코드 확인</summary>
+    <div class="details-body">
+      <span class="badge code">Input Code</span>
+<pre><code>import numpy as np
+X = np.array([[1,2],[3,4]])
+Y = np.array([[10,20],[30,40]])
+print(X @ Y)</code></pre>
+      <span class="badge out">Output</span>
+<pre><code>[[ 70 100]
+ [150 220]]
+</code></pre>
+    </div>
+  </details>
+</div>
+
+<div class="card">
+  <div class="q-box">
+    <div class="q-title">문제 29</div>
+    <div class="q-desc">29. 실수 배열 f = np.array([1.2, 3.7, 4.5]) 를 정수형(int)으로 변환한 g 를 만들고 g 와 g.dtype 을 출력하세요.</div>
+  </div>
+  <details class="qa answer">
+    <summary>정답 예시 코드 확인</summary>
+    <div class="details-body">
+      <span class="badge code">Input Code</span>
+<pre><code>import numpy as np
+f = np.array([1.2,3.7,4.5])
+g = f.astype(int)
+print(g)
+print(g.dtype)</code></pre>
+      <span class="badge out">Output</span>
+<pre><code>[1 3 4]
+int64
+</code></pre>
+    </div>
+  </details>
+</div>
+
+<div class="card">
+  <div class="q-box">
+    <div class="q-title">문제 30</div>
+    <div class="q-desc">30. 1차원 배열 z = np.array([0,0,1,1,1,2,2,3]) 에서 고유값(중복제거)만 뽑아 unique_vals 에 저장하고 출력하세요. (np.unique)</div>
+  </div>
+  <details class="qa answer">
+    <summary>정답 예시 코드 확인</summary>
+    <div class="details-body">
+      <span class="badge code">Input Code</span>
+<pre><code>import numpy as np
+z = np.array([0,0,1,1,1,2,2,3])
+unique_vals = np.unique(z)
+print(unique_vals)</code></pre>
+      <span class="badge out">Output</span>
+<pre><code>[0 1 2 3]
+</code></pre>
+    </div>
+  </details>
+</div>
+
+<div class="card">
+  <div class="q-box">
+    <div class="q-title">문제 31</div>
+    <div class="q-desc">31. 배열 s = np.array([5,1,9,3]) 를 오름차순 정렬한 결과를 출력하세요. (np.sort 사용)</div>
+  </div>
+  <details class="qa answer">
+    <summary>정답 예시 코드 확인</summary>
+    <div class="details-body">
+      <span class="badge code">Input Code</span>
+<pre><code>import numpy as np
+s = np.array([5,1,9,3])
+print(np.sort(s))</code></pre>
+      <span class="badge out">Output</span>
+<pre><code>[1 3 5 9]
+</code></pre>
+    </div>
+  </details>
+</div>
+
+<div class="card">
+  <div class="q-box">
+    <div class="q-title">문제 32</div>
+    <div class="q-desc">32. 문제31의 s 를 정렬했을 때의 인덱스 순서를 args 라고 할 때, np.argsort 로 args 를 구하고 출력하세요.</div>
+  </div>
+  <details class="qa answer">
+    <summary>정답 예시 코드 확인</summary>
+    <div class="details-body">
+      <span class="badge code">Input Code</span>
+<pre><code>import numpy as np
+s = np.array([5,1,9,3])
+args = np.argsort(s)
+print(args)</code></pre>
+      <span class="badge out">Output</span>
+<pre><code>[1 3 0 2]
+</code></pre>
+    </div>
+  </details>
+</div>
+
+<div class="card">
+  <div class="q-box">
+    <div class="q-title">문제 33</div>
+    <div class="q-desc">33. 2차원 배열 arr2 = np.array([[3,1],[2,4]]) 에서 각 행을 기준으로 정렬한 결과를 출력하세요. (np.sort(arr2, axis=1))</div>
+  </div>
+  <details class="qa answer">
+    <summary>정답 예시 코드 확인</summary>
+    <div class="details-body">
+      <span class="badge code">Input Code</span>
+<pre><code>import numpy as np
+arr2 = np.array([[3,1],[2,4]])
+print(np.sort(arr2, axis=1))</code></pre>
+      <span class="badge out">Output</span>
+<pre><code>[[1 3]
+ [2 4]]
+</code></pre>
+    </div>
+  </details>
+</div>
+
+<div class="card">
+  <div class="q-box">
+    <div class="q-title">문제 34</div>
+    <div class="q-desc">34. arr2(문제33)에서 각 열을 기준으로 오름차순 정렬한 결과를 출력하세요. (axis=0)</div>
+  </div>
+  <details class="qa answer">
+    <summary>정답 예시 코드 확인</summary>
+    <div class="details-body">
+      <span class="badge code">Input Code</span>
+<pre><code>import numpy as np
+arr2 = np.array([[3,1],[2,4]])
+print(np.sort(arr2, axis=0))</code></pre>
+      <span class="badge out">Output</span>
+<pre><code>[[2 1]
+ [3 4]]
+</code></pre>
+    </div>
+  </details>
+</div>
+
+<div class="card">
+  <div class="q-box">
+    <div class="q-title">문제 35</div>
+    <div class="q-desc">35. 1차원 배열 w = np.array([10,40,20,30]) 에서 가장 큰 값의 인덱스를 np.argmax 로 구해 출력하세요.</div>
+  </div>
+  <details class="qa answer">
+    <summary>정답 예시 코드 확인</summary>
+    <div class="details-body">
+      <span class="badge code">Input Code</span>
+<pre><code>import numpy as np
+w = np.array([10,40,20,30])
+print(np.argmax(w))</code></pre>
+      <span class="badge out">Output</span>
+<pre><code>1
+</code></pre>
+    </div>
+  </details>
+</div>
+
+<div class="card">
+  <div class="q-box">
+    <div class="q-title">문제 36</div>
+    <div class="q-desc">36. 문제35의 w 에서 가장 작은 값의 인덱스를 np.argmin 으로 구해 출력하세요.</div>
+  </div>
+  <details class="qa answer">
+    <summary>정답 예시 코드 확인</summary>
+    <div class="details-body">
+      <span class="badge code">Input Code</span>
+<pre><code>import numpy as np
+w = np.array([10,40,20,30])
+print(np.argmin(w))</code></pre>
+      <span class="badge out">Output</span>
+<pre><code>0
+</code></pre>
+    </div>
+  </details>
+</div>
+
+<div class="card">
+  <div class="q-box">
+    <div class="q-title">문제 37</div>
+    <div class="q-desc">37. 2차원 배열 q = np.arange(12).reshape(3,4) 에서 axis=1 기준으로 argmax 를 구해 출력하세요.</div>
+  </div>
+  <details class="qa answer">
+    <summary>정답 예시 코드 확인</summary>
+    <div class="details-body">
+      <span class="badge code">Input Code</span>
+<pre><code>import numpy as np
+q = np.arange(12).reshape(3,4)
+print(np.argmax(q, axis=1))</code></pre>
+      <span class="badge out">Output</span>
+<pre><code>[3 3 3]
+</code></pre>
+    </div>
+  </details>
+</div>
+
+<div class="card">
+  <div class="q-box">
+    <div class="q-title">문제 38</div>
+    <div class="q-desc">38. 같은 q 에서 axis=0 기준으로 argmin 을 구해 출력하세요.</div>
+  </div>
+  <details class="qa answer">
+    <summary>정답 예시 코드 확인</summary>
+    <div class="details-body">
+      <span class="badge code">Input Code</span>
+<pre><code>import numpy as np
+q = np.arange(12).reshape(3,4)
+print(np.argmin(q, axis=0))</code></pre>
+      <span class="badge out">Output</span>
+<pre><code>[0 0 0 0]
+</code></pre>
+    </div>
+  </details>
+</div>
+
+<div class="card">
+  <div class="q-box">
+    <div class="q-title">문제 39</div>
+    <div class="q-desc">39. 배열 mix = np.array([3,3,2,1,2,3,0]) 의 고유값을 정렬된 순서로 출력하고, 그 개수도 함께 출력하세요.</div>
+  </div>
+  <details class="qa answer">
+    <summary>정답 예시 코드 확인</summary>
+    <div class="details-body">
+      <span class="badge code">Input Code</span>
+<pre><code>import numpy as np
+mix = np.array([3,3,2,1,2,3,0])
+uniq = np.unique(mix)
+print(uniq)
+print(len(uniq))</code></pre>
+      <span class="badge out">Output</span>
+<pre><code>[0 1 2 3]
+4
+</code></pre>
+    </div>
+  </details>
+</div>
+
+<div class="card">
+  <div class="q-box">
+    <div class="q-title">문제 40</div>
+    <div class="q-desc">40. np.linspace(0,10,6) 으로 만든 배열 L 을 내림차순으로 정렬한 결과를 출력하세요. (np.sort 결과를 뒤집기)</div>
+  </div>
+  <details class="qa answer">
+    <summary>정답 예시 코드 확인</summary>
+    <div class="details-body">
+      <span class="badge code">Input Code</span>
+<pre><code>import numpy as np
+L = np.linspace(0,10,6)
+asc = np.sort(L)
+desc = asc[::-1]
+print(desc)</code></pre>
+      <span class="badge out">Output</span>
+<pre><code>[10.  8.  6.  4.  2.  0.]
+</code></pre>
+    </div>
+  </details>
+</div>
+
+<div class="card">
+  <div class="q-box">
+    <div class="q-title">문제 41</div>
+    <div class="q-desc">41. a = np.array([1,2,3]), b = np.array([4,5,6]) 을 위아래(axis=0)로 붙인 merged 를 np.concatenate 로 만들고 출력하세요.</div>
+  </div>
+  <details class="qa answer">
+    <summary>정답 예시 코드 확인</summary>
+    <div class="details-body">
+      <span class="badge code">Input Code</span>
+<pre><code>import numpy as np
+a = np.array([1,2,3])
+b = np.array([4,5,6])
+merged = np.concatenate((a,b), axis=0)
+print(merged)</code></pre>
+      <span class="badge out">Output</span>
+<pre><code>[1 2 3 4 5 6]
+</code></pre>
+    </div>
+  </details>
+</div>
+
+<div class="card">
+  <div class="q-box">
+    <div class="q-title">문제 42</div>
+    <div class="q-desc">42. 2x2 배열 A=[[1,2],[3,4]] 와 B=[[5,6],[7,8]] 를 세로방향(axis=0)으로 붙여서 출력하세요.</div>
+  </div>
+  <details class="qa answer">
+    <summary>정답 예시 코드 확인</summary>
+    <div class="details-body">
+      <span class="badge code">Input Code</span>
+<pre><code>import numpy as np
+A = np.array([[1,2],[3,4]])
+B = np.array([[5,6],[7,8]])
+C = np.concatenate((A,B), axis=0)
+print(C)</code></pre>
+      <span class="badge out">Output</span>
+<pre><code>[[1 2]
+ [3 4]
+ [5 6]
+ [7 8]]
+</code></pre>
+    </div>
+  </details>
+</div>
+
+<div class="card">
+  <div class="q-box">
+    <div class="q-title">문제 43</div>
+    <div class="q-desc">43. 문제42의 A,B 를 가로방향(axis=1)으로 붙여서 출력하세요.</div>
+  </div>
+  <details class="qa answer">
+    <summary>정답 예시 코드 확인</summary>
+    <div class="details-body">
+      <span class="badge code">Input Code</span>
+<pre><code>import numpy as np
+A = np.array([[1,2],[3,4]])
+B = np.array([[5,6],[7,8]])
+D = np.concatenate((A,B), axis=1)
+print(D)</code></pre>
+      <span class="badge out">Output</span>
+<pre><code>[[1 2 5 6]
+ [3 4 7 8]]
+</code></pre>
+    </div>
+  </details>
+</div>
+
+<div class="card">
+  <div class="q-box">
+    <div class="q-title">문제 44</div>
+    <div class="q-desc">44. 서로 shape 이 맞지 않으면 concatenate 가 에러가 납니다. 아래 코드가 왜 에러인지 주석으로 설명을 적고 실행해 보세요.
+
+import numpy as np<br>
+x = np.array([[1,2,3]])<br>
+y = np.array([[4,5]])<br>
+np.concatenate((x,y), axis=0)<br></div>
+  </div>
+  <details class="qa answer">
+    <summary>정답 예시 코드 확인</summary>
+    <div class="details-body">
+      <span class="badge code">Input Code</span>
+<pre><code>import numpy as np
+x = np.array([[1,2,3]])
+y = np.array([[4,5]])
+np.concatenate((x,y), axis=0)
+# 열의 개수가 다르기 때문에(axis=1 으로 붙일 때) shape 이 맞지 않아 에러가 난다.
+# np.concatenate((x,y), axis=1)</code></pre>
+      <span class="badge out">Output</span>
+<pre><code>ValueError: all the input array dimensions except for the concatenation axis must match exactly, but along dimension 1, the array at index 0 has size 3 and the array at index 1 has size 2</code></pre>
+    </div>
+  </details>
+</div>
+
+<div class="card">
+  <div class="q-box">
+    <div class="q-title">문제 45</div>
+    <div class="q-desc">45. 2x3 배열 Z = np.arange(6).reshape(2,3)를 전치(transpose)해서 Z_T 를 만들고 Z_T 와 Z_T.shape 를 출력하세요. (.T 사용)</div>
+  </div>
+  <details class="qa answer">
+    <summary>정답 예시 코드 확인</summary>
+    <div class="details-body">
+      <span class="badge code">Input Code</span>
+<pre><code>import numpy as np
+Z = np.arange(6).reshape(2,3)
+Z_T = Z.T
+print(Z_T)
+print(Z_T.shape)</code></pre>
+      <span class="badge out">Output</span>
+<pre><code>[[0 3]
+ [1 4]
+ [2 5]]
+(3, 2)
+</code></pre>
+    </div>
+  </details>
+</div>
+
+<div class="card">
+  <div class="q-box">
+    <div class="q-title">문제 46</div>
+    <div class="q-desc">46. 3x2 배열 Y = np.array([[1,2],[3,4],[5,6]]) 를 .transpose() 메서드로 전치해 출력하세요.</div>
+  </div>
+  <details class="qa answer">
+    <summary>정답 예시 코드 확인</summary>
+    <div class="details-body">
+      <span class="badge code">Input Code</span>
+<pre><code>import numpy as np
+Y = np.array([[1,2],[3,4],[5,6]])
+print(Y.transpose())</code></pre>
+      <span class="badge out">Output</span>
+<pre><code>[[1 3 5]
+ [2 4 6]]
+</code></pre>
+    </div>
+  </details>
+</div>
+
+<div class="card">
+  <div class="q-box">
+    <div class="q-title">문제 47</div>
+    <div class="q-desc">47. 2x2x3 배열 R = np.arange(12).reshape(2,2,3)를 만들고, R.shape 와 R.ndim 을 출력하세요.</div>
+  </div>
+  <details class="qa answer">
+    <summary>정답 예시 코드 확인</summary>
+    <div class="details-body">
+      <span class="badge code">Input Code</span>
+<pre><code>import numpy as np
+R = np.arange(12).reshape(2,2,3)
+print(R.shape)
+print(R.ndim)</code></pre>
+      <span class="badge out">Output</span>
+<pre><code>(2, 2, 3)
+3
+</code></pre>
+    </div>
+  </details>
+</div>
+
+<div class="card">
+  <div class="q-box">
+    <div class="q-title">문제 48</div>
+    <div class="q-desc">48. 문제47의 R 에서 첫 번째 블록 R[0] 과 두 번째 블록 R[1] 을 각각 출력하세요.</div>
+  </div>
+  <details class="qa answer">
+    <summary>정답 예시 코드 확인</summary>
+    <div class="details-body">
+      <span class="badge code">Input Code</span>
+<pre><code>import numpy as np
+R = np.arange(12).reshape(2,2,3)
+print(R[0])
+print(R[1])</code></pre>
+      <span class="badge out">Output</span>
+<pre><code>[[0 1 2]
+ [3 4 5]]
+[[ 6  7  8]
+ [ 9 10 11]]
+</code></pre>
+    </div>
+  </details>
+</div>
+
+<div class="card">
+  <div class="q-box">
+    <div class="q-title">문제 49</div>
+    <div class="q-desc">49. 문제47의 R 에서 모든 값에 100을 더한 R2 를 만들고 R2 를 출력하세요. (브로드캐스팅)</div>
+  </div>
+  <details class="qa answer">
+    <summary>정답 예시 코드 확인</summary>
+    <div class="details-body">
+      <span class="badge code">Input Code</span>
+<pre><code>import numpy as np
+R = np.arange(12).reshape(2,2,3)
+R2 = R + 100
+print(R2)</code></pre>
+      <span class="badge out">Output</span>
+<pre><code>[[[100 101 102]
+  [103 104 105]]
+
+ [[106 107 108]
+  [109 110 111]]]
+</code></pre>
+    </div>
+  </details>
+</div>
+
+<div class="card">
+  <div class="q-box">
+    <div class="q-title">문제 50</div>
+    <div class="q-desc">50. 문제47의 R 에서 axis=0 으로 합을 구해 sum0 에 저장하고 sum0 과 sum0.shape 를 출력하세요.</div>
+  </div>
+  <details class="qa answer">
+    <summary>정답 예시 코드 확인</summary>
+    <div class="details-body">
+      <span class="badge code">Input Code</span>
+<pre><code>import numpy as np
+R = np.arange(12).reshape(2,2,3)
+sum0 = R.sum(axis=0)
+print(sum0)
+print(sum0.shape)</code></pre>
+      <span class="badge out">Output</span>
+<pre><code>[[ 6  8 10]
+ [12 14 16]]
+(2, 3)
+</code></pre>
+    </div>
+  </details>
+</div>
+
+<div class="card">
+  <div class="q-box">
+    <div class="q-title">문제 51</div>
+    <div class="q-desc">51. 1차원 배열 score = np.array([95,60,72,88,45]) 에서 70 이상이면 'pass', 아니면 'fail' 문자열로 만든 result 를 출력하세요.</div>
+  </div>
+  <details class="qa answer">
+    <summary>정답 예시 코드 확인</summary>
+    <div class="details-body">
+      <span class="badge code">Input Code</span>
+<pre><code>import numpy as np
+score = np.array([95,60,72,88,45])
+result = np.where(score>=70,'pass','fail')
+print(result)</code></pre>
+      <span class="badge out">Output</span>
+<pre><code>['pass' 'fail' 'pass' 'pass' 'fail']
+</code></pre>
+    </div>
+  </details>
+</div>
+
+<div class="card">
+  <div class="q-box">
+    <div class="q-title">문제 52</div>
+    <div class="q-desc">52. score 에서 80 이상인 값들만 골라 high 에 넣고 출력하세요.</div>
+  </div>
+  <details class="qa answer">
+    <summary>정답 예시 코드 확인</summary>
+    <div class="details-body">
+      <span class="badge code">Input Code</span>
+<pre><code>import numpy as np
+score = np.array([95,60,72,88,45])
+high = score[score>=80]
+print(high)</code></pre>
+      <span class="badge out">Output</span>
+<pre><code>[95 88]
+</code></pre>
+    </div>
+  </details>
+</div>
+
+<div class="card">
+  <div class="q-box">
+    <div class="q-title">문제 53</div>
+    <div class="q-desc">53. score 의 평균을 구하고, 평균 이상인 점수만 골라서 출력하세요.</div>
+  </div>
+  <details class="qa answer">
+    <summary>정답 예시 코드 확인</summary>
+    <div class="details-body">
+      <span class="badge code">Input Code</span>
+<pre><code>import numpy as np
+score = np.array([95,60,72,88,45])
+avg = score.mean()
+print(avg)
+print(score[score>=avg])</code></pre>
+      <span class="badge out">Output</span>
+<pre><code>72.0
+[95 72 88]
+</code></pre>
+    </div>
+  </details>
+</div>
+
+<div class="card">
+  <div class="q-box">
+    <div class="q-title">문제 54</div>
+    <div class="q-desc">54. 2차원 배열 temp = np.array([[10,-5],[3,-1],[0,7]]) 에서 음수는 0으로 바꾸고 양수/0은 그대로 두는 fixed 를 출력하세요. (np.where)</div>
+  </div>
+  <details class="qa answer">
+    <summary>정답 예시 코드 확인</summary>
+    <div class="details-body">
+      <span class="badge code">Input Code</span>
+<pre><code>import numpy as np
+temp = np.array([[10,-5],[3,-1],[0,7]])
+fixed = np.where(temp&lt;0,0,temp)
+print(fixed)</code></pre>
+      <span class="badge out">Output</span>
+<pre><code>[[10  0]
+ [ 3  0]
+ [ 0  7]]
+</code></pre>
+    </div>
+  </details>
+</div>
+
+<div class="card">
+  <div class="q-box">
+    <div class="q-title">문제 55</div>
+    <div class="q-desc">55. temp 배열에서 0보다 작은 값들의 위치(불리언 mask)를 mask 라고 할 때, mask 와 temp[mask] 를 각각 출력하세요.</div>
+  </div>
+  <details class="qa answer">
+    <summary>정답 예시 코드 확인</summary>
+    <div class="details-body">
+      <span class="badge code">Input Code</span>
+<pre><code>import numpy as np
+temp = np.array([[10,-5],[3,-1],[0,7]])
+mask = temp&lt;0
+print(mask)
+print(temp[mask])</code></pre>
+      <span class="badge out">Output</span>
+<pre><code>[[False  True]
+ [False  True]
+ [False False]]
+[-5 -1]
+</code></pre>
+    </div>
+  </details>
+</div>
+
+<div class="card">
+  <div class="q-box">
+    <div class="q-title">문제 56</div>
+    <div class="q-desc">56. arr = np.arange(1,13).reshape(3,4) 에서 짝수는 그대로, 홀수는 arr 값에 -1을 곱한 배열 new_arr 를 만들어 출력하세요.</div>
+  </div>
+  <details class="qa answer">
+    <summary>정답 예시 코드 확인</summary>
+    <div class="details-body">
+      <span class="badge code">Input Code</span>
+<pre><code>import numpy as np
+arr = np.arange(1,13).reshape(3,4)
+new_arr = np.where(arr%2==0,arr,-arr)
+print(new_arr)</code></pre>
+      <span class="badge out">Output</span>
+<pre><code>[[ -1   2  -3   4]
+ [ -5   6  -7   8]
+ [ -9  10 -11  12]]
+</code></pre>
+    </div>
+  </details>
+</div>
+
+<div class="card">
+  <div class="q-box">
+    <div class="q-title">문제 57</div>
+    <div class="q-desc">57. arr(문제56) 에서 각 행별 최대값을 출력하세요. (axis=1)</div>
+  </div>
+  <details class="qa answer">
+    <summary>정답 예시 코드 확인</summary>
+    <div class="details-body">
+      <span class="badge code">Input Code</span>
+<pre><code>import numpy as np
+arr = np.arange(1,13).reshape(3,4)
+print(arr.max(axis=1))</code></pre>
+      <span class="badge out">Output</span>
+<pre><code>[ 4  8 12]
+</code></pre>
+    </div>
+  </details>
+</div>
+
+<div class="card">
+  <div class="q-box">
+    <div class="q-title">문제 58</div>
+    <div class="q-desc">58. arr(문제56) 에서 각 열별 최소값을 출력하세요. (axis=0)</div>
+  </div>
+  <details class="qa answer">
+    <summary>정답 예시 코드 확인</summary>
+    <div class="details-body">
+      <span class="badge code">Input Code</span>
+<pre><code>import numpy as np
+arr = np.arange(1,13).reshape(3,4)
+print(arr.min(axis=0))</code></pre>
+      <span class="badge out">Output</span>
+<pre><code>[1 2 3 4]
+</code></pre>
+    </div>
+  </details>
+</div>
+
+<div class="card">
+  <div class="q-box">
+    <div class="q-title">문제 59</div>
+    <div class="q-desc">59. arr(문제56) 의 표준편차를 np.std 로 구해 출력하세요.</div>
+  </div>
+  <details class="qa answer">
+    <summary>정답 예시 코드 확인</summary>
+    <div class="details-body">
+      <span class="badge code">Input Code</span>
+<pre><code>import numpy as np
+arr = np.arange(1,13).reshape(3,4)
+print(np.std(arr))</code></pre>
+      <span class="badge out">Output</span>
+<pre><code>3.452052529534663
+</code></pre>
+    </div>
+  </details>
+</div>
+
+<div class="card">
+  <div class="q-box">
+    <div class="q-title">문제 60</div>
+    <div class="q-desc">60. arr(문제56) 의 분산을 np.var 로 구해 출력하세요.</div>
+  </div>
+  <details class="qa answer">
+    <summary>정답 예시 코드 확인</summary>
+    <div class="details-body">
+      <span class="badge code">Input Code</span>
+<pre><code>import numpy as np
+arr = np.arange(1,13).reshape(3,4)
+print(np.var(arr))</code></pre>
+      <span class="badge out">Output</span>
+<pre><code>11.916666666666666
+</code></pre>
+    </div>
+  </details>
+</div>
+
+<div class="card">
+  <div class="q-box">
+    <div class="q-title">문제 61</div>
+    <div class="q-desc">61. np.arange(24)를 2x3x4 형태로 바꾼 cube 를 만들고 cube.shape 와 cube.ndim 을 출력하세요.</div>
+  </div>
+  <details class="qa answer">
+    <summary>정답 예시 코드 확인</summary>
+    <div class="details-body">
+      <span class="badge code">Input Code</span>
+<pre><code>import numpy as np
+cube = np.arange(24).reshape(2,3,4)
+print(cube.shape)
+print(cube.ndim)</code></pre>
+      <span class="badge out">Output</span>
+<pre><code>(2, 3, 4)
+3
+</code></pre>
+    </div>
+  </details>
+</div>
+
+<div class="card">
+  <div class="q-box">
+    <div class="q-title">문제 62</div>
+    <div class="q-desc">62. cube(문제61) 에서 첫 번째 블록(cube[0]) 만 출력하세요.</div>
+  </div>
+  <details class="qa answer">
+    <summary>정답 예시 코드 확인</summary>
+    <div class="details-body">
+      <span class="badge code">Input Code</span>
+<pre><code>import numpy as np
+cube = np.arange(24).reshape(2,3,4)
+print(cube[0])</code></pre>
+      <span class="badge out">Output</span>
+<pre><code>[[ 0  1  2  3]
+ [ 4  5  6  7]
+ [ 8  9 10 11]]
+</code></pre>
+    </div>
+  </details>
+</div>
+
+<div class="card">
+  <div class="q-box">
+    <div class="q-title">문제 63</div>
+    <div class="q-desc">63. cube 에 100을 더한 cube2 를 만든 다음 cube2 의 (1,2,3) 위치 값을 출력하세요.</div>
+  </div>
+  <details class="qa answer">
+    <summary>정답 예시 코드 확인</summary>
+    <div class="details-body">
+      <span class="badge code">Input Code</span>
+<pre><code>import numpy as np
+cube = np.arange(24).reshape(2,3,4)
+cube2 = cube + 100
+print(cube2[1,2,3])</code></pre>
+      <span class="badge out">Output</span>
+<pre><code>123
+</code></pre>
+    </div>
+  </details>
+</div>
+
+<div class="card">
+  <div class="q-box">
+    <div class="q-title">문제 64</div>
+    <div class="q-desc">64. cube 의 axis=0 합, axis=1 합, axis=2 합을 각각 구해 출력하세요.</div>
+  </div>
+  <details class="qa answer">
+    <summary>정답 예시 코드 확인</summary>
+    <div class="details-body">
+      <span class="badge code">Input Code</span>
+<pre><code>import numpy as np
+cube = np.arange(24).reshape(2,3,4)
+print(cube.sum(axis=0))
+print(cube.sum(axis=1))
+print(cube.sum(axis=2))</code></pre>
+      <span class="badge out">Output</span>
+<pre><code>[[12 14 16 18]
+ [20 22 24 26]
+ [28 30 32 34]]
+[[12 15 18 21]
+ [48 51 54 57]]
+[[ 6 22 38]
+ [54 70 86]]
+</code></pre>
+    </div>
+  </details>
+</div>
+
+<div class="card">
+  <div class="q-box">
+    <div class="q-title">문제 65</div>
+    <div class="q-desc">65. cube 의 전치(축 순서 바꾸기)를 transpose(1,0,2) 로 수행한 t 를 만들고, t.shape 를 출력하세요.</div>
+  </div>
+  <details class="qa answer">
+    <summary>정답 예시 코드 확인</summary>
+    <div class="details-body">
+      <span class="badge code">Input Code</span>
+<pre><code>import numpy as np
+cube = np.arange(24).reshape(2,3,4)
+t = cube.transpose(1,0,2)
+print(t.shape)</code></pre>
+      <span class="badge out">Output</span>
+<pre><code>(3, 2, 4)
+</code></pre>
+    </div>
+  </details>
+</div>
+
+<div class="card">
+  <div class="q-box">
+    <div class="q-title">문제 66</div>
+    <div class="q-desc">66. cube 의 마지막 축(axis=2) 기준 평균을 mean_last 에 저장하고 mean_last 과 mean_last.shape 를 출력하세요.</div>
+  </div>
+  <details class="qa answer">
+    <summary>정답 예시 코드 확인</summary>
+    <div class="details-body">
+      <span class="badge code">Input Code</span>
+<pre><code>import numpy as np
+cube = np.arange(24).reshape(2,3,4)
+mean_last = cube.mean(axis=2)
+print(mean_last)
+print(mean_last.shape)</code></pre>
+      <span class="badge out">Output</span>
+<pre><code>[[ 1.5  5.5  9.5]
+ [13.5 17.5 21.5]]
+(2, 3)
+</code></pre>
+    </div>
+  </details>
+</div>
+
+<div class="card">
+  <div class="q-box">
+    <div class="q-title">문제 67</div>
+    <div class="q-desc">67. 1차원 배열 vec = np.arange(1,6) 을 (5,1) 모양과 (1,5) 모양으로 각각 reshape 해서 출력하세요.</div>
+  </div>
+  <details class="qa answer">
+    <summary>정답 예시 코드 확인</summary>
+    <div class="details-body">
+      <span class="badge code">Input Code</span>
+<pre><code>import numpy as np
+vec = np.arange(1,6)
+print(vec.reshape(5,1))
+print(vec.reshape(1,5))</code></pre>
+      <span class="badge out">Output</span>
+<pre><code>[[1]
+ [2]
+ [3]
+ [4]
+ [5]]
+[[1 2 3 4 5]]
+</code></pre>
+    </div>
+  </details>
+</div>
+
+<div class="card">
+  <div class="q-box">
+    <div class="q-title">문제 68</div>
+    <div class="q-desc">68. 문제67에서 만든 (5,1) 배열과 (1,5) 배열을 곱하면 5x5 행렬이 됩니다. 이를 mat 라고 하고 mat.shape 와 mat 를 출력하세요. (브로드캐스팅)</div>
+  </div>
+  <details class="qa answer">
+    <summary>정답 예시 코드 확인</summary>
+    <div class="details-body">
+      <span class="badge code">Input Code</span>
+<pre><code>import numpy as np
+vec = np.arange(1,6)
+col = vec.reshape(5,1)
+row = vec.reshape(1,5)
+mat = col * row
+print(mat.shape)
+print(mat)</code></pre>
+      <span class="badge out">Output</span>
+<pre><code>(5, 5)
+[[ 1  2  3  4  5]
+ [ 2  4  6  8 10]
+ [ 3  6  9 12 15]
+ [ 4  8 12 16 20]
+ [ 5 10 15 20 25]]
+</code></pre>
+    </div>
+  </details>
+</div>
+
+<div class="card">
+  <div class="q-box">
+    <div class="q-title">문제 69</div>
+    <div class="q-desc">69. np.arange(1,10).reshape(3,3) 을 M 이라고 할 때, M 에서 대각선 요소만 0으로 바꾼 M2 를 만들어 출력하세요.</div>
+  </div>
+  <details class="qa answer">
+    <summary>정답 예시 코드 확인</summary>
+    <div class="details-body">
+      <span class="badge code">Input Code</span>
+<pre><code>import numpy as np
+M = np.arange(1,10).reshape(3,3)
+M2 = M.copy()
+idx = np.arange(3)
+M2[idx,idx] = 0
+print(M2)</code></pre>
+      <span class="badge out">Output</span>
+<pre><code>[[0 2 3]
+ [4 0 6]
+ [7 8 0]]
+</code></pre>
+    </div>
+  </details>
+</div>
+
+<div class="card">
+  <div class="q-box">
+    <div class="q-title">문제 70</div>
+    <div class="q-desc">70. 문제69의 M 에서 상삼각(대각선 위) 부분만 골라서 upper 라는 1차원 배열로 만들어 출력하세요.</div>
+  </div>
+  <details class="qa answer">
+    <summary>정답 예시 코드 확인</summary>
+    <div class="details-body">
+      <span class="badge code">Input Code</span>
+<pre><code>import numpy as np
+M = np.arange(1,10).reshape(3,3)
+rows, cols = np.triu_indices(3, k=1)
+upper = M[rows, cols]
+print(upper)</code></pre>
+      <span class="badge out">Output</span>
+<pre><code>[2 3 6]
+</code></pre>
+    </div>
+  </details>
+</div>
+
+<div class="card">
+  <div class="q-box">
+    <div class="q-title">문제 71</div>
+    <div class="q-desc">71. 길이가 10인 0으로 채워진 배열 zeros 를 만들고 zeros 를 출력하세요. (np.zeros)</div>
+  </div>
+  <details class="qa answer">
+    <summary>정답 예시 코드 확인</summary>
+    <div class="details-body">
+      <span class="badge code">Input Code</span>
+<pre><code>import numpy as np
+zeros = np.zeros(10)
+print(zeros)</code></pre>
+      <span class="badge out">Output</span>
+<pre><code>[0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+</code></pre>
+    </div>
+  </details>
+</div>
+
+<div class="card">
+  <div class="q-box">
+    <div class="q-title">문제 72</div>
+    <div class="q-desc">72. 3행4열 모두 1로 채워진 배열 ones 를 만들고 ones 와 ones.dtype 를 출력하세요. (np.ones)</div>
+  </div>
+  <details class="qa answer">
+    <summary>정답 예시 코드 확인</summary>
+    <div class="details-body">
+      <span class="badge code">Input Code</span>
+<pre><code>import numpy as np
+ones = np.ones((3,4))
+print(ones)
+print(ones.dtype)</code></pre>
+      <span class="badge out">Output</span>
+<pre><code>[[1. 1. 1. 1.]
+ [1. 1. 1. 1.]
+ [1. 1. 1. 1.]]
+float64
+</code></pre>
+    </div>
+  </details>
+</div>
+
+<div class="card">
+  <div class="q-box">
+    <div class="q-title">문제 73</div>
+    <div class="q-desc">73. (2,3) 모양의 모든 값이 7인 배열 sevens 를 np.full 로 만들고 출력하세요.</div>
+  </div>
+  <details class="qa answer">
+    <summary>정답 예시 코드 확인</summary>
+    <div class="details-body">
+      <span class="badge code">Input Code</span>
+<pre><code>import numpy as np
+sevens = np.full((2,3),7)
+print(sevens)</code></pre>
+      <span class="badge out">Output</span>
+<pre><code>[[7 7 7]
+ [7 7 7]]
+</code></pre>
+    </div>
+  </details>
+</div>
+
+<div class="card">
+  <div class="q-box">
+    <div class="q-title">문제 74</div>
+    <div class="q-desc">74. 1차원 배열 a = np.array([1,2,3,4,5]) 의 평균을 구하고, 각 원소에서 평균을 뺀 결과 centered 를 출력하세요.</div>
+  </div>
+  <details class="qa answer">
+    <summary>정답 예시 코드 확인</summary>
+    <div class="details-body">
+      <span class="badge code">Input Code</span>
+<pre><code>import numpy as np
+a = np.array([1,2,3,4,5])
+mu = a.mean()
+centered = a - mu
+print(centered)</code></pre>
+      <span class="badge out">Output</span>
+<pre><code>[-2. -1.  0.  1.  2.]
+</code></pre>
+    </div>
+  </details>
+</div>
+
+<div class="card">
+  <div class="q-box">
+    <div class="q-title">문제 75</div>
+    <div class="q-desc">75. 두 배열 p=[2,4,6] 와 q=[1,3,5] 에 대해 (p-q), (p*q), (p/q) 를 각각 출력하세요.</div>
+  </div>
+  <details class="qa answer">
+    <summary>정답 예시 코드 확인</summary>
+    <div class="details-body">
+      <span class="badge code">Input Code</span>
+<pre><code>import numpy as np
+p = np.array([2,4,6])
+q = np.array([1,3,5])
+print(p-q)
+print(p*q)
+print(p/q)</code></pre>
+      <span class="badge out">Output</span>
+<pre><code>[1 1 1]
+[ 2 12 30]
+[2.         1.33333333 1.2       ]
+</code></pre>
+    </div>
+  </details>
+</div>
+
+<div class="card">
+  <div class="q-box">
+    <div class="q-title">문제 76</div>
+    <div class="q-desc">76. arr = np.array([1,2,0,4,0,5]) 에서 0이 아닌 값들만 골라 nonzero_vals 로 저장하고 출력하세요.</div>
+  </div>
+  <details class="qa answer">
+    <summary>정답 예시 코드 확인</summary>
+    <div class="details-body">
+      <span class="badge code">Input Code</span>
+<pre><code>import numpy as np
+arr = np.array([1,2,0,4,0,5])
+nonzero_vals = arr[arr!=0]
+print(nonzero_vals)</code></pre>
+      <span class="badge out">Output</span>
+<pre><code>[1 2 4 5]
+</code></pre>
+    </div>
+  </details>
+</div>
+
+<div class="card">
+  <div class="q-box">
+    <div class="q-title">문제 77</div>
+    <div class="q-desc">77. arr 에서 0인 원소의 인덱스만 np.where 로 찾아서 idx_zero 에 저장하고 출력하세요.</div>
+  </div>
+  <details class="qa answer">
+    <summary>정답 예시 코드 확인</summary>
+    <div class="details-body">
+      <span class="badge code">Input Code</span>
+<pre><code>import numpy as np
+arr = np.array([1,2,0,4,0,5])
+idx_zero = np.where(arr==0)
+print(idx_zero)</code></pre>
+      <span class="badge out">Output</span>
+<pre><code>(array([2, 4]),)
+</code></pre>
+    </div>
+  </details>
+</div>
+
+<div class="card">
+  <div class="q-box">
+    <div class="q-title">문제 78</div>
+    <div class="q-desc">78. 2차원 배열 G = np.arange(1,10).reshape(3,3) 에서 전체 합과 대각선의 합을 각각 구해 출력하세요.</div>
+  </div>
+  <details class="qa answer">
+    <summary>정답 예시 코드 확인</summary>
+    <div class="details-body">
+      <span class="badge code">Input Code</span>
+<pre><code>import numpy as np
+G = np.arange(1,10).reshape(3,3)
+print(G.sum())
+print(G[range(3),range(3)].sum())</code></pre>
+      <span class="badge out">Output</span>
+<pre><code>45
+15
+</code></pre>
+    </div>
+  </details>
+</div>
+
+<div class="card">
+  <div class="q-box">
+    <div class="q-title">문제 79</div>
+    <div class="q-desc">79. G(문제78)의 역순(마지막 행부터 첫 행까지) 배열 rev_rows 를 만들어 출력하세요.</div>
+  </div>
+  <details class="qa answer">
+    <summary>정답 예시 코드 확인</summary>
+    <div class="details-body">
+      <span class="badge code">Input Code</span>
+<pre><code>import numpy as np
+G = np.arange(1,10).reshape(3,3)
+rev_rows = G[::-1]
+print(rev_rows)</code></pre>
+      <span class="badge out">Output</span>
+<pre><code>[[7 8 9]
+ [4 5 6]
+ [1 2 3]]
+</code></pre>
+    </div>
+  </details>
+</div>
+
+<div class="card">
+  <div class="q-box">
+    <div class="q-title">문제 80</div>
+    <div class="q-desc">80. G(문제78)의 각 행을 거꾸로 뒤집은 rev_cols 를 만들어 출력하세요. (슬라이싱 사용)</div>
+  </div>
+  <details class="qa answer">
+    <summary>정답 예시 코드 확인</summary>
+    <div class="details-body">
+      <span class="badge code">Input Code</span>
+<pre><code>import numpy as np
+G = np.arange(1,10).reshape(3,3)
+rev_cols = G[:, ::-1]
+print(rev_cols)</code></pre>
+      <span class="badge out">Output</span>
+<pre><code>[[3 2 1]
+ [6 5 4]
+ [9 8 7]]
+</code></pre>
+    </div>
+  </details>
+</div>
+
+<div class="card">
+  <div class="q-box">
+    <div class="q-title">문제 81</div>
+    <div class="q-desc">81. 길이가 10인 배열 h 를 0~9 로 만들고, h 의 짝수 인덱스 위치에만 100을 더한 h2 를 만들어 출력하세요.</div>
+  </div>
+  <details class="qa answer">
+    <summary>정답 예시 코드 확인</summary>
+    <div class="details-body">
+      <span class="badge code">Input Code</span>
+<pre><code>import numpy as np
+h = np.arange(10)
+h2 = h.copy()
+h2[0::2] += 100
+print(h2)</code></pre>
+      <span class="badge out">Output</span>
+<pre><code>[100   1 102   3 104   5 106   7 108   9]
+</code></pre>
+    </div>
+  </details>
+</div>
+
+<div class="card">
+  <div class="q-box">
+    <div class="q-title">문제 82</div>
+    <div class="q-desc">82. 1차원 배열 src = np.array([10,20,30,40,50]) 에서 가운데 3개 값(20,30,40)을 0으로 바꾼 dst 를 만들어 출력하세요.</div>
+  </div>
+  <details class="qa answer">
+    <summary>정답 예시 코드 확인</summary>
+    <div class="details-body">
+      <span class="badge code">Input Code</span>
+<pre><code>import numpy as np
+src = np.array([10,20,30,40,50])
+dst = src.copy()
+dst[1:4] = 0
+print(dst)</code></pre>
+      <span class="badge out">Output</span>
+<pre><code>[10  0  0  0 50]
+</code></pre>
+    </div>
+  </details>
+</div>
+
+<div class="card">
+  <div class="q-box">
+    <div class="q-title">문제 83</div>
+    <div class="q-desc">83. 4x4 배열 H = np.arange(16).reshape(4,4) 에서 테두리(가장 바깥 행/열)만 남기고 나머지는 0으로 만든 mask_arr 를 출력하세요.</div>
+  </div>
+  <details class="qa answer">
+    <summary>정답 예시 코드 확인</summary>
+    <div class="details-body">
+      <span class="badge code">Input Code</span>
+<pre><code>import numpy as np
+H = np.arange(16).reshape(4,4)
+mask_arr = np.zeros_like(H)
+mask_arr[0,:] = H[0,:]
+mask_arr[-1,:]= H[-1,:]
+mask_arr[:,0] = H[:,0]
+mask_arr[:,-1]= H[:,-1]
+print(mask_arr)</code></pre>
+      <span class="badge out">Output</span>
+<pre><code>[[ 0  1  2  3]
+ [ 4  0  0  7]
+ [ 8  0  0 11]
+ [12 13 14 15]]
+</code></pre>
+    </div>
+  </details>
+</div>
+
+<div class="card">
+  <div class="q-box">
+    <div class="q-title">문제 84</div>
+    <div class="q-desc">84. H(문제83) 의 가운데 2x2 영역만 잘라서 center 라는 배열에 담고 출력하세요.</div>
+  </div>
+  <details class="qa answer">
+    <summary>정답 예시 코드 확인</summary>
+    <div class="details-body">
+      <span class="badge code">Input Code</span>
+<pre><code>import numpy as np
+H = np.arange(16).reshape(4,4)
+center = H[1:3,1:3]
+print(center)</code></pre>
+      <span class="badge out">Output</span>
+<pre><code>[[ 5  6]
+ [ 9 10]]
+</code></pre>
+    </div>
+  </details>
+</div>
+
+<div class="card">
+  <div class="q-box">
+    <div class="q-title">문제 85</div>
+    <div class="q-desc">85. np.arange(1,17).reshape(4,4)를 K 라고 할 때, K 의 각 행 평균을 row_mean 에 저장하고 출력하세요.</div>
+  </div>
+  <details class="qa answer">
+    <summary>정답 예시 코드 확인</summary>
+    <div class="details-body">
+      <span class="badge code">Input Code</span>
+<pre><code>import numpy as np
+K = np.arange(1,17).reshape(4,4)
+row_mean = K.mean(axis=1)
+print(row_mean)</code></pre>
+      <span class="badge out">Output</span>
+<pre><code>[ 2.5  6.5 10.5 14.5]
+</code></pre>
+    </div>
+  </details>
+</div>
+
+<div class="card">
+  <div class="q-box">
+    <div class="q-title">문제 86</div>
+    <div class="q-desc">86. K 의 각 열 평균을 col_mean 에 저장하고 출력하세요.</div>
+  </div>
+  <details class="qa answer">
+    <summary>정답 예시 코드 확인</summary>
+    <div class="details-body">
+      <span class="badge code">Input Code</span>
+<pre><code>import numpy as np
+K = np.arange(1,17).reshape(4,4)
+col_mean = K.mean(axis=0)
+print(col_mean)</code></pre>
+      <span class="badge out">Output</span>
+<pre><code>[ 7.  8.  9. 10.]
+</code></pre>
+    </div>
+  </details>
+</div>
+
+<div class="card">
+  <div class="q-box">
+    <div class="q-title">문제 87</div>
+    <div class="q-desc">87. 다음은 4×4 행렬 K 입니다.
+각 행(row) 의 평균을 구해(axis=1),
+(4,1) 형태로 변형하고  그 평균값을 해당 행의 모든 원소에서 빼서(k-row_mean)
+각 행의 평균이 0이 되도록 중심화(centered) 하세요.
+(힌트: 브로드캐스팅을 활용하세요.)</div>
+  </div>
+  <details class="qa answer">
+    <summary>정답 예시 코드 확인</summary>
+    <div class="details-body">
+      <span class="badge code">Input Code</span>
+<pre><code>import numpy as np
+K = np.arange(1,17).reshape(4,4)</code></pre>
+      <span class="badge code">Input Code</span>
+<pre><code>row_mean = K.mean(axis=1)
+row_mean</code></pre>
+      <span class="badge code">Input Code</span>
+<pre><code>K - row_mean.reshape(4,1)</code></pre>
+      <span class="badge code">Input Code</span>
+<pre><code>row_mean = K.mean(axis=1).reshape(4,1)
+centered_K = K - row_mean
+print(centered_K)</code></pre>
+      <span class="badge out">Output</span>
+<pre><code>[[-1.5 -0.5  0.5  1.5]
+ [-1.5 -0.5  0.5  1.5]
+ [-1.5 -0.5  0.5  1.5]
+ [-1.5 -0.5  0.5  1.5]]
+</code></pre>
+    </div>
+  </details>
+</div>
+
+<div class="card">
+  <div class="q-box">
+    <div class="q-title">문제 88</div>
+    <div class="q-desc">88. 1차원 배열 t = np.array([1,2,3,4,5]) 의 누적합(np.cumsum)을 출력하세요.</div>
+  </div>
+  <details class="qa answer">
+    <summary>정답 예시 코드 확인</summary>
+    <div class="details-body">
+      <span class="badge code">Input Code</span>
+<pre><code>import numpy as np
+t = np.array([1,2,3,4,5])
+print(np.cumsum(t))</code></pre>
+      <span class="badge out">Output</span>
+<pre><code>[ 1  3  6 10 15]
+</code></pre>
+    </div>
+  </details>
+</div>
+
+<div class="card">
+  <div class="q-box">
+    <div class="q-title">문제 89</div>
+    <div class="q-desc">89. t 의 누적곱(np.cumprod)을 출력하세요.</div>
+  </div>
+  <details class="qa answer">
+    <summary>정답 예시 코드 확인</summary>
+    <div class="details-body">
+      <span class="badge code">Input Code</span>
+<pre><code>import numpy as np
+t = np.array([1,2,3,4,5])
+print(np.cumprod(t))</code></pre>
+      <span class="badge out">Output</span>
+<pre><code>[  1   2   6  24 120]
+</code></pre>
+    </div>
+  </details>
+</div>
+
+<div class="card">
+  <div class="q-box">
+    <div class="q-title">문제 90</div>
+    <div class="q-desc">90. 0~8 배열을 3x3 으로 만든 U 에서 대각선 아래(하삼각) 원소만 0으로 만든 U2 를 출력하세요. (인덱싱 사용)</div>
+  </div>
+  <details class="qa answer">
+    <summary>정답 예시 코드 확인</summary>
+    <div class="details-body">
+      <span class="badge code">Input Code</span>
+<pre><code>import numpy as np
+U = np.arange(9).reshape(3,3)
+U2 = U.copy()
+print(U2)
+rows, cols = np.tril_indices(3, k=-1)
+U2[rows, cols] = 0
+print(U2)</code></pre>
+      <span class="badge out">Output</span>
+<pre><code>[[0 1 2]
+ [3 4 5]
+ [6 7 8]]
+[[0 1 2]
+ [0 4 5]
+ [0 0 8]]
+</code></pre>
+    </div>
+  </details>
+</div>
+
+<div class="card">
+  <div class="q-box">
+    <div class="q-title">문제 91</div>
+    <div class="q-desc">91. 파이썬 리스트 [170, 180, 175, 160, 165] (cm)를 배열 height 로 만들고, 평균 키와 최대/최소 키를 출력하세요.</div>
+  </div>
+  <details class="qa answer">
+    <summary>정답 예시 코드 확인</summary>
+    <div class="details-body">
+      <span class="badge code">Input Code</span>
+<pre><code>import numpy as np
+height = np.array([170,180,175,160,165])
+print(height.mean())
+print(height.max())
+print(height.min())</code></pre>
+      <span class="badge out">Output</span>
+<pre><code>170.0
+180
+160
+</code></pre>
+    </div>
+  </details>
+</div>
+
+<div class="card">
+  <div class="q-box">
+    <div class="q-title">문제 92</div>
+    <div class="q-desc">92. 문제91의 height 에서 평균 이상인 값만 골라 tall_group 에 저장하고 출력하세요.</div>
+  </div>
+  <details class="qa answer">
+    <summary>정답 예시 코드 확인</summary>
+    <div class="details-body">
+      <span class="badge code">Input Code</span>
+<pre><code>import numpy as np
+height = np.array([170,180,175,160,165])
+mean_h = height.mean()
+tall_group = height[height>=mean_h]
+print(tall_group)</code></pre>
+      <span class="badge out">Output</span>
+<pre><code>[170 180 175]
+</code></pre>
+    </div>
+  </details>
+</div>
+
+<div class="card">
+  <div class="q-box">
+    <div class="q-title">문제 93</div>
+    <div class="q-desc">93. 1~12 를 가진 배열 sales 를 3x4 로 바꾸고, 각 월(열)별 합계를 month_sum 으로 구해 출력하세요. (axis=0)</div>
+  </div>
+  <details class="qa answer">
+    <summary>정답 예시 코드 확인</summary>
+    <div class="details-body">
+      <span class="badge code">Input Code</span>
+<pre><code>import numpy as np
+sales = np.arange(1,13).reshape(3,4)
+month_sum = sales.sum(axis=0)
+print(month_sum)</code></pre>
+      <span class="badge out">Output</span>
+<pre><code>[15 18 21 24]
+</code></pre>
+    </div>
+  </details>
+</div>
+
+<div class="card">
+  <div class="q-box">
+    <div class="q-title">문제 94</div>
+    <div class="q-desc">94. 문제93의 sales 에서 각 지점(행)별 평균을 branch_mean 으로 구해 출력하세요. (axis=1)</div>
+  </div>
+  <details class="qa answer">
+    <summary>정답 예시 코드 확인</summary>
+    <div class="details-body">
+      <span class="badge code">Input Code</span>
+<pre><code>import numpy as np
+sales = np.arange(1,13).reshape(3,4)
+branch_mean = sales.mean(axis=1)
+print(branch_mean)</code></pre>
+      <span class="badge out">Output</span>
+<pre><code>[ 2.5  6.5 10.5]
+</code></pre>
+    </div>
+  </details>
+</div>
+
+<div class="card">
+  <div class="q-box">
+    <div class="q-title">문제 95</div>
+    <div class="q-desc">95. sales 에서 가장 많이 팔린 값이 어느 위치(행,열)인지 np.argmax 를 이용해 찾아서 그 행과 열 인덱스를 각각 출력하세요.</div>
+  </div>
+  <details class="qa answer">
+    <summary>정답 예시 코드 확인</summary>
+    <div class="details-body">
+      <span class="badge code">Input Code</span>
+<pre><code>import numpy as np
+sales = np.arange(1,13).reshape(3,4)
+idx = np.argmax(sales)
+row, col = divmod(idx, 4)
+print(row, col)</code></pre>
+      <span class="badge out">Output</span>
+<pre><code>2 3
+</code></pre>
+    </div>
+  </details>
+</div>
+
+<div class="card">
+  <div class="q-box">
+    <div class="q-title">문제 96</div>
+    <div class="q-desc">96. 시험 점수 scores = np.array([88,92,75,90,68,100]) 에서 상위 3개 점수만 큰 순서대로 출력하세요.</div>
+  </div>
+  <details class="qa answer">
+    <summary>정답 예시 코드 확인</summary>
+    <div class="details-body">
+      <span class="badge code">Input Code</span>
+<pre><code>import numpy as np
+scores = np.array([88,92,75,90,68,100])
+order = np.argsort(scores)[::-1]
+print(scores[order[:3]])</code></pre>
+      <span class="badge out">Output</span>
+<pre><code>[100  92  90]
+</code></pre>
+    </div>
+  </details>
+</div>
+
+<div class="card">
+  <div class="q-box">
+    <div class="q-title">문제 97</div>
+    <div class="q-desc">97. scores 에서 평균과 표준편차(np.std)를 구하고 출력하세요.</div>
+  </div>
+  <details class="qa answer">
+    <summary>정답 예시 코드 확인</summary>
+    <div class="details-body">
+      <span class="badge code">Input Code</span>
+<pre><code>import numpy as np
+scores = np.array([88,92,75,90,68,100])
+print(scores.mean())
+print(np.std(scores))</code></pre>
+      <span class="badge out">Output</span>
+<pre><code>85.5
+10.766460266339475
+</code></pre>
+    </div>
+  </details>
+</div>
+
+<div class="card">
+  <div class="q-box">
+    <div class="q-title">문제 98</div>
+    <div class="q-desc">98. product = np.array([10,20,30,40]) 와 cost = np.array([7,15,22,35]) 가 있을 때, 각 원소별 이익(=product-cost)을 profit 으로 계산해 출력하세요.</div>
+  </div>
+  <details class="qa answer">
+    <summary>정답 예시 코드 확인</summary>
+    <div class="details-body">
+      <span class="badge code">Input Code</span>
+<pre><code>import numpy as np
+product = np.array([10,20,30,40])
+cost = np.array([7,15,22,35])
+profit = product - cost
+print(profit)</code></pre>
+      <span class="badge out">Output</span>
+<pre><code>[3 5 8 5]
+</code></pre>
+    </div>
+  </details>
+</div>
+
+<div class="card">
+  <div class="q-box">
+    <div class="q-title">문제 99</div>
+    <div class="q-desc">99. product 와 cost 로부터 이익률(이익/원가 *100)을 perc 로 계산해 출력하세요.</div>
+  </div>
+  <details class="qa answer">
+    <summary>정답 예시 코드 확인</summary>
+    <div class="details-body">
+      <span class="badge code">Input Code</span>
+<pre><code>import numpy as np
+product = np.array([10,20,30,40])
+cost = np.array([7,15,22,35])
+profit = product - cost
+perc = profit / cost * 100
+print(perc)</code></pre>
+      <span class="badge out">Output</span>
+<pre><code>[42.85714286 33.33333333 36.36363636 14.28571429]
+</code></pre>
+    </div>
+  </details>
+</div>
+
+<div class="card">
+  <div class="q-box">
+    <div class="q-title">문제 100</div>
+    <div class="q-desc">100. 임의의 3x3 배열 data = np.array([[5,2,7],[1,9,3],[4,6,8]]) 에서 각 열마다 가장 큰 값을 max_col 로 저장하고 max_col 을 출력하세요.</div>
+  </div>
+  <details class="qa answer">
+    <summary>정답 예시 코드 확인</summary>
+    <div class="details-body">
+      <span class="badge code">Input Code</span>
+<pre><code>import numpy as np
+data = np.array([[5,2,7],[1,9,3],[4,6,8]])
+max_col = data.max(axis=0)
+print(max_col)</code></pre>
+      <span class="badge out">Output</span>
+<pre><code>[5 9 8]
+</code></pre>
+    </div>
+  </details>
+</div>
+
+</main>
+</body>
+</html>

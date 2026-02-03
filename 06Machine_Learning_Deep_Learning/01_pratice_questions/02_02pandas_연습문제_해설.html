@@ -1,0 +1,1182 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pandas 연습문제 100</title>
+<style>
+:root{
+  --bg: #f6f7fb;
+  --card: #ffffff;
+  --text: #1f2937;
+  --muted: #6b7280;
+  --border: #e5e7eb;
+  --accent: #2563eb;
+  --accent-soft: #eff6ff;
+  --warn: #b45309;
+  --warn-soft: #fffbeb;
+  --code-bg: #0b1220;
+  --code-text: #e5e7eb;
+  --shadow: 0 10px 30px rgba(17,24,39,.06);
+}
+
+*{ box-sizing: border-box; }
+html, body { height: 100%; }
+
+body{
+  margin: 0;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans KR", Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.7;
+}
+
+.container{
+  width: min(1050px, calc(100% - 32px));
+  margin: 0 auto;
+}
+
+a{ color: inherit; text-decoration: none; }
+
+.header{
+  background: linear-gradient(180deg, var(--accent-soft), var(--bg));
+  border-bottom: 1px solid var(--border);
+  padding: 40px 0 30px;
+}
+
+.title{
+  margin: 10px 0 6px;
+  font-size: 32px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: #111827;
+}
+
+.subtitle{
+  margin: 0 0 14px;
+  color: var(--muted);
+  max-width: 78ch;
+  font-size: 16px;
+}
+
+.section{
+  padding: 30px 0 60px;
+}
+
+.card{
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 24px;
+  box-shadow: var(--shadow);
+  margin-bottom: 24px;
+}
+
+/* Q&A 스타일 */
+.q-box{
+  border-left: 4px solid var(--accent);
+  background: #f8fafc;
+  border-radius: 0 12px 12px 0;
+  padding: 16px 20px;
+  margin-bottom: 16px;
+}
+
+.q-box .q-title{
+  font-size: 18px;
+  font-weight: 700;
+  color: #1e293b;
+  margin-bottom: 8px;
+  display: block;
+}
+
+.q-box .q-desc{
+  margin: 0;
+  color: #334155;
+  white-space: pre-wrap;
+}
+
+/* Details (접기/펼치기) */
+details.qa{
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: #fff;
+  overflow: hidden;
+}
+
+details.qa summary{
+  cursor: pointer;
+  list-style: none;
+  padding: 12px 16px;
+  font-weight: 600;
+  background: #fff7ed; /* 정답 배경색 */
+  color: #9a3412;
+  border-bottom: 1px solid transparent;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+}
+
+details.qa[open] summary{
+  border-bottom-color: var(--border);
+  background: #ffedd5;
+}
+
+details.qa summary::before {
+  content: "▶";
+  font-size: 0.8em;
+  margin-right: 8px;
+  transition: transform 0.2s;
+}
+
+details.qa[open] summary::before {
+  transform: rotate(90deg);
+}
+
+details.qa .details-body{
+  padding: 20px;
+  background: #fff;
+}
+
+/* 코드 블록 스타일 */
+pre{
+  margin: 0 0 16px 0;
+  background: var(--code-bg);
+  color: var(--code-text);
+  padding: 16px;
+  border-radius: 12px;
+  overflow-x: auto;
+  border: 1px solid rgba(255,255,255,.06);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+.badge{
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  padding: 4px 8px;
+  border-radius: 6px;
+  margin-bottom: 8px;
+  letter-spacing: 0.05em;
+}
+
+.badge.code{ background: #e0e7ff; color: #3730a3; border: 1px solid #c7d2fe; }
+.badge.out{ background: #ecfeff; color: #155e75; border: 1px solid #a5f3fc; }
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="container">
+    <h1 class="title">Pandas 연습문제 100</h1>
+    <p class="subtitle">
+      각 문제는 직접 코드를 작성해서 실행 결과를 확인하는 형태입니다.<br>
+      아래에는 정답 예시 코드가 접혀 있습니다. 클릭하여 확인하세요.<br>
+      <span style="font-size: 0.9em; opacity: 0.8;">(강의안: DataFrame 생성, 인덱싱, 필터링, 정렬, 그룹화, 통계 함수 등 Pandas 핵심 기능 복습)</span>
+    </p>
+  </div>
+</header>
+
+<main class="container section">
+
+<div class="card">
+  <div class="q-box">
+    <div class="q-title">문제 1</div>
+    <div class="q-desc">1. pandas 를 pd 라는 별칭으로 임포트하고, 버전 정보를 출력하세요.</div>
+  </div>
+  <details class="qa answer">
+    <summary>정답 예시 코드 확인</summary>
+    <div class="details-body">
+      <span class="badge code">Input Code</span>
+<pre><code>import pandas as pd
+print(pd.__version__)</code></pre>
+      <span class="badge out">Output</span>
+<pre><code>1.5.3 (예시 출력)
+</code></pre>
+    </div>
+  </details>
+</div>
+
+<div class="card">
+  <div class="q-box">
+    <div class="q-title">문제 2</div>
+    <div class="q-desc">2. 파이썬 리스트 data = [10, 20, 30, 40, 50] 를 사용하여 pandas Series s 를 만들고 출력하세요.</div>
+  </div>
+  <details class="qa answer">
+    <summary>정답 예시 코드 확인</summary>
+    <div class="details-body">
+      <span class="badge code">Input Code</span>
+<pre><code>import pandas as pd
+data = [10, 20, 30, 40, 50]
+s = pd.Series(data)
+print(s)</code></pre>
+      <span class="badge out">Output</span>
+<pre><code>0    10
+1    20
+2    30
+3    40
+4    50
+dtype: int64
+</code></pre>
+    </div>
+  </details>
+</div>
+
+<div class="card">
+  <div class="q-box">
+    <div class="q-title">문제 3</div>
+    <div class="q-desc">3. 문제 2에서 만든 Series s 를 리스트로 변환해서 출력하세요. (.tolist() 사용)</div>
+  </div>
+  <details class="qa answer">
+    <summary>정답 예시 코드 확인</summary>
+    <div class="details-body">
+      <span class="badge code">Input Code</span>
+<pre><code>import pandas as pd
+data = [10, 20, 30, 40, 50]
+s = pd.Series(data)
+print(s.tolist())</code></pre>
+      <span class="badge out">Output</span>
+<pre><code>[10, 20, 30, 40, 50]
+</code></pre>
+    </div>
+  </details>
+</div>
+
+<div class="card">
+  <div class="q-box">
+    <div class="q-title">문제 4</div>
+    <div class="q-desc">4. 두 개의 Series a = pd.Series([1, 2, 3, 4]) 와 b = pd.Series([5, 6, 7, 8]) 을 더하기, 빼기, 곱하기, 나누기 한 결과를 각각 출력하세요.</div>
+  </div>
+  <details class="qa answer">
+    <summary>정답 예시 코드 확인</summary>
+    <div class="details-body">
+      <span class="badge code">Input Code</span>
+<pre><code>import pandas as pd
+a = pd.Series([1, 2, 3, 4])
+b = pd.Series([5, 6, 7, 8])
+print(a + b)
+print(a - b)
+print(a * b)
+print(a / b)</code></pre>
+      <span class="badge out">Output</span>
+<pre><code>0     6
+1     8
+2    10
+3    12
+dtype: int64
+0   -4
+1   -4
+2   -4
+3   -4
+dtype: int64
+0     5
+1    12
+2    21
+3    32
+dtype: int64
+0    0.200000
+1    0.333333
+2    0.428571
+3    0.500000
+dtype: float64
+</code></pre>
+    </div>
+  </details>
+</div>
+
+<div class="card">
+  <div class="q-box">
+    <div class="q-title">문제 5</div>
+    <div class="q-desc">5. 딕셔너리 d = {'a': 100, 'b': 200, 'c': 300, 'd': 400} 를 사용하여 Series s2 를 만들고 출력하세요.</div>
+  </div>
+  <details class="qa answer">
+    <summary>정답 예시 코드 확인</summary>
+    <div class="details-body">
+      <span class="badge code">Input Code</span>
+<pre><code>import pandas as pd
+d = {'a': 100, 'b': 200, 'c': 300, 'd': 400}
+s2 = pd.Series(d)
+print(s2)</code></pre>
+      <span class="badge out">Output</span>
+<pre><code>a    100
+b    200
+c    300
+d    400
+dtype: int64
+</code></pre>
+    </div>
+  </details>
+</div>
+
+<div class="card">
+  <div class="q-box">
+    <div class="q-title">문제 6</div>
+    <div class="q-desc">6. Numpy 배열 arr = np.array([10, 20, 30]) 을 사용하여 Series s3 를 만들고 출력하세요.</div>
+  </div>
+  <details class="qa answer">
+    <summary>정답 예시 코드 확인</summary>
+    <div class="details-body">
+      <span class="badge code">Input Code</span>
+<pre><code>import pandas as pd
+import numpy as np
+arr = np.array([10, 20, 30])
+s3 = pd.Series(arr)
+print(s3)</code></pre>
+      <span class="badge out">Output</span>
+<pre><code>0    10
+1    20
+2    30
+dtype: int64
+</code></pre>
+    </div>
+  </details>
+</div>
+
+<div class="card">
+  <div class="q-box">
+    <div class="q-title">문제 7</div>
+    <div class="q-desc">7. Series s = pd.Series(['100', '200', 'python', '300.12', '400']) 에서 숫자로 변환 가능한 것만 숫자로 변환(pd.to_numeric 사용, errors='coerce')하고, 결과 Series 를 출력하세요.</div>
+  </div>
+  <details class="qa answer">
+    <summary>정답 예시 코드 확인</summary>
+    <div class="details-body">
+      <span class="badge code">Input Code</span>
+<pre><code>import pandas as pd
+s = pd.Series(['100', '200', 'python', '300.12', '400'])
+s_numeric = pd.to_numeric(s, errors='coerce')
+print(s_numeric)</code></pre>
+      <span class="badge out">Output</span>
+<pre><code>0    100.00
+1    200.00
+2       NaN
+3    300.12
+4    400.00
+dtype: float64
+</code></pre>
+    </div>
+  </details>
+</div>
+
+<div class="card">
+  <div class="q-box">
+    <div class="q-title">문제 8</div>
+    <div class="q-desc">8. 딕셔너리 data = {'col1': [1, 2], 'col2': [3, 4]} 를 사용하여 DataFrame df 를 만들고 출력하세요.</div>
+  </div>
+  <details class="qa answer">
+    <summary>정답 예시 코드 확인</summary>
+    <div class="details-body">
+      <span class="badge code">Input Code</span>
+<pre><code>import pandas as pd
+data = {'col1': [1, 2], 'col2': [3, 4]}
+df = pd.DataFrame(data)
+print(df)</code></pre>
+      <span class="badge out">Output</span>
+<pre><code>   col1  col2
+0     1     3
+1     2     4
+</code></pre>
+    </div>
+  </details>
+</div>
+
+<div class="card">
+  <div class="q-box">
+    <div class="q-title">문제 9</div>
+    <div class="q-desc">9. 다음 Series s_name = pd.Series(['Amy', 'Bob', 'Chris']) 와 s_age = pd.Series([25, 30, 22]) 를 합쳐서 DataFrame df_info 를 만드세요. (컬럼명은 'Name', 'Age' 로 지정)</div>
+  </div>
+  <details class="qa answer">
+    <summary>정답 예시 코드 확인</summary>
+    <div class="details-body">
+      <span class="badge code">Input Code</span>
+<pre><code>import pandas as pd
+s_name = pd.Series(['Amy', 'Bob', 'Chris'])
+s_age = pd.Series([25, 30, 22])
+df_info = pd.DataFrame({'Name': s_name, 'Age': s_age})
+print(df_info)</code></pre>
+      <span class="badge out">Output</span>
+<pre><code>    Name  Age
+0    Amy   25
+1    Bob   30
+2  Chris   22
+</code></pre>
+    </div>
+  </details>
+</div>
+
+<div class="card">
+  <div class="q-box">
+    <div class="q-title">문제 10</div>
+    <div class="q-desc">10. 문제 9에서 만든 df_info 의 인덱스를 ['id_1', 'id_2', 'id_3'] 으로 변경하고 출력하세요.</div>
+  </div>
+  <details class="qa answer">
+    <summary>정답 예시 코드 확인</summary>
+    <div class="details-body">
+      <span class="badge code">Input Code</span>
+<pre><code>import pandas as pd
+s_name = pd.Series(['Amy', 'Bob', 'Chris'])
+s_age = pd.Series([25, 30, 22])
+df_info = pd.DataFrame({'Name': s_name, 'Age': s_age})
+df_info.index = ['id_1', 'id_2', 'id_3']
+print(df_info)</code></pre>
+      <span class="badge out">Output</span>
+<pre><code>       Name  Age
+id_1    Amy   25
+id_2    Bob   30
+id_3  Chris   22
+</code></pre>
+    </div>
+  </details>
+</div>
+
+<div class="card">
+  <div class="q-box">
+    <div class="q-title">문제 11</div>
+    <div class="q-desc">11. Numpy 배열 arr2d = np.array([[1, 2, 3], [4, 5, 6]]) 를 사용하여 DataFrame df_num 을 만들고 출력하세요. (컬럼명은 ['A', 'B', 'C'] 로 지정)</div>
+  </div>
+  <details class="qa answer">
+    <summary>정답 예시 코드 확인</summary>
+    <div class="details-body">
+      <span class="badge code">Input Code</span>
+<pre><code>import pandas as pd
+import numpy as np
+arr2d = np.array([[1, 2, 3], [4, 5, 6]])
+df_num = pd.DataFrame(arr2d, columns=['A', 'B', 'C'])
+print(df_num)</code></pre>
+      <span class="badge out">Output</span>
+<pre><code>   A  B  C
+0  1  2  3
+1  4  5  6
+</code></pre>
+    </div>
+  </details>
+</div>
+
+<div class="card">
+  <div class="q-box">
+    <div class="q-title">문제 12</div>
+    <div class="q-desc">12. 딕셔너리 리스트 data_list = [{'name': 'John', 'age': 25}, {'name': 'Jane', 'age': 30}] 를 사용하여 DataFrame df_list 를 만들고 출력하세요.</div>
+  </div>
+  <details class="qa answer">
+    <summary>정답 예시 코드 확인</summary>
+    <div class="details-body">
+      <span class="badge code">Input Code</span>
+<pre><code>import pandas as pd
+data_list = [{'name': 'John', 'age': 25}, {'name': 'Jane', 'age': 30}]
+df_list = pd.DataFrame(data_list)
+print(df_list)</code></pre>
+      <span class="badge out">Output</span>
+<pre><code>   name  age
+0  John   25
+1  Jane   30
+</code></pre>
+    </div>
+  </details>
+</div>
+
+<div class="card">
+  <div class="q-box">
+    <div class="q-title">문제 13</div>
+    <div class="q-desc">13. pd.date_range 를 사용하여 2023-01-01 부터 6일간의 날짜 인덱스를 생성하고 dates 변수에 저장한 뒤 출력하세요.</div>
+  </div>
+  <details class="qa answer">
+    <summary>정답 예시 코드 확인</summary>
+    <div class="details-body">
+      <span class="badge code">Input Code</span>
+<pre><code>import pandas as pd
+dates = pd.date_range('20230101', periods=6)
+print(dates)</code></pre>
+      <span class="badge out">Output</span>
+<pre><code>DatetimeIndex(['2023-01-01', '2023-01-02', '2023-01-03', '2023-01-04',
+               '2023-01-05', '2023-01-06'],
+              dtype='datetime64[ns]', freq='D')
+</code></pre>
+    </div>
+  </details>
+</div>
+
+<div class="card">
+  <div class="q-box">
+    <div class="q-title">문제 14</div>
+    <div class="q-desc">14. 문제 13의 dates 인덱스와 np.random.randn(6, 4) 배열을 사용하여 6행 4열 DataFrame df_dates 를 만드세요. (컬럼명은 ['A', 'B', 'C', 'D'])</div>
+  </div>
+  <details class="qa answer">
+    <summary>정답 예시 코드 확인</summary>
+    <div class="details-body">
+      <span class="badge code">Input Code</span>
+<pre><code>import pandas as pd
+import numpy as np
+dates = pd.date_range('20230101', periods=6)
+df_dates = pd.DataFrame(np.random.randn(6, 4), index=dates, columns=list('ABCD'))
+print(df_dates.head())</code></pre>
+      <span class="badge out">Output</span>
+<pre><code>                   A         B         C         D
+2023-01-01 -0.584310 -0.803362 -0.854096  0.518606
+2023-01-02  0.648083 -0.669527  0.418296 -1.213190
+2023-01-03 -0.760771  0.725950 -0.198592 -0.556277
+2023-01-04 -0.063236  0.963496 -0.170624  1.401149
+2023-01-05 -0.639354  0.569472 -1.149232 -0.301323
+</code></pre>
+    </div>
+  </details>
+</div>
+
+<div class="card">
+  <div class="q-box">
+    <div class="q-title">문제 15</div>
+    <div class="q-desc">15. df_dates 의 상위 3개 행만 출력하세요. (.head() 사용)</div>
+  </div>
+  <details class="qa answer">
+    <summary>정답 예시 코드 확인</summary>
+    <div class="details-body">
+      <span class="badge code">Input Code</span>
+<pre><code>import pandas as pd
+import numpy as np
+dates = pd.date_range('20230101', periods=6)
+df_dates = pd.DataFrame(np.random.randn(6, 4), index=dates, columns=list('ABCD'))
+print(df_dates.head(3))</code></pre>
+      <span class="badge out">Output</span>
+<pre><code>                   A         B         C         D
+2023-01-01  0.076840 -1.748367  0.412952  0.091176
+2023-01-02 -0.219803  0.316815  0.470533  0.730335
+2023-01-03  0.705126 -0.169112 -0.334077 -0.741541
+</code></pre>
+    </div>
+  </details>
+</div>
+
+<div class="card">
+  <div class="q-box">
+    <div class="q-title">문제 16</div>
+    <div class="q-desc">16. df_dates 의 인덱스(index)와 컬럼(columns)을 각각 출력하세요.</div>
+  </div>
+  <details class="qa answer">
+    <summary>정답 예시 코드 확인</summary>
+    <div class="details-body">
+      <span class="badge code">Input Code</span>
+<pre><code>import pandas as pd
+import numpy as np
+dates = pd.date_range('20230101', periods=6)
+df_dates = pd.DataFrame(np.random.randn(6, 4), index=dates, columns=list('ABCD'))
+print(df_dates.index)
+print(df_dates.columns)</code></pre>
+      <span class="badge out">Output</span>
+<pre><code>DatetimeIndex(['2023-01-01', '2023-01-02', '2023-01-03', '2023-01-04',
+               '2023-01-05', '2023-01-06'],
+              dtype='datetime64[ns]', freq='D')
+Index(['A', 'B', 'C', 'D'], dtype='object')
+</code></pre>
+    </div>
+  </details>
+</div>
+
+<div class="card">
+  <div class="q-box">
+    <div class="q-title">문제 17</div>
+    <div class="q-desc">17. df_dates 의 통계 요약 정보를 출력하세요. (.describe() 사용)</div>
+  </div>
+  <details class="qa answer">
+    <summary>정답 예시 코드 확인</summary>
+    <div class="details-body">
+      <span class="badge code">Input Code</span>
+<pre><code>import pandas as pd
+import numpy as np
+dates = pd.date_range('20230101', periods=6)
+df_dates = pd.DataFrame(np.random.randn(6, 4), index=dates, columns=list('ABCD'))
+print(df_dates.describe())</code></pre>
+      <span class="badge out">Output</span>
+<pre><code>              A         B         C         D
+count  6.000000  6.000000  6.000000  6.000000
+mean  -0.086358  0.490708  0.038144  0.016335
+std    0.803761  0.985951  0.867946  0.942921
+min   -1.285854 -0.669766 -1.259021 -1.458853
+25%   -0.531062 -0.279805 -0.370243 -0.569420
+50%    0.155896  0.470717  0.137837  0.187806
+75%    0.395123  1.229188  0.414902  0.729707
+max    0.730248  1.829023  1.233267  1.026744
+</code></pre>
+    </div>
+  </details>
+</div>
+
+<div class="card">
+  <div class="q-box">
+    <div class="q-title">문제 18</div>
+    <div class="q-desc">18. df_dates 를 'B' 컬럼 기준으로 내림차순 정렬하여 출력하세요. (.sort_values 사용)</div>
+  </div>
+  <details class="qa answer">
+    <summary>정답 예시 코드 확인</summary>
+    <div class="details-body">
+      <span class="badge code">Input Code</span>
+<pre><code>import pandas as pd
+import numpy as np
+dates = pd.date_range('20230101', periods=6)
+df_dates = pd.DataFrame(np.random.randn(6, 4), index=dates, columns=list('ABCD'))
+print(df_dates.sort_values(by='B', ascending=False))</code></pre>
+      <span class="badge out">Output</span>
+<pre><code>                   A         B         C         D
+2023-01-05 -1.268715  2.169123  1.054363  0.021074
+2023-01-02  0.457805  1.717540 -0.559388  0.781830
+2023-01-03 -0.627743 -0.010214 -0.739775 -0.697427
+2023-01-06  0.814238 -0.407949  0.925232  1.861755
+2023-01-04 -0.399557 -1.248386  0.316885 -0.771239
+2023-01-01  1.611100 -1.637372 -0.635384  0.718870
+</code></pre>
+    </div>
+  </details>
+</div>
+
+<div class="card">
+  <div class="q-box">
+    <div class="q-title">문제 19</div>
+    <div class="q-desc">19. df_dates 에서 'A' 컬럼 하나만 선택하여 출력하세요. (Series 형태)</div>
+  </div>
+  <details class="qa answer">
+    <summary>정답 예시 코드 확인</summary>
+    <div class="details-body">
+      <span class="badge code">Input Code</span>
+<pre><code>import pandas as pd
+import numpy as np
+dates = pd.date_range('20230101', periods=6)
+df_dates = pd.DataFrame(np.random.randn(6, 4), index=dates, columns=list('ABCD'))
+print(df_dates['A'])</code></pre>
+      <span class="badge out">Output</span>
+<pre><code>2023-01-01   -1.621487
+2023-01-02   -1.127453
+2023-01-03   -0.547167
+2023-01-04    1.096377
+2023-01-05   -0.123512
+2023-01-06   -1.298019
+Freq: D, Name: A, dtype: float64
+</code></pre>
+    </div>
+  </details>
+</div>
+
+<div class="card">
+  <div class="q-box">
+    <div class="q-title">문제 20</div>
+    <div class="q-desc">20. df_dates 에서 0번째 행부터 2번째 행까지 슬라이싱(0:3)하여 출력하세요.</div>
+  </div>
+  <details class="qa answer">
+    <summary>정답 예시 코드 확인</summary>
+    <div class="details-body">
+      <span class="badge code">Input Code</span>
+<pre><code>import pandas as pd
+import numpy as np
+dates = pd.date_range('20230101', periods=6)
+df_dates = pd.DataFrame(np.random.randn(6, 4), index=dates, columns=list('ABCD'))
+print(df_dates[0:3])</code></pre>
+      <span class="badge out">Output</span>
+<pre><code>                   A         B         C         D
+2023-01-01 -0.063720 -0.871868 -0.999661 -1.411139
+2023-01-02  0.076342  0.224151  0.584343 -0.569438
+2023-01-03  0.370369 -0.923153  0.395729 -0.372134
+</code></pre>
+    </div>
+  </details>
+</div>
+
+<div class="card">
+  <div class="q-box">
+    <div class="q-title">문제 21</div>
+    <div class="q-desc">21. df_dates 에서 '2023-01-02' 부터 '2023-01-04' 까지의 행을 인덱스 라벨 슬라이싱으로 선택하여 출력하세요.</div>
+  </div>
+  <details class="qa answer">
+    <summary>정답 예시 코드 확인</summary>
+    <div class="details-body">
+      <span class="badge code">Input Code</span>
+<pre><code>import pandas as pd
+import numpy as np
+dates = pd.date_range('20230101', periods=6)
+df_dates = pd.DataFrame(np.random.randn(6, 4), index=dates, columns=list('ABCD'))
+print(df_dates['2023-01-02':'2023-01-04'])</code></pre>
+      <span class="badge out">Output</span>
+<pre><code>                   A         B         C         D
+2023-01-02  0.997235 -0.730335 -0.669389 -0.633917
+2023-01-03  0.509748 -0.093153 -1.488319  1.173256
+2023-01-04 -0.046022 -0.835153 -1.241566  0.916327
+</code></pre>
+    </div>
+  </details>
+</div>
+
+<div class="card">
+  <div class="q-box">
+    <div class="q-title">문제 22</div>
+    <div class="q-desc">22. df_dates 에서 'dates[0]' (첫번째 날짜) 에 해당하는 행을 .loc 을 사용하여 출력하세요.</div>
+  </div>
+  <details class="qa answer">
+    <summary>정답 예시 코드 확인</summary>
+    <div class="details-body">
+      <span class="badge code">Input Code</span>
+<pre><code>import pandas as pd
+import numpy as np
+dates = pd.date_range('20230101', periods=6)
+df_dates = pd.DataFrame(np.random.randn(6, 4), index=dates, columns=list('ABCD'))
+print(df_dates.loc[dates[0]])</code></pre>
+      <span class="badge out">Output</span>
+<pre><code>A   -0.564555
+B   -0.903823
+C   -0.091176
+D    0.198284
+Name: 2023-01-01 00:00:00, dtype: float64
+</code></pre>
+    </div>
+  </details>
+</div>
+
+<div class="card">
+  <div class="q-box">
+    <div class="q-title">문제 23</div>
+    <div class="q-desc">23. df_dates 에서 모든 행(:)에 대해 'A', 'B' 컬럼만 .loc 으로 선택하여 출력하세요.</div>
+  </div>
+  <details class="qa answer">
+    <summary>정답 예시 코드 확인</summary>
+    <div class="details-body">
+      <span class="badge code">Input Code</span>
+<pre><code>import pandas as pd
+import numpy as np
+dates = pd.date_range('20230101', periods=6)
+df_dates = pd.DataFrame(np.random.randn(6, 4), index=dates, columns=list('ABCD'))
+print(df_dates.loc[:, ['A', 'B']])</code></pre>
+      <span class="badge out">Output</span>
+<pre><code>                   A         B
+2023-01-01  0.528419  0.923984
+2023-01-02  0.038596 -0.197779
+2023-01-03  0.421422 -0.169123
+2023-01-04 -0.316823 -0.803932
+2023-01-05  0.380962  1.619053
+2023-01-06  0.959954  0.781878
+</code></pre>
+    </div>
+  </details>
+</div>
+
+<div class="card">
+  <div class="q-box">
+    <div class="q-title">문제 24</div>
+    <div class="q-desc">24. df_dates 에서 3번째 행(인덱스 3)을 .iloc 으로 선택하여 출력하세요.</div>
+  </div>
+  <details class="qa answer">
+    <summary>정답 예시 코드 확인</summary>
+    <div class="details-body">
+      <span class="badge code">Input Code</span>
+<pre><code>import pandas as pd
+import numpy as np
+dates = pd.date_range('20230101', periods=6)
+df_dates = pd.DataFrame(np.random.randn(6, 4), index=dates, columns=list('ABCD'))
+print(df_dates.iloc[3])</code></pre>
+      <span class="badge out">Output</span>
+<pre><code>A   -0.456123
+B   -0.569123
+C    1.002345
+D    0.123456
+Name: 2023-01-04 00:00:00, dtype: float64
+</code></pre>
+    </div>
+  </details>
+</div>
+
+<div class="card">
+  <div class="q-box">
+    <div class="q-title">문제 25</div>
+    <div class="q-desc">25. df_dates 에서 3행~4행, 0열~1열 부분을 .iloc 슬라이싱으로 선택하여 출력하세요.</div>
+  </div>
+  <details class="qa answer">
+    <summary>정답 예시 코드 확인</summary>
+    <div class="details-body">
+      <span class="badge code">Input Code</span>
+<pre><code>import pandas as pd
+import numpy as np
+dates = pd.date_range('20230101', periods=6)
+df_dates = pd.DataFrame(np.random.randn(6, 4), index=dates, columns=list('ABCD'))
+print(df_dates.iloc[3:5, 0:2])</code></pre>
+      <span class="badge out">Output</span>
+<pre><code>                   A         B
+2023-01-04  0.223153 -1.229153
+2023-01-05 -0.569420  0.137837
+</code></pre>
+    </div>
+  </details>
+</div>
+
+<div class="card">
+  <div class="q-box">
+    <div class="q-title">문제 26</div>
+    <div class="q-desc">26. df_dates 에서 'A' 컬럼의 값이 0보다 큰 행만 필터링하여 출력하세요. (불리언 인덱싱)</div>
+  </div>
+  <details class="qa answer">
+    <summary>정답 예시 코드 확인</summary>
+    <div class="details-body">
+      <span class="badge code">Input Code</span>
+<pre><code>import pandas as pd
+import numpy as np
+dates = pd.date_range('20230101', periods=6)
+df_dates = pd.DataFrame(np.random.randn(6, 4), index=dates, columns=list('ABCD'))
+print(df_dates[df_dates['A'] > 0])</code></pre>
+      <span class="badge out">Output</span>
+<pre><code>                   A         B         C         D
+2023-01-02  0.648083 -0.669527  0.418296 -1.213190
+2023-01-06  0.198592 -0.301323  0.556277 -0.170624
+</code></pre>
+    </div>
+  </details>
+</div>
+
+<div class="card">
+  <div class="q-box">
+    <div class="q-title">문제 27</div>
+    <div class="q-desc">27. df_dates 전체 데이터 중 0보다 큰 값만 그대로 두고, 0이하는 NaN으로 나오게(혹은 필터링 결과) 출력하세요. (df[df>0])</div>
+  </div>
+  <details class="qa answer">
+    <summary>정답 예시 코드 확인</summary>
+    <div class="details-body">
+      <span class="badge code">Input Code</span>
+<pre><code>import pandas as pd
+import numpy as np
+dates = pd.date_range('20230101', periods=6)
+df_dates = pd.DataFrame(np.random.randn(6, 4), index=dates, columns=list('ABCD'))
+print(df_dates[df_dates > 0])</code></pre>
+      <span class="badge out">Output</span>
+<pre><code>                   A         B         C         D
+2023-01-01       NaN       NaN       NaN  0.518606
+2023-01-02  0.648083       NaN  0.418296       NaN
+2023-01-03       NaN  0.725950       NaN       NaN
+2023-01-04       NaN  0.963496       NaN  1.401149
+2023-01-05       NaN  0.569472       NaN       NaN
+2023-01-06  0.198592       NaN  0.556277       NaN
+</code></pre>
+    </div>
+  </details>
+</div>
+
+<div class="card">
+  <div class="q-box">
+    <div class="q-title">문제 28</div>
+    <div class="q-desc">28. df_dates 에 새로운 컬럼 'E' 를 추가하고 값을 ['one', 'one', 'two', 'three', 'four', 'three'] 로 지정한 뒤 출력하세요.</div>
+  </div>
+  <details class="qa answer">
+    <summary>정답 예시 코드 확인</summary>
+    <div class="details-body">
+      <span class="badge code">Input Code</span>
+<pre><code>import pandas as pd
+import numpy as np
+dates = pd.date_range('20230101', periods=6)
+df_dates = pd.DataFrame(np.random.randn(6, 4), index=dates, columns=list('ABCD'))
+df_dates['E'] = ['one', 'one', 'two', 'three', 'four', 'three']
+print(df_dates)</code></pre>
+      <span class="badge out">Output</span>
+<pre><code>                   A         B         C         D      E
+2023-01-01 -0.584310 -0.803362 -0.854096  0.518606    one
+2023-01-02  0.648083 -0.669527  0.418296 -1.213190    one
+2023-01-03 -0.760771  0.725950 -0.198592 -0.556277    two
+2023-01-04 -0.063236  0.963496 -0.170624  1.401149  three
+2023-01-05 -0.639354  0.569472 -1.149232 -0.301323   four
+2023-01-06  0.198592 -0.395123  0.556277 -0.155896  three
+</code></pre>
+    </div>
+  </details>
+</div>
+
+<div class="card">
+  <div class="q-box">
+    <div class="q-title">문제 29</div>
+    <div class="q-desc">29. df_dates 에서 'E' 컬럼값이 'two' 또는 'four' 인 행만 필터링(.isin 사용) 하여 출력하세요.</div>
+  </div>
+  <details class="qa answer">
+    <summary>정답 예시 코드 확인</summary>
+    <div class="details-body">
+      <span class="badge code">Input Code</span>
+<pre><code>import pandas as pd
+import numpy as np
+dates = pd.date_range('20230101', periods=6)
+df_dates = pd.DataFrame(np.random.randn(6, 4), index=dates, columns=list('ABCD'))
+df_dates['E'] = ['one', 'one', 'two', 'three', 'four', 'three']
+print(df_dates[df_dates['E'].isin(['two', 'four'])])</code></pre>
+      <span class="badge out">Output</span>
+<pre><code>                   A         B         C         D     E
+2023-01-03 -0.760771  0.725950 -0.198592 -0.556277   two
+2023-01-05 -0.639354  0.569472 -1.149232 -0.301323  four
+</code></pre>
+    </div>
+  </details>
+</div>
+
+<div class="card">
+  <div class="q-box">
+    <div class="q-title">문제 30</div>
+    <div class="q-desc">30. df_dates 에서 0행 0열의 값(iloc[0,0])을 100 으로 변경한 뒤 출력하세요.</div>
+  </div>
+  <details class="qa answer">
+    <summary>정답 예시 코드 확인</summary>
+    <div class="details-body">
+      <span class="badge code">Input Code</span>
+<pre><code>import pandas as pd
+import numpy as np
+dates = pd.date_range('20230101', periods=6)
+df_dates = pd.DataFrame(np.random.randn(6, 4), index=dates, columns=list('ABCD'))
+df_dates.iloc[0, 0] = 100
+print(df_dates.head(1))</code></pre>
+      <span class="badge out">Output</span>
+<pre><code>              A         B         C         D
+2023-01-01  100.0 -0.803362 -0.854096  0.518606
+</code></pre>
+    </div>
+  </details>
+</div>
+
+<div class="card">
+  <div class="q-box">
+    <div class="q-title">문제 31</div>
+    <div class="q-desc">31. 결측치 처리를 위해 4행 1열(iloc[4,1]) 값을 np.nan 으로 변경하고, 결측치가 있는 행을 제거(.dropna(how='any'))한 결과를 출력하세요.</div>
+  </div>
+  <details class="qa answer">
+    <summary>정답 예시 코드 확인</summary>
+    <div class="details-body">
+      <span class="badge code">Input Code</span>
+<pre><code>import pandas as pd
+import numpy as np
+dates = pd.date_range('20230101', periods=6)
+df_dates = pd.DataFrame(np.random.randn(6, 4), index=dates, columns=list('ABCD'))
+df_dates.iloc[4, 1] = np.nan
+print(df_dates.dropna(how='any'))</code></pre>
+      <span class="badge out">Output</span>
+<pre><code>                   A         B         C         D
+2023-01-01 -0.584310 -0.803362 -0.854096  0.518606
+2023-01-02  0.648083 -0.669527  0.418296 -1.213190
+2023-01-03 -0.760771  0.725950 -0.198592 -0.556277
+2023-01-04 -0.063236  0.963496 -0.170624  1.401149
+2023-01-06  0.198592 -0.395123  0.556277 -0.155896
+</code></pre>
+    </div>
+  </details>
+</div>
+
+<div class="card">
+  <div class="q-box">
+    <div class="q-title">문제 32</div>
+    <div class="q-desc">32. 위에서 발생시킨 결측치(NaN)를 숫자 0으로 채운 결과(.fillna(0))를 출력하세요.</div>
+  </div>
+  <details class="qa answer">
+    <summary>정답 예시 코드 확인</summary>
+    <div class="details-body">
+      <span class="badge code">Input Code</span>
+<pre><code>import pandas as pd
+import numpy as np
+dates = pd.date_range('20230101', periods=6)
+df_dates = pd.DataFrame(np.random.randn(6, 4), index=dates, columns=list('ABCD'))
+df_dates.iloc[4, 1] = np.nan
+print(df_dates.fillna(0))</code></pre>
+      <span class="badge out">Output</span>
+<pre><code>                   A         B         C         D
+2023-01-01 -0.584310 -0.803362 -0.854096  0.518606
+2023-01-02  0.648083 -0.669527  0.418296 -1.213190
+2023-01-03 -0.760771  0.725950 -0.198592 -0.556277
+2023-01-04 -0.063236  0.963496 -0.170624  1.401149
+2023-01-05 -0.639354  0.000000 -1.149232 -0.301323
+2023-01-06  0.198592 -0.395123  0.556277 -0.155896
+</code></pre>
+    </div>
+  </details>
+</div>
+
+<div class="card">
+  <div class="q-box">
+    <div class="q-title">문제 33</div>
+    <div class="q-desc">33. df_dates 의 모든 값의 평균(.mean()) 을 출력하세요. (기본 axis=0, 컬럼별 평균)</div>
+  </div>
+  <details class="qa answer">
+    <summary>정답 예시 코드 확인</summary>
+    <div class="details-body">
+      <span class="badge code">Input Code</span>
+<pre><code>import pandas as pd
+import numpy as np
+dates = pd.date_range('20230101', periods=6)
+df_dates = pd.DataFrame(np.random.randn(6, 4), index=dates, columns=list('ABCD'))
+print(df_dates.mean())</code></pre>
+      <span class="badge out">Output</span>
+<pre><code>A   -0.200166
+B    0.064985
+C   -0.233029
+D   -0.034489
+dtype: float64
+</code></pre>
+    </div>
+  </details>
+</div>
+
+<div class="card">
+  <div class="q-box">
+    <div class="q-title">문제 34</div>
+    <div class="q-desc">34. df_dates 에서 axis=1 (행별 평균)을 구하여 출력하세요.</div>
+  </div>
+  <details class="qa answer">
+    <summary>정답 예시 코드 확인</summary>
+    <div class="details-body">
+      <span class="badge code">Input Code</span>
+<pre><code>import pandas as pd
+import numpy as np
+dates = pd.date_range('20230101', periods=6)
+df_dates = pd.DataFrame(np.random.randn(6, 4), index=dates, columns=list('ABCD'))
+print(df_dates.mean(axis=1))</code></pre>
+      <span class="badge out">Output</span>
+<pre><code>2023-01-01   -0.430790
+2023-01-02   -0.254035
+2023-01-03   -0.197422
+2023-01-04    0.532696
+2023-01-05   -0.380109
+2023-01-06    0.050961
+Freq: D, dtype: float64
+</code></pre>
+    </div>
+  </details>
+</div>
+
+<div class="card">
+  <div class="q-box">
+    <div class="q-title">문제 35</div>
+    <div class="q-desc">35. df_dates 에 대해 .apply(np.cumsum) 을 적용하여 누적합을 구하고 출력하세요.</div>
+  </div>
+  <details class="qa answer">
+    <summary>정답 예시 코드 확인</summary>
+    <div class="details-body">
+      <span class="badge code">Input Code</span>
+<pre><code>import pandas as pd
+import numpy as np
+dates = pd.date_range('20230101', periods=6)
+df_dates = pd.DataFrame(np.random.randn(6, 4), index=dates, columns=list('ABCD'))
+print(df_dates.apply(np.cumsum))</code></pre>
+      <span class="badge out">Output</span>
+<pre><code>                   A         B         C         D
+2023-01-01 -0.584310 -0.803362 -0.854096  0.518606
+2023-01-02  0.063773 -1.472889 -0.435800 -0.694584
+2023-01-03 -0.696998 -0.746939 -0.634392 -1.250861
+2023-01-04 -0.760234  0.216557 -0.805016  0.150288
+2023-01-05 -1.399588  0.786029 -1.954248 -0.151035
+2023-01-06 -1.200996  0.390906 -1.397971 -0.306931
+</code></pre>
+    </div>
+  </details>
+</div>
+
+<div class="card">
+  <div class="q-box">
+    <div class="q-title">문제 36</div>
+    <div class="q-desc">36. 딕셔너리 data = {'key': ['A', 'B', 'C', 'A', 'B', 'C'], 'data': range(6)} 로 DataFrame df_key 를 만들고 'key' 컬럼을 기준으로 그룹화하여 합계(.sum())를 구하고 출력하세요.</div>
+  </div>
+  <details class="qa answer">
+    <summary>정답 예시 코드 확인</summary>
+    <div class="details-body">
+      <span class="badge code">Input Code</span>
+<pre><code>import pandas as pd
+data = {'key': ['A', 'B', 'C', 'A', 'B', 'C'], 'data': range(6)}
+df_key = pd.DataFrame(data)
+print(df_key.groupby('key').sum())</code></pre>
+      <span class="badge out">Output</span>
+<pre><code>     data
+key
+A       3
+B       5
+C       7
+</code></pre>
+    </div>
+  </details>
+</div>
+
+<div class="card">
+  <div class="q-box">
+    <div class="q-title">문제 37</div>
+    <div class="q-desc">37. 두 DataFrame left = pd.DataFrame({'key': ['foo', 'bar'], 'lval': [1, 2]}) 와 right = pd.DataFrame({'key': ['foo', 'bar'], 'rval': [4, 5]}) 를 'key' 컬럼 기준으로 병합(pd.merge)하여 출력하세요.</div>
+  </div>
+  <details class="qa answer">
+    <summary>정답 예시 코드 확인</summary>
+    <div class="details-body">
+      <span class="badge code">Input Code</span>
+<pre><code>import pandas as pd
+left = pd.DataFrame({'key': ['foo', 'bar'], 'lval': [1, 2]})
+right = pd.DataFrame({'key': ['foo', 'bar'], 'rval': [4, 5]})
+merged = pd.merge(left, right, on='key')
+print(merged)</code></pre>
+      <span class="badge out">Output</span>
+<pre><code>   key  lval  rval
+0  foo     1     4
+1  bar     2     5
+</code></pre>
+    </div>
+  </details>
+</div>
+
+<div class="card">
+  <div class="q-box">
+    <div class="q-title">문제 38</div>
+    <div class="q-desc">38. 파일 입출력을 연습하기 위해 df_dates 를 'foo.csv' 로 저장하세요. (.to_csv)</div>
+  </div>
+  <details class="qa answer">
+    <summary>정답 예시 코드 확인</summary>
+    <div class="details-body">
+      <span class="badge code">Input Code</span>
+<pre><code>import pandas as pd
+import numpy as np
+dates = pd.date_range('20230101', periods=6)
+df_dates = pd.DataFrame(np.random.randn(6, 4), index=dates, columns=list('ABCD'))
+df_dates.to_csv('foo.csv')
+print("Saved foo.csv")</code></pre>
+      <span class="badge out">Output</span>
+<pre><code>Saved foo.csv
+</code></pre>
+    </div>
+  </details>
+</div>
+
+<div class="card">
+  <div class="q-box">
+    <div class="q-title">문제 39</div>
+    <div class="q-desc">39. 저장한 'foo.csv' 파일을 읽어와서 df_loaded 에 저장하고 출력하세요. (pd.read_csv)</div>
+  </div>
+  <details class="qa answer">
+    <summary>정답 예시 코드 확인</summary>
+    <div class="details-body">
+      <span class="badge code">Input Code</span>
+<pre><code>import pandas as pd
+df_loaded = pd.read_csv('foo.csv', index_col=0)
+print(df_loaded.head())</code></pre>
+      <span class="badge out">Output</span>
+<pre><code>                   A         B         C         D
+2023-01-01 -0.584310 -0.803362 -0.854096  0.518606
+2023-01-02  0.648083 -0.669527  0.418296 -1.213190
+2023-01-03 -0.760771  0.725950 -0.198592 -0.556277
+2023-01-04 -0.063236  0.963496 -0.170624  1.401149
+2023-01-05 -0.639354  0.569472 -1.149232 -0.301323
+</code></pre>
+    </div>
+  </details>
+</div>
+
+<div class="card">
+  <div class="q-box">
+    <div class="q-title">문제 40</div>
+    <div class="q-desc">40. 3x3 DataFrame df = pd.DataFrame(np.random.randn(3, 3), columns=['A', 'B', 'C']) 에서 각 컬럼별 최대값과 최소값의 차이를 구하는 함수 lambda x: x.max() - x.min() 을 .apply() 로 적용하여 출력하세요.</div>
+  </div>
+  <details class="qa answer">
+    <summary>정답 예시 코드 확인</summary>
+    <div class="details-body">
+      <span class="badge code">Input Code</span>
+<pre><code>import pandas as pd
+import numpy as np
+df = pd.DataFrame(np.random.randn(3, 3), columns=['A', 'B', 'C'])
+print(df.apply(lambda x: x.max() - x.min()))</code></pre>
+      <span class="badge out">Output</span>
+<pre><code>A    1.408854
+B    1.239023
+C    1.382499
+dtype: float64
+</code></pre>
+    </div>
+  </details>
+</div>
+
+</main>
+</body>
+</html>
