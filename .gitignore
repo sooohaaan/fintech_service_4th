@@ -1,8 +1,20 @@
+# --- 데이터 관련  ---
 data/
 *.csv
 *.json
 *.xlsx
-01database/핀테크 교재/*.pdf
 *.zip
+
+# --- 문서 및 교재  ---
+01database/핀테크 교재/*.pdf
+
+# --- 환경 설정 및 보안 ---
 .env
 .env*
+
+# 주피터 노트북 체크포인트
+.ipynb_checkpoints/
+
+# --- OS 임시 파일 ---
+.DS_Store             # Mac용
+Thumbs.db             # Windows용
